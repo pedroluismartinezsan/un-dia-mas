@@ -1,244 +1,325 @@
-```html
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#061426">
-  <meta name="description" content="Un día Más - Un mensaje para acompañarte cada día">
-  <title>Un día Más</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#061426">
+    <meta name="description" content="Un día Más - Mensajes para cada día">
+    <title>Un día Más</title>
 
-  <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <!-- =========================
-       INTRO
-  ========================== -->
+    <!-- =================================
+         PANTALLA DE INTRODUCCIÓN
+    ================================== -->
 
-  <main id="splashScreen" class="splash-screen">
+    <main id="splashScreen" class="splash-screen">
 
-    <div class="ambient-light light-one"></div>
-    <div class="ambient-light light-two"></div>
+        <!-- Luces ambientales -->
+        <div class="ambient-light light-one"></div>
+        <div class="ambient-light light-two"></div>
 
-    <div class="stars">
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-
-    <!-- NUBE / DESENFOQUE -->
-    <div id="mist" class="mist"></div>
-
-    <section id="intro" class="intro">
-
-      <!-- 1. BIENVENIDOS -->
-      <div id="welcomePhase" class="welcome-phase">
-        <div class="welcome-word">
-          BIENVENIDOS
-        </div>
-      </div>
-
-
-      <!-- 2. ESTÁS ESCUCHANDO -->
-      <div id="listeningPhase" class="listening-phase">
-
-        <div class="listening-small">
-          ESTÁS ESCUCHANDO
+        <!-- Estrellas -->
+        <div class="stars">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
 
-        <div class="listening-title">
-          UN DÍA MÁS
+        <!-- Niebla -->
+        <div id="mist" class="mist"></div>
+
+
+        <!-- Contenido central -->
+        <section class="intro">
+
+            <!-- BIENVENIDOS -->
+            <div id="welcomePhase" class="welcome-phase">
+                <div class="welcome-word">
+                    BIENVENIDOS
+                </div>
+            </div>
+
+
+            <!-- ESTÁS ESCUCHANDO -->
+            <div id="listeningPhase" class="listening-phase">
+
+                <div class="listening-small">
+                    ESTÁS ESCUCHANDO
+                </div>
+
+                <div class="listening-title">
+                    UN DÍA MÁS
+                </div>
+
+            </div>
+
+
+            <!-- LOGO UDM -->
+            <div id="udmLogo" class="udm-logo">
+
+                <span class="udm-letter">U</span>
+                <span class="udm-letter">D</span>
+                <span class="udm-letter">M</span>
+
+            </div>
+
+
+            <!-- Resplandor -->
+            <div id="logoGlow" class="logo-glow"></div>
+
+        </section>
+
+
+        <!-- Barra de carga -->
+        <div id="loadingIndicator" class="loading-indicator">
+
+            <div class="progress-track">
+                <div id="progressBar" class="progress-bar"></div>
+            </div>
+
+            <div class="loading-info">
+
+                <span>Preparando tu día</span>
+
+                <span id="timer">
+                    10
+                </span>
+
+            </div>
+
         </div>
 
-      </div>
 
+        <footer>
+            UN DÍA MÁS
+        </footer>
 
-      <!-- 3. UDM -->
-      <div id="udmLogo" class="udm-logo">
+    </main>
 
-        <span class="udm-letter udm-u">U</span>
-        <span class="udm-letter udm-d">D</span>
-        <span class="udm-letter udm-m">M</span>
 
-      </div>
+    <!-- =================================
+         PANTALLA PRINCIPAL
+    ================================== -->
 
+    <main id="audioScreen" class="audio-screen">
 
-      <!-- BRILLO DEL LOGO -->
-      <div id="logoGlow" class="logo-glow"></div>
+        <header class="audio-header">
 
-    </section>
+            <div class="mini-logo">
+                UDM
+            </div>
 
+            <div>
+                <h1>
+                    Un día Más
+                </h1>
 
-    <!-- CARGA -->
-    <div id="loadingIndicator" class="loading-indicator">
+                <p>
+                    Mensajes para cada día
+                </p>
+            </div>
 
-      <div class="progress-track">
-        <div id="progressBar" class="progress-bar"></div>
-      </div>
+        </header>
 
-      <div class="loading-info">
-        <span>Preparando tu día</span>
-        <span id="timer">10</span>
-      </div>
 
-    </div>
+        <!-- MENSAJE DE HOY -->
 
+        <section class="today-card">
 
-    <footer>
-      UN DÍA MÁS
-    </footer>
+            <div class="audio-icon">
+                ♪
+            </div>
 
-  </main>
+            <span class="today-label">
+                MENSAJE DE HOY
+            </span>
 
+            <h2>
+                Un nuevo día
+            </h2>
 
-  <!-- =========================
-       APLICACIÓN
-  ========================== -->
+            <p>
+                Un mensaje para acompañarte en este día.
+            </p>
 
-  <main id="audioScreen" class="audio-screen">
 
-    <header class="audio-header">
+            <div class="player">
 
-      <div class="mini-logo">
-        UDM
-      </div>
+                <div class="time-row">
 
-      <div>
-        <h1>Un día Más</h1>
-        <p>Mensajes para cada día</p>
-      </div>
+                    <span>
+                        00:00
+                    </span>
 
-    </header>
+                    <span>
+                        02:00
+                    </span>
 
+                </div>
 
-    <!-- MENSAJE DE HOY -->
 
-    <section class="today-card">
+                <div class="audio-progress">
+                    <div></div>
+                </div>
 
-      <div class="audio-icon">
-        ♪
-      </div>
 
-      <span class="today-label">
-        MENSAJE DE HOY
-      </span>
+                <button class="play-button">
+                    ▶
+                </button>
 
-      <h2>
-        Un nuevo día
-      </h2>
+            </div>
 
-      <p>
-        Un mensaje para acompañarte en este día.
-      </p>
+        </section>
 
 
-      <div class="player">
+        <!-- MENSAJES RECIENTES -->
 
-        <div class="time-row">
-          <span>00:00</span>
-          <span>02:00</span>
-        </div>
+        <section class="recent-section">
 
-        <div class="audio-progress">
-          <div></div>
-        </div>
+            <div class="section-title">
 
-        <button class="play-button">
-          ▶
-        </button>
+                <h2>
+                    Mensajes recientes
+                </h2>
 
-      </div>
+            </div>
 
-    </section>
 
+            <div class="audio-list">
 
-    <!-- MENSAJES ANTERIORES -->
 
-    <section class="recent-section">
+                <!-- HOY -->
 
-      <div class="section-title">
-        <h2>Mensajes recientes</h2>
-      </div>
+                <article class="audio-item">
 
+                    <div class="date-box">
 
-      <div class="audio-list">
+                        <strong>
+                            HOY
+                        </strong>
 
+                        <span>
+                            24
+                        </span>
 
-        <article class="audio-item">
+                    </div>
 
-          <div class="date-box">
-            <strong>HOY</strong>
-            <span>24</span>
-          </div>
 
-          <div class="audio-info">
-            <strong>Mensaje de hoy</strong>
-            <span>Un día Más</span>
-          </div>
+                    <div class="audio-info">
 
-          <button class="small-play">
-            ▶
-          </button>
+                        <strong>
+                            Mensaje de hoy
+                        </strong>
 
-        </article>
+                        <span>
+                            Un día Más
+                        </span>
 
+                    </div>
 
-        <article class="audio-item">
 
-          <div class="date-box">
-            <strong>AYER</strong>
-            <span>23</span>
-          </div>
+                    <button class="small-play">
+                        ▶
+                    </button>
 
-          <div class="audio-info">
-            <strong>Mensaje de ayer</strong>
-            <span>Un día Más</span>
-          </div>
+                </article>
 
-          <button class="small-play">
-            ▶
-          </button>
 
-        </article>
+                <!-- AYER -->
 
+                <article class="audio-item">
 
-        <article class="audio-item">
+                    <div class="date-box">
 
-          <div class="date-box">
-            <strong>ANTERIOR</strong>
-            <span>22</span>
-          </div>
+                        <strong>
+                            AYER
+                        </strong>
 
-          <div class="audio-info">
-            <strong>Mensaje anterior</strong>
-            <span>Un día Más</span>
-          </div>
+                        <span>
+                            23
+                        </span>
 
-          <button class="small-play">
-            ▶
-          </button>
+                    </div>
 
-        </article>
 
+                    <div class="audio-info">
 
-      </div>
+                        <strong>
+                            Mensaje de ayer
+                        </strong>
 
-    </section>
+                        <span>
+                            Un día Más
+                        </span>
 
-  </main>
+                    </div>
 
 
-  <script src="app.js"></script>
+                    <button class="small-play">
+                        ▶
+                    </button>
+
+                </article>
+
+
+                <!-- ANTERIOR -->
+
+                <article class="audio-item">
+
+                    <div class="date-box">
+
+                        <strong>
+                            ANTERIOR
+                        </strong>
+
+                        <span>
+                            22
+                        </span>
+
+                    </div>
+
+
+                    <div class="audio-info">
+
+                        <strong>
+                            Mensaje anterior
+                        </strong>
+
+                        <span>
+                            Un día Más
+                        </span>
+
+                    </div>
+
+
+                    <button class="small-play">
+                        ▶
+                    </button>
+
+                </article>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- JavaScript -->
+    <script src="app.js"></script>
 
 </body>
 </html>
-```
+
