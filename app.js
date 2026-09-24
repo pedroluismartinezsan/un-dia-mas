@@ -1,4 +1,4 @@
-```javascript id="n3m8qv"
+
 /* =====================================================
    UN DÍA MÁS
    Reproductor local - primera prueba
@@ -358,4 +358,4 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
 });
-```
+
