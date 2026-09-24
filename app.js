@@ -1,17 +1,11 @@
 
-/* =====================================================
-   UN DÍA MÁS
-   Reproductor local - primera prueba
-===================================================== */
-
 document.addEventListener("DOMContentLoaded", () => {
 
     console.log("UN DÍA MÁS: aplicación iniciada");
 
-
-    /* =================================================
+    /* ==========================================
        ELEMENTOS
-    ================================================= */
+    ========================================== */
 
     const audio = document.getElementById("audioPlayer");
 
@@ -43,56 +37,42 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("visualizer");
 
 
-    /* =================================================
-       AUDIO
-    ================================================= */
-
-    /*
-       IMPORTANTE:
-
-       Coloca tu MP3 dentro de:
-
-       audio/hoy.mp3
-
-       Por ahora solamente probaremos el audio de hoy.
-    */
+    /* ==========================================
+       AUDIO LOCAL
+    ========================================== */
 
     const audioURL = "audio/hoy.mp3";
 
     audio.src = audioURL;
 
 
-    /* =================================================
+    /* ==========================================
        INFORMACIÓN
-    ================================================= */
+    ========================================== */
 
-    todayTitle.textContent =
-        "Un día más";
+    todayTitle.textContent = "Un día más";
 
     todayDescription.textContent =
         "Tómate un momento. Respira. Escucha.";
 
 
-    /* =================================================
+    /* ==========================================
        FECHA
-    ================================================= */
+    ========================================== */
 
     const ahora = new Date();
 
     currentDate.textContent =
-        ahora.toLocaleDateString(
-            "es-CO",
-            {
-                day: "2-digit",
-                month: "short",
-                year: "numeric"
-            }
-        ).toUpperCase();
+        ahora.toLocaleDateString("es-CO", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        }).toUpperCase();
 
 
-    /* =================================================
+    /* ==========================================
        FORMATO DE TIEMPO
-    ================================================= */
+    ========================================== */
 
     function formatearTiempo(segundos) {
 
@@ -116,9 +96,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /* =================================================
+    /* ==========================================
        PLAY / PAUSA
-    ================================================= */
+    ========================================== */
 
     playButton.addEventListener("click", () => {
 
@@ -139,10 +119,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         error
                     );
 
-                    alert(
-                        "No se pudo reproducir el audio."
-                    );
-
                 });
 
         } else {
@@ -152,14 +128,15 @@ document.addEventListener("DOMContentLoaded", () => {
             playIcon.textContent = "▶";
 
             visualizer.classList.remove("playing");
+
         }
 
     });
 
 
-    /* =================================================
-       CUANDO EL AUDIO TERMINA
-    ================================================= */
+    /* ==========================================
+       AUDIO TERMINADO
+    ========================================== */
 
     audio.addEventListener("ended", () => {
 
@@ -174,9 +151,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
-    /* =================================================
+    /* ==========================================
        METADATOS
-    ================================================= */
+    ========================================== */
 
     audio.addEventListener("loadedmetadata", () => {
 
@@ -184,16 +161,16 @@ document.addEventListener("DOMContentLoaded", () => {
             formatearTiempo(audio.duration);
 
         console.log(
-            "Duración del audio:",
+            "Duración:",
             audio.duration
         );
 
     });
 
 
-    /* =================================================
-       PROGRESO
-    ================================================= */
+    /* ==========================================
+       ACTUALIZAR PROGRESO
+    ========================================== */
 
     audio.addEventListener("timeupdate", () => {
 
@@ -213,9 +190,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
-    /* =================================================
-       CLIC EN LA BARRA
-    ================================================= */
+    /* ==========================================
+       CLIC EN BARRA DE PROGRESO
+    ========================================== */
 
     progressBar.addEventListener("click", event => {
 
@@ -238,9 +215,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
-    /* =================================================
+    /* ==========================================
        RETROCEDER 10 SEGUNDOS
-    ================================================= */
+    ========================================== */
 
     rewindButton.addEventListener("click", () => {
 
@@ -253,40 +230,44 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
-    /* =================================================
+    /* ==========================================
        AVANZAR 10 SEGUNDOS
-    ================================================= */
+    ========================================== */
 
     forwardButton.addEventListener("click", () => {
 
+        if (!Number.isFinite(audio.duration)) {
+            return;
+        }
+
         audio.currentTime =
             Math.min(
-                audio.duration || 0,
+                audio.duration,
                 audio.currentTime + 10
             );
 
     });
 
 
-    /* =================================================
-       DESCARGAR
-    ================================================= */
+    /* ==========================================
+       DESCARGA
+    ========================================== */
 
-    downloadButton.href =
-        audioURL;
+    downloadButton.href = audioURL;
 
     downloadButton.download =
         "un-dia-mas-hoy.mp3";
 
 
-    /* =================================================
-       ANIMACIÓN DEL VISUALIZADOR
-    ================================================= */
+    /* ==========================================
+       VISUALIZADOR
+    ========================================== */
 
     const barras =
         visualizer.querySelectorAll("span");
 
     let animacion = null;
+
 
     function animarVisualizer() {
 
@@ -300,8 +281,8 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             return;
-
         }
+
 
         barras.forEach(barra => {
 
@@ -315,13 +296,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
         });
 
+
         animacion =
             setTimeout(
                 animarVisualizer,
                 120
             );
+
     }
 
+
+    /* ==========================================
+       AUDIO PLAY
+    ========================================== */
 
     audio.addEventListener("play", () => {
 
@@ -334,6 +321,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
+    /* ==========================================
+       AUDIO PAUSE
+    ========================================== */
+
     audio.addEventListener("pause", () => {
 
         visualizer.classList.remove("playing");
@@ -343,10 +334,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
+    /* ==========================================
+       ERROR
+    ========================================== */
+
     audio.addEventListener("error", () => {
 
         console.error(
-            "ERROR: no se pudo cargar:",
+            "ERROR: no se pudo cargar el audio:",
             audioURL
         );
 
