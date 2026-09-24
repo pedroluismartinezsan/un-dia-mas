@@ -1,4 +1,4 @@
-const CACHE_NAME = "un-dia-mas-v2";
+const CACHE_NAME = "un-dia-mas-v3";
 
 const APP_FILES = [
   "./",
@@ -10,16 +10,27 @@ const APP_FILES = [
   "./assets/icon-512.png"
 ];
 
+
+/* =====================================================
+   INSTALAR
+===================================================== */
+
 self.addEventListener("install", event => {
 
   event.waitUntil(
+
     caches.open(CACHE_NAME)
       .then(cache => cache.addAll(APP_FILES))
       .then(() => self.skipWaiting())
+
   );
 
 });
 
+
+/* =====================================================
+   ACTIVAR
+===================================================== */
 
 self.addEventListener("activate", event => {
 
@@ -42,23 +53,38 @@ self.addEventListener("activate", event => {
 });
 
 
+/* =====================================================
+   PETICIONES
+===================================================== */
+
 self.addEventListener("fetch", event => {
 
   const request = event.request;
+  const url = new URL(request.url);
+
 
   /*
-   * Los audios vienen directamente desde Google Drive.
-   * No los guardamos en la caché de la aplicación.
+   * NO INTERCEPTAR GOOGLE DRIVE
+   *
+   * Esto permite que el navegador maneje
+   * directamente el MP3.
    */
+
   if (
-    request.url.includes("/audio/") ||
-    request.destination === "audio" ||
-    request.url.includes("drive.google.com")
+    url.hostname === "drive.google.com" ||
+    url.hostname === "drive.usercontent.google.com" ||
+    url.hostname === "googleusercontent.com"
   ) {
 
-    event.respondWith(
-      fetch(request).catch(() => caches.match(request))
-    );
+    return;
+  }
+
+
+  /*
+   * Ignorar extensiones del navegador
+   */
+
+  if (url.protocol === "chrome-extension:") {
 
     return;
   }
@@ -67,37 +93,54 @@ self.addEventListener("fetch", event => {
   /*
    * Archivos de la aplicación
    */
+
   event.respondWith(
 
-    caches.match(request).then(cachedResponse => {
+    caches.match(request)
+      .then(cachedResponse => {
 
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-
-      return fetch(request).then(response => {
-
-        if (
-          response &&
-          response.status === 200 &&
-          response.type === "basic"
-        ) {
-
-          const responseClone =
-            response.clone();
-
-          caches.open(CACHE_NAME)
-            .then(cache => {
-              cache.put(request, responseClone);
-            });
-
+        if (cachedResponse) {
+          return cachedResponse;
         }
 
-        return response;
 
-      });
+        return fetch(request)
+          .then(response => {
 
-    })
+            if (
+              response &&
+              response.status === 200 &&
+              response.type === "basic"
+            ) {
+
+              const responseClone =
+                response.clone();
+
+              caches.open(CACHE_NAME)
+                .then(cache => {
+
+                  cache.put(
+                    request,
+                    responseClone
+                  );
+
+                })
+                .catch(error => {
+
+                  console.warn(
+                    "No se pudo guardar en caché:",
+                    error
+                  );
+
+                });
+
+            }
+
+            return response;
+
+          });
+
+      })
 
   );
 
