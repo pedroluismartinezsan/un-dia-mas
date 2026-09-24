@@ -1,4 +1,4 @@
-```javascript
+
 const CACHE_NAME = "un-dia-mas-v1";
 
 const APP_FILES = [
@@ -77,4 +77,4 @@ self.addEventListener("fetch", event => {
     })
   );
 });
-```
+
