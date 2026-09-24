@@ -1,6 +1,6 @@
 /* =========================================================
    UN DÍA MÁS
-   APP.JS
+   INTRO + REPRODUCTOR
 ========================================================= */
 
 
@@ -10,16 +10,15 @@
 
 const CONFIG = {
 
-    introDuration: 10000,
+    introDuration: 7500,
 
-    todayAudio:
-        "audio/hoy.mp3"
+    todayAudio: "audio/hoy.mp3"
 
 };
 
 
 /* =========================================================
-   ELEMENTOS DEL DOM
+   ELEMENTOS
 ========================================================= */
 
 const splashScreen =
@@ -29,13 +28,8 @@ const audioScreen =
     document.getElementById("audioScreen");
 
 
-/* INTRO */
-
 const welcomePhase =
     document.getElementById("welcomePhase");
-
-const listeningPhase =
-    document.getElementById("listeningPhase");
 
 const mist =
     document.getElementById("mist");
@@ -51,9 +45,6 @@ const loadingIndicator =
 
 const progressBar =
     document.getElementById("progressBar");
-
-const timer =
-    document.getElementById("timer");
 
 
 /* AUDIO */
@@ -96,7 +87,7 @@ let introFinished = false;
 
 
 /* =========================================================
-   INICIAR
+   INICIO
 ========================================================= */
 
 window.addEventListener(
@@ -129,19 +120,11 @@ function prepareIntro() {
     }
 
 
-    if (listeningPhase) {
-
-        listeningPhase.style.opacity = "0";
-
-        listeningPhase.style.transform =
-            "scale(0.92)";
-
-    }
-
-
     if (mist) {
 
-        mist.classList.remove("active");
+        mist.classList.remove(
+            "active"
+        );
 
     }
 
@@ -151,7 +134,7 @@ function prepareIntro() {
         udmLogo.style.opacity = "0";
 
         udmLogo.style.transform =
-            "scale(0.5)";
+            "scale(0.55)";
 
     }
 
@@ -165,7 +148,8 @@ function prepareIntro() {
 
     if (loadingIndicator) {
 
-        loadingIndicator.style.opacity = "1";
+        loadingIndicator.style.opacity =
+            "1";
 
     }
 
@@ -189,21 +173,16 @@ function startIntro() {
 
 
 /* =========================================================
-   LOOP INTRO
+   LOOP
 ========================================================= */
 
-function introLoop(currentTime) {
-
-    if (!startTime) {
-
-        startTime =
-            currentTime;
-
-    }
-
+function introLoop(
+    currentTime
+) {
 
     const elapsed =
-        currentTime - startTime;
+        currentTime -
+        startTime;
 
 
     const progress =
@@ -214,12 +193,7 @@ function introLoop(currentTime) {
         );
 
 
-    updateIntroProgress(
-        progress
-    );
-
-
-    animateIntro(
+    updateIntro(
         progress
     );
 
@@ -240,65 +214,23 @@ function introLoop(currentTime) {
 
 
 /* =========================================================
-   PROGRESO INTRO
+   ANIMACIÓN
 ========================================================= */
 
-function updateIntroProgress(
-    progress
-) {
-
-    if (progressBar) {
-
-        progressBar.style.width =
-            String(
-                progress * 100
-            ) + "%";
-
-    }
-
-
-    if (timer) {
-
-        const remaining =
-            Math.ceil(
-                10 -
-                (progress * 10)
-            );
-
-
-        if (remaining > 0) {
-
-            timer.textContent =
-                String(
-                    remaining
-                );
-
-        } else {
-
-            timer.textContent =
-                "LISTO";
-
-        }
-
-    }
-
-}
-
-
-/* =========================================================
-   ANIMACIÓN INTRO
-========================================================= */
-
-function animateIntro(
+function updateIntro(
     progress
 ) {
 
 
     /* -----------------------------------------
-       0% - 25%
+       0 - 35%
+       BIENVENIDOS
     ----------------------------------------- */
 
-    if (progress < 0.25) {
+    if (
+        progress >= 0 &&
+        progress < 0.35
+    ) {
 
         if (welcomePhase) {
 
@@ -314,78 +246,34 @@ function animateIntro(
 
 
     /* -----------------------------------------
-       25% - 55%
+       35 - 48%
+       DESAPARECE BIENVENIDOS
     ----------------------------------------- */
 
     if (
-        progress >= 0.25 &&
-        progress < 0.55
+        progress >= 0.35 &&
+        progress < 0.48
     ) {
 
-        const phase =
-            (progress - 0.25) /
-            0.30;
+        const p =
+            (progress - 0.35) /
+            0.13;
 
 
         if (welcomePhase) {
 
             welcomePhase.style.opacity =
                 String(
-                    1 - phase
+                    1 - p
                 );
 
             welcomePhase.style.transform =
                 "scale(" +
                 String(
                     1 -
-                    (phase * 0.12)
+                    (p * 0.08)
                 ) +
                 ")";
-
-        }
-
-
-        if (listeningPhase) {
-
-            listeningPhase.style.opacity =
-                String(
-                    phase
-                );
-
-            listeningPhase.style.transform =
-                "scale(" +
-                String(
-                    0.92 +
-                    (phase * 0.08)
-                ) +
-                ")";
-
-        }
-
-    }
-
-
-    /* -----------------------------------------
-       55% - 72%
-    ----------------------------------------- */
-
-    if (
-        progress >= 0.55 &&
-        progress < 0.72
-    ) {
-
-        const phase =
-            (progress - 0.55) /
-            0.17;
-
-
-        if (listeningPhase) {
-
-            listeningPhase.style.opacity =
-                String(
-                    1 -
-                    (phase * 0.8)
-                );
 
         }
 
@@ -402,22 +290,23 @@ function animateIntro(
 
 
     /* -----------------------------------------
-       72% - 88%
+       48 - 75%
+       APARECE UDM
     ----------------------------------------- */
 
     if (
-        progress >= 0.72 &&
-        progress < 0.88
+        progress >= 0.48 &&
+        progress < 0.75
     ) {
 
-        const phase =
-            (progress - 0.72) /
-            0.16;
+        const p =
+            (progress - 0.48) /
+            0.27;
 
 
-        if (listeningPhase) {
+        if (welcomePhase) {
 
-            listeningPhase.style.opacity =
+            welcomePhase.style.opacity =
                 "0";
 
         }
@@ -427,14 +316,14 @@ function animateIntro(
 
             udmLogo.style.opacity =
                 String(
-                    phase
+                    p
                 );
 
             udmLogo.style.transform =
                 "scale(" +
                 String(
                     0.55 +
-                    (phase * 0.45)
+                    (p * 0.45)
                 ) +
                 ")";
 
@@ -445,7 +334,7 @@ function animateIntro(
 
             logoGlow.style.opacity =
                 String(
-                    phase * 0.8
+                    p * 0.8
                 );
 
         }
@@ -454,10 +343,21 @@ function animateIntro(
 
 
     /* -----------------------------------------
-       88% - 100%
+       75 - 100%
+       UDM SE CONSOLIDA
     ----------------------------------------- */
 
-    if (progress >= 0.88) {
+    if (
+        progress >= 0.75
+    ) {
+
+        if (welcomePhase) {
+
+            welcomePhase.style.opacity =
+                "0";
+
+        }
+
 
         if (udmLogo) {
 
@@ -465,7 +365,7 @@ function animateIntro(
                 "1";
 
             udmLogo.style.transform =
-                "scale(1.05)";
+                "scale(1)";
 
         }
 
@@ -483,11 +383,23 @@ function animateIntro(
 
     }
 
+
+    /* BARRA */
+
+    if (progressBar) {
+
+        progressBar.style.width =
+            String(
+                progress * 100
+            ) + "%";
+
+    }
+
 }
 
 
 /* =========================================================
-   TERMINAR INTRO
+   FINALIZAR INTRO
 ========================================================= */
 
 function finishIntro() {
@@ -501,22 +413,6 @@ function finishIntro() {
 
     introFinished =
         true;
-
-
-    if (progressBar) {
-
-        progressBar.style.width =
-            "100%";
-
-    }
-
-
-    if (timer) {
-
-        timer.textContent =
-            "LISTO";
-
-    }
 
 
     if (loadingIndicator) {
@@ -538,7 +434,7 @@ function finishIntro() {
 
 
             splashScreen.style.transition =
-                "opacity 1.2s ease";
+                "opacity 1s ease";
 
 
             splashScreen.style.opacity =
@@ -566,18 +462,18 @@ function finishIntro() {
                     );
 
                 },
-                1200
+                1000
             );
 
         },
-        700
+        500
     );
 
 }
 
 
 /* =========================================================
-   PREPARAR AUDIO
+   AUDIO
 ========================================================= */
 
 function prepareAudio() {
@@ -592,23 +488,16 @@ function prepareAudio() {
     audioPlayer.src =
         CONFIG.todayAudio;
 
-
     audioPlayer.preload =
         "metadata";
 
-
     audioPlayer.load();
-
-
-    updatePlayButton(
-        false
-    );
 
 }
 
 
 /* =========================================================
-   BOTÓN PLAY
+   PLAY / PAUSE
 ========================================================= */
 
 if (playButton) {
@@ -624,15 +513,13 @@ if (playButton) {
             }
 
 
-            if (
-                audioPlayer.paused
-            ) {
+            if (audioPlayer.paused) {
 
-                playAudio();
+                audioPlayer.play();
 
             } else {
 
-                pauseAudio();
+                audioPlayer.pause();
 
             }
 
@@ -643,78 +530,25 @@ if (playButton) {
 
 
 /* =========================================================
-   REPRODUCIR
-========================================================= */
-
-function playAudio() {
-
-    if (!audioPlayer) {
-
-        return;
-
-    }
-
-
-    const playPromise =
-        audioPlayer.play();
-
-
-    if (
-        playPromise &&
-        typeof playPromise.catch ===
-        "function"
-    ) {
-
-        playPromise.catch(
-            function (error) {
-
-                console.log(
-                    "No se pudo reproducir el audio:",
-                    error
-                );
-
-            }
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   PAUSAR
-========================================================= */
-
-function pauseAudio() {
-
-    if (!audioPlayer) {
-
-        return;
-
-    }
-
-
-    audioPlayer.pause();
-
-}
-
-
-/* =========================================================
-   EVENTO PLAY
+   EVENTOS AUDIO
 ========================================================= */
 
 if (audioPlayer) {
+
 
     audioPlayer.addEventListener(
         "play",
         function () {
 
-            updatePlayButton(
-                true
-            );
+            updatePlayButton(true);
 
+            if (waveform) {
 
-            startWaveAnimation();
+                waveform.classList.add(
+                    "is-playing"
+                );
+
+            }
 
         }
     );
@@ -724,41 +558,13 @@ if (audioPlayer) {
         "pause",
         function () {
 
-            updatePlayButton(
-                false
-            );
+            updatePlayButton(false);
 
+            if (waveform) {
 
-            stopWaveAnimation();
-
-        }
-    );
-
-
-    audioPlayer.addEventListener(
-        "ended",
-        function () {
-
-            updatePlayButton(
-                false
-            );
-
-
-            stopWaveAnimation();
-
-
-            if (audioProgressValue) {
-
-                audioProgressValue.style.width =
-                    "0%";
-
-            }
-
-
-            if (currentTime) {
-
-                currentTime.textContent =
-                    "00:00";
+                waveform.classList.remove(
+                    "is-playing"
+                );
 
             }
 
@@ -794,13 +600,18 @@ if (audioPlayer) {
 
 
     audioPlayer.addEventListener(
-        "error",
+        "ended",
         function () {
 
-            console.log(
-                "No se pudo cargar:",
-                CONFIG.todayAudio
-            );
+            updatePlayButton(false);
+
+            if (waveform) {
+
+                waveform.classList.remove(
+                    "is-playing"
+                );
+
+            }
 
         }
     );
@@ -809,7 +620,39 @@ if (audioPlayer) {
 
 
 /* =========================================================
-   ACTUALIZAR PROGRESO
+   BOTÓN
+========================================================= */
+
+function updatePlayButton(
+    playing
+) {
+
+    if (playIcon) {
+
+        playIcon.textContent =
+            playing
+                ? "Ⅱ"
+                : "▶";
+
+    }
+
+
+    if (playButton) {
+
+        playButton.setAttribute(
+            "aria-label",
+            playing
+                ? "Pausar mensaje"
+                : "Reproducir mensaje"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   PROGRESO
 ========================================================= */
 
 function updateAudioProgress() {
@@ -844,13 +687,9 @@ function updateAudioProgress() {
         audioProgressValue
     ) {
 
-        const percentage =
-            (current / total) * 100;
-
-
         audioProgressValue.style.width =
             String(
-                percentage
+                (current / total) * 100
             ) + "%";
 
     }
@@ -859,7 +698,7 @@ function updateAudioProgress() {
 
 
 /* =========================================================
-   BARRA CLICKEABLE
+   CLIC EN BARRA
 ========================================================= */
 
 if (audioProgress) {
@@ -868,18 +707,9 @@ if (audioProgress) {
         "click",
         function (event) {
 
-            if (!audioPlayer) {
-
-                return;
-
-            }
-
-
             if (
-                !audioPlayer.duration ||
-                !isFinite(
-                    audioPlayer.duration
-                )
+                !audioPlayer ||
+                !audioPlayer.duration
             ) {
 
                 return;
@@ -912,85 +742,7 @@ if (audioProgress) {
 
 
 /* =========================================================
-   ACTUALIZAR BOTÓN
-========================================================= */
-
-function updatePlayButton(
-    playing
-) {
-
-    if (!playIcon) {
-
-        return;
-
-    }
-
-
-    if (playing) {
-
-        playIcon.textContent =
-            "Ⅱ";
-
-    } else {
-
-        playIcon.textContent =
-            "▶";
-
-    }
-
-
-    if (playButton) {
-
-        playButton.setAttribute(
-            "aria-label",
-            playing
-                ? "Pausar mensaje"
-                : "Reproducir mensaje"
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   ONDA
-========================================================= */
-
-function startWaveAnimation() {
-
-    if (!waveform) {
-
-        return;
-
-    }
-
-
-    waveform.classList.add(
-        "is-playing"
-    );
-
-}
-
-
-function stopWaveAnimation() {
-
-    if (!waveform) {
-
-        return;
-
-    }
-
-
-    waveform.classList.remove(
-        "is-playing"
-    );
-
-}
-
-
-/* =========================================================
-   DESCARGAR
+   DESCARGA
 ========================================================= */
 
 if (downloadButton) {
@@ -999,7 +751,31 @@ if (downloadButton) {
         "click",
         function () {
 
-            downloadAudio();
+            const link =
+                document.createElement(
+                    "a"
+                );
+
+
+            link.href =
+                CONFIG.todayAudio;
+
+
+            link.download =
+                "un-dia-mas-hoy.mp3";
+
+
+            document.body.appendChild(
+                link
+            );
+
+
+            link.click();
+
+
+            document.body.removeChild(
+                link
+            );
 
         }
     );
@@ -1007,39 +783,8 @@ if (downloadButton) {
 }
 
 
-function downloadAudio() {
-
-    const link =
-        document.createElement(
-            "a"
-        );
-
-
-    link.href =
-        CONFIG.todayAudio;
-
-
-    link.download =
-        "un-dia-mas-hoy.mp3";
-
-
-    document.body.appendChild(
-        link
-    );
-
-
-    link.click();
-
-
-    document.body.removeChild(
-        link
-    );
-
-}
-
-
 /* =========================================================
-   FORMATO DE TIEMPO
+   FORMATO TIEMPO
 ========================================================= */
 
 function formatTime(
@@ -1062,7 +807,7 @@ function formatTime(
         );
 
 
-    const remainingSeconds =
+    const secs =
         Math.floor(
             seconds % 60
         );
@@ -1071,36 +816,7 @@ function formatTime(
     return (
         String(minutes).padStart(2, "0") +
         ":" +
-        String(remainingSeconds).padStart(2, "0")
+        String(secs).padStart(2, "0")
     );
 
 }
-
-
-/* =========================================================
-   MENSAJES RECIENTES
-========================================================= */
-
-const recentButtons =
-    document.querySelectorAll(
-        ".recent-play"
-    );
-
-
-recentButtons.forEach(
-    function (button, index) {
-
-        button.addEventListener(
-            "click",
-            function () {
-
-                console.log(
-                    "Mensaje reciente:",
-                    index + 1
-                );
-
-            }
-        );
-
-    }
-);
