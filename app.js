@@ -1,24 +1,34 @@
-javascript
+
 const TOTAL_TIME = 10000;
 
 const splashScreen = document.getElementById("splashScreen");
 const audioScreen = document.getElementById("audioScreen");
+
 const welcomePhase = document.getElementById("welcomePhase");
 const listeningPhase = document.getElementById("listeningPhase");
+
 const mist = document.getElementById("mist");
+
 const udmLogo = document.getElementById("udmLogo");
 const logoGlow = document.getElementById("logoGlow");
-const loadingIndicator = document.getElementById("loadingIndicator");
-const progressBar = document.getElementById("progressBar");
-const timer = document.getElementById("timer");
+
+const loadingIndicator =
+    document.getElementById("loadingIndicator");
+
+const progressBar =
+    document.getElementById("progressBar");
+
+const timer =
+    document.getElementById("timer");
+
 
 let startTime = null;
 let finished = false;
 
 
-/* ================================
-   INICIO
-================================ */
+/* ==========================================
+   CUANDO CARGA LA PÁGINA
+========================================== */
 
 window.addEventListener("load", function () {
 
@@ -31,6 +41,7 @@ window.addEventListener("load", function () {
 
     if (listeningPhase) {
         listeningPhase.style.opacity = "0";
+        listeningPhase.style.transform = "scale(0.92)";
     }
 
     if (mist) {
@@ -51,26 +62,26 @@ window.addEventListener("load", function () {
 });
 
 
-/* ================================
+/* ==========================================
    ANIMACIÓN PRINCIPAL
-================================ */
+========================================== */
 
 function animationLoop(currentTime) {
 
-    if (!startTime) {
-        startTime = currentTime;
-    }
+    const elapsed =
+        currentTime - startTime;
 
-    const elapsed = currentTime - startTime;
+    const progress =
+        Math.min(
+            elapsed / TOTAL_TIME,
+            1
+        );
 
-    const progress = Math.min(
-        elapsed / TOTAL_TIME,
-        1
-    );
 
     updateProgress(progress);
 
     animateSequence(progress);
+
 
     if (progress < 1) {
 
@@ -85,9 +96,9 @@ function animationLoop(currentTime) {
 }
 
 
-/* ================================
-   BARRA DE CARGA
-================================ */
+/* ==========================================
+   PROGRESO
+========================================== */
 
 function updateProgress(progress) {
 
@@ -98,52 +109,58 @@ function updateProgress(progress) {
 
     }
 
+
     if (timer) {
 
         const remaining =
-            Math.ceil(10 - progress * 10);
+            Math.ceil(
+                10 - (progress * 10)
+            );
 
-        if (remaining > 0) {
 
-            timer.textContent = remaining;
-
-        } else {
-
-            timer.textContent = "Listo";
-
-        }
+        timer.textContent =
+            remaining > 0
+                ? remaining
+                : "Listo";
 
     }
 
 }
 
 
-/* ================================
+/* ==========================================
    SECUENCIA CINEMATOGRÁFICA
-================================ */
+========================================== */
 
 function animateSequence(progress) {
 
 
-    /* -------------------------------
-       0 - 2.5 segundos
+    /* ======================================
+       0% - 25%
+
        BIENVENIDOS
-    ------------------------------- */
+    ====================================== */
 
     if (progress < 0.25) {
 
         if (welcomePhase) {
+
             welcomePhase.style.opacity = "1";
-            welcomePhase.style.transform = "scale(1)";
+
+            welcomePhase.style.transform =
+                "scale(1)";
+
         }
 
     }
 
 
-    /* -------------------------------
-       2.5 - 5.5 segundos
+    /* ======================================
+       25% - 55%
+
        ESTÁS ESCUCHANDO
-    ------------------------------- */
+       UN DÍA MÁS
+    ====================================== */
 
     if (
         progress >= 0.25 &&
@@ -153,15 +170,19 @@ function animateSequence(progress) {
         const p =
             (progress - 0.25) / 0.30;
 
+
         if (welcomePhase) {
 
             welcomePhase.style.opacity =
                 String(1 - p);
 
             welcomePhase.style.transform =
-                "scale(" + (1 - p * 0.12) + ")";
+                "scale(" +
+                (1 - (p * 0.12)) +
+                ")";
 
         }
+
 
         if (listeningPhase) {
 
@@ -169,17 +190,20 @@ function animateSequence(progress) {
                 String(p);
 
             listeningPhase.style.transform =
-                "scale(" + (0.92 + p * 0.08) + ")";
+                "scale(" +
+                (0.92 + (p * 0.08)) +
+                ")";
 
         }
 
     }
 
 
-    /* -------------------------------
-       5.5 - 7.2 segundos
-       NIEBLA
-    ------------------------------- */
+    /* ======================================
+       55% - 72%
+
+       COMIENZA LA NIEBLA
+    ====================================== */
 
     if (
         progress >= 0.55 &&
@@ -189,12 +213,14 @@ function animateSequence(progress) {
         const p =
             (progress - 0.55) / 0.17;
 
+
         if (listeningPhase) {
 
             listeningPhase.style.opacity =
-                String(1 - p * 0.8);
+                String(1 - (p * 0.8));
 
         }
+
 
         if (mist) {
 
@@ -205,10 +231,11 @@ function animateSequence(progress) {
     }
 
 
-    /* -------------------------------
-       7.2 - 8.8 segundos
+    /* ======================================
+       72% - 88%
+
        APARECE UDM
-    ------------------------------- */
+    ====================================== */
 
     if (
         progress >= 0.72 &&
@@ -218,11 +245,14 @@ function animateSequence(progress) {
         const p =
             (progress - 0.72) / 0.16;
 
+
         if (listeningPhase) {
 
-            listeningPhase.style.opacity = "0";
+            listeningPhase.style.opacity =
+                "0";
 
         }
+
 
         if (udmLogo) {
 
@@ -230,9 +260,12 @@ function animateSequence(progress) {
                 String(p);
 
             udmLogo.style.transform =
-                "scale(" + (0.55 + p * 0.45) + ")";
+                "scale(" +
+                (0.55 + (p * 0.45)) +
+                ")";
 
         }
+
 
         if (logoGlow) {
 
@@ -244,10 +277,11 @@ function animateSequence(progress) {
     }
 
 
-    /* -------------------------------
-       8.8 - 10 segundos
-       UDM FINAL
-    ------------------------------- */
+    /* ======================================
+       88% - 100%
+
+       LOGO FINAL
+    ====================================== */
 
     if (progress >= 0.88) {
 
@@ -259,6 +293,7 @@ function animateSequence(progress) {
                 "scale(1.05)";
 
         }
+
 
         if (logoGlow) {
 
@@ -273,9 +308,9 @@ function animateSequence(progress) {
 }
 
 
-/* ================================
-   ENTRADA AUTOMÁTICA
-================================ */
+/* ==========================================
+   TERMINAR INTRO
+========================================== */
 
 function finishIntro() {
 
@@ -288,25 +323,31 @@ function finishIntro() {
 
     if (progressBar) {
 
-        progressBar.style.width = "100%";
+        progressBar.style.width =
+            "100%";
 
     }
+
 
     if (timer) {
 
-        timer.textContent = "Listo";
+        timer.textContent =
+            "Listo";
 
     }
 
+
     if (loadingIndicator) {
 
-        loadingIndicator.style.opacity = "0";
+        loadingIndicator.style.opacity =
+            "0";
 
     }
 
 
     /*
-       Dejamos UDM visible un momento.
+       Dejamos UDM visible
+       durante un instante.
     */
 
     setTimeout(function () {
@@ -315,20 +356,21 @@ function finishIntro() {
             return;
         }
 
-        splashScreen.style.transition =
-            "opacity 1.2s ease";
 
-        splashScreen.style.opacity = "0";
+        splashScreen.style.opacity =
+            "0";
 
 
         /*
            Entrada automática
+           a la aplicación.
         */
 
         setTimeout(function () {
 
             splashScreen.style.display =
                 "none";
+
 
             if (audioScreen) {
 
@@ -337,7 +379,11 @@ function finishIntro() {
 
             }
 
-            window.scrollTo(0, 0);
+
+            window.scrollTo(
+                0,
+                0
+            );
 
         }, 1200);
 
