@@ -1,5 +1,5 @@
 /* =========================================================
-   UN DÍA MÁS
+   UDM - UN DÍA MÁS
    DISEÑO FUTURISTA
 ========================================================= */
 
@@ -31,9 +31,9 @@ body {
 
 body {
 
-    background: #040812;
+    background: #050914;
 
-    color: white;
+    color: #ffffff;
 
     font-family:
         Arial,
@@ -46,10 +46,10 @@ body {
 
 
 /* =========================================================
-   SPLASH
+   INTRO
 ========================================================= */
 
-#splash {
+#intro {
 
     position: fixed;
 
@@ -63,17 +63,17 @@ body {
 
     justify-content: center;
 
+    overflow: hidden;
+
     background:
 
         radial-gradient(
             circle at center,
-            #102544 0%,
+            #122b4b 0%,
             #09172c 35%,
-            #050b18 70%,
+            #050914 70%,
             #02040a 100%
         );
-
-    overflow: hidden;
 
 }
 
@@ -82,60 +82,65 @@ body {
    FONDO
 ========================================================= */
 
-.splash-background {
+.intro-background {
 
     position: absolute;
 
     inset: 0;
 
+    overflow: hidden;
+
 }
 
 
 /* =========================================================
-   GRID
+   GRID FUTURISTA
 ========================================================= */
 
-.background-grid {
+.grid {
 
     position: absolute;
 
-    width: 180%;
+    width: 200%;
 
-    height: 180%;
+    height: 200%;
 
-    left: -40%;
+    left: -50%;
 
     top: 15%;
 
     background-image:
 
         linear-gradient(
-            rgba(25,120,255,0.07) 1px,
+            rgba(25, 120, 255, 0.08)
+            1px,
             transparent 1px
         ),
 
         linear-gradient(
             90deg,
-            rgba(25,120,255,0.07) 1px,
+            rgba(25, 120, 255, 0.08)
+            1px,
             transparent 1px
         );
 
-    background-size: 55px 55px;
+    background-size:
+        55px 55px;
 
     transform:
-        perspective(500px)
-        rotateX(65deg);
+        perspective(600px)
+        rotateX(62deg);
 
-    opacity: 0.5;
+    opacity: 0.45;
 
 }
 
 
 /* =========================================================
-   LUCES
+   LUZ AZUL
 ========================================================= */
 
-.blue-light {
+.blue-glow {
 
     position: absolute;
 
@@ -153,36 +158,40 @@ body {
     border-radius: 50%;
 
     background:
-        rgba(0,100,255,0.15);
+        rgba(0, 100, 255, 0.14);
 
     filter:
-        blur(100px);
+        blur(110px);
 
 }
 
 
-.gold-light {
+/* =========================================================
+   LUZ DORADA
+========================================================= */
+
+.gold-glow {
 
     position: absolute;
 
-    width: 400px;
+    width: 450px;
 
-    height: 400px;
+    height: 450px;
 
     left: 50%;
 
     top: 50%;
 
     transform:
-        translate(-10%, -50%);
+        translate(-5%, -50%);
 
     border-radius: 50%;
 
     background:
-        rgba(212,175,55,0.12);
+        rgba(212, 175, 55, 0.13);
 
     filter:
-        blur(90px);
+        blur(100px);
 
 }
 
@@ -201,33 +210,190 @@ body {
 
         radial-gradient(
             2px 2px at 15% 20%,
-            rgba(255,215,100,0.8),
+            rgba(255, 215, 102, 0.8),
             transparent
         ),
 
         radial-gradient(
-            1px 1px at 30% 70%,
-            rgba(255,255,255,0.7),
+            1px 1px at 30% 75%,
+            rgba(255, 255, 255, 0.7),
             transparent
         ),
 
         radial-gradient(
-            2px 2px at 75% 25%,
-            rgba(40,140,255,0.8),
+            2px 2px at 75% 20%,
+            rgba(40, 140, 255, 0.8),
             transparent
         ),
 
         radial-gradient(
             1px 1px at 85% 75%,
-            rgba(255,215,100,0.7),
+            rgba(255, 215, 102, 0.7),
             transparent
         ),
 
         radial-gradient(
-            1px 1px at 55% 12%,
-            rgba(255,255,255,0.7),
+            1px 1px at 55% 10%,
+            rgba(255, 255, 255, 0.7),
             transparent
         );
+
+}
+
+
+/* =========================================================
+   PARTÍCULAS
+========================================================= */
+
+.particles {
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+}
+
+
+.particles span {
+
+    position: absolute;
+
+    width: 3px;
+
+    height: 3px;
+
+    border-radius: 50%;
+
+    background:
+        #d4af37;
+
+    box-shadow:
+        0 0 10px #d4af37;
+
+    opacity: 0;
+
+    animation:
+        particleFloat
+        5s
+        ease-in-out
+        infinite;
+
+}
+
+
+.particles span:nth-child(1) {
+    left: 12%;
+    top: 25%;
+    animation-delay: 0s;
+}
+
+
+.particles span:nth-child(2) {
+    left: 22%;
+    top: 65%;
+    animation-delay: 1s;
+}
+
+
+.particles span:nth-child(3) {
+    left: 82%;
+    top: 20%;
+    animation-delay: 2s;
+}
+
+
+.particles span:nth-child(4) {
+    left: 78%;
+    top: 70%;
+    animation-delay: 3s;
+}
+
+
+.particles span:nth-child(5) {
+    left: 8%;
+    top: 50%;
+    animation-delay: 1.5s;
+}
+
+
+.particles span:nth-child(6) {
+    left: 92%;
+    top: 45%;
+    animation-delay: 2.5s;
+}
+
+
+.particles span:nth-child(7) {
+    left: 40%;
+    top: 12%;
+    animation-delay: 3.5s;
+}
+
+
+.particles span:nth-child(8) {
+    left: 60%;
+    top: 88%;
+    animation-delay: 1.2s;
+}
+
+
+.particles span:nth-child(9) {
+    left: 35%;
+    top: 88%;
+    animation-delay: 2.2s;
+}
+
+
+.particles span:nth-child(10) {
+    left: 65%;
+    top: 12%;
+    animation-delay: 4s;
+}
+
+
+.particles span:nth-child(11) {
+    left: 18%;
+    top: 42%;
+    animation-delay: 3s;
+}
+
+
+.particles span:nth-child(12) {
+    left: 86%;
+    top: 82%;
+    animation-delay: 2s;
+}
+
+
+@keyframes particleFloat {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            translateY(20px)
+            scale(0.5);
+
+    }
+
+    50% {
+
+        opacity: 1;
+
+    }
+
+    100% {
+
+        opacity: 0;
+
+        transform:
+            translateY(-30px)
+            scale(1.3);
+
+    }
 
 }
 
@@ -236,7 +402,7 @@ body {
    CENTRO
 ========================================================= */
 
-.splash-center {
+.intro-center {
 
     position: relative;
 
@@ -259,9 +425,9 @@ body {
 
     position: relative;
 
-    width: 300px;
+    width: 320px;
 
-    height: 300px;
+    height: 320px;
 
     display: flex;
 
@@ -276,19 +442,19 @@ body {
    ANILLO EXTERIOR
 ========================================================= */
 
-.loader-ring-outer {
+.outer-ring {
 
     position: absolute;
 
-    width: 285px;
+    width: 300px;
 
-    height: 285px;
+    height: 300px;
 
     border-radius: 50%;
 
     border:
         1px solid
-        rgba(212,175,55,0.25);
+        rgba(212, 175, 55, 0.25);
 
     animation:
         rotateRight
@@ -300,22 +466,22 @@ body {
 
 
 /* =========================================================
-   ANILLO INTERIOR
+   ANILLO TECNOLÓGICO
 ========================================================= */
 
-.loader-ring-inner {
+.tech-ring {
 
     position: absolute;
 
-    width: 235px;
+    width: 275px;
 
-    height: 235px;
+    height: 275px;
 
     border-radius: 50%;
 
     border:
         1px dashed
-        rgba(25,130,255,0.35);
+        rgba(40, 140, 255, 0.35);
 
     animation:
         rotateLeft
@@ -327,22 +493,86 @@ body {
 
 
 /* =========================================================
-   CÍRCULO PRINCIPAL
+   MARCAS
 ========================================================= */
 
-.loader-spinner {
+.tech-mark {
 
     position: absolute;
 
-    width: 265px;
+    width: 8px;
 
-    height: 265px;
+    height: 2px;
+
+    background:
+        #d4af37;
+
+    box-shadow:
+        0 0 8px
+        rgba(212, 175, 55, 0.8);
+
+}
+
+
+.mark-1 {
+
+    top: -1px;
+
+    left: 50%;
+
+}
+
+
+.mark-2 {
+
+    right: 0;
+
+    top: 50%;
+
+    transform:
+        rotate(90deg);
+
+}
+
+
+.mark-3 {
+
+    bottom: -1px;
+
+    left: 50%;
+
+}
+
+
+.mark-4 {
+
+    left: 0;
+
+    top: 50%;
+
+    transform:
+        rotate(90deg);
+
+}
+
+
+/* =========================================================
+   CÍRCULO DE CARGA
+========================================================= */
+
+.loading-circle {
+
+    position: absolute;
+
+    width: 260px;
+
+    height: 260px;
 
     border-radius: 50%;
 
     border:
         4px solid
-        rgba(255,255,255,0.04);
+        rgba(255, 255, 255, 0.04);
 
     border-top-color:
         #ffd966;
@@ -357,8 +587,8 @@ body {
         transparent;
 
     animation:
-        rotateRight
-        2.5s
+        loadingRotate
+        2.4s
         linear
         infinite;
 
@@ -366,17 +596,36 @@ body {
 
         drop-shadow(
             0 0 8px
-            rgba(212,175,55,0.8)
+            rgba(212, 175, 55, 0.9)
         );
 
 }
 
 
+@keyframes loadingRotate {
+
+    from {
+
+        transform:
+            rotate(0deg);
+
+    }
+
+    to {
+
+        transform:
+            rotate(360deg);
+
+    }
+
+}
+
+
 /* =========================================================
-   PUNTO LUMINOSO
+   PUNTO ORBITAL
 ========================================================= */
 
-.loader-point {
+.orbit-point {
 
     position: absolute;
 
@@ -391,20 +640,20 @@ body {
 
     box-shadow:
 
-        0 0 8px
+        0 0 10px
         #ffd966,
 
         0 0 25px
-        rgba(212,175,55,0.9);
+        rgba(212, 175, 55, 0.9);
 
-    top: 14px;
+    top: 10px;
 
     left: 50%;
 
     margin-left: -4px;
 
     animation:
-        orbitPoint
+        pointOrbit
         3s
         linear
         infinite;
@@ -412,17 +661,38 @@ body {
 }
 
 
+@keyframes pointOrbit {
+
+    from {
+
+        transform:
+            rotate(0deg)
+            translateX(145px);
+
+    }
+
+    to {
+
+        transform:
+            rotate(360deg)
+            translateX(145px);
+
+    }
+
+}
+
+
 /* =========================================================
-   CENTRO DEL LOADER
+   CENTRO
 ========================================================= */
 
 .loader-center {
 
     position: absolute;
 
-    width: 150px;
+    width: 145px;
 
-    height: 150px;
+    height: 145px;
 
     border-radius: 50%;
 
@@ -436,21 +706,21 @@ body {
 
         radial-gradient(
             circle,
-            rgba(20,50,85,0.9),
-            rgba(5,12,25,0.95)
+            #122d4d,
+            #06101f
         );
 
     border:
         1px solid
-        rgba(212,175,55,0.3);
+        rgba(212, 175, 55, 0.35);
 
     box-shadow:
 
         inset 0 0 35px
-        rgba(0,100,255,0.15),
+        rgba(0, 100, 255, 0.15),
 
-        0 0 40px
-        rgba(212,175,55,0.08);
+        0 0 45px
+        rgba(212, 175, 55, 0.08);
 
 }
 
@@ -459,9 +729,9 @@ body {
    UDM
 ========================================================= */
 
-.loader-symbol {
+.udm {
 
-    font-size: 34px;
+    font-size: 36px;
 
     font-weight: 800;
 
@@ -480,83 +750,28 @@ body {
             #b8860b
         );
 
-    -webkit-background-clip: text;
+    -webkit-background-clip:
+        text;
 
-    background-clip: text;
+    background-clip:
+        text;
 
-    color: transparent;
+    color:
+        transparent;
 
-}
+    text-shadow:
 
-
-/* =========================================================
-   ANIMACIONES
-========================================================= */
-
-@keyframes rotateRight {
-
-    from {
-
-        transform:
-            rotate(0deg);
-
-    }
-
-    to {
-
-        transform:
-            rotate(360deg);
-
-    }
-
-}
-
-
-@keyframes rotateLeft {
-
-    from {
-
-        transform:
-            rotate(360deg);
-
-    }
-
-    to {
-
-        transform:
-            rotate(0deg);
-
-    }
-
-}
-
-
-@keyframes orbitPoint {
-
-    from {
-
-        transform:
-            rotate(0deg)
-            translateX(132px);
-
-    }
-
-    to {
-
-        transform:
-            rotate(360deg)
-            translateX(132px);
-
-    }
+        0 0 20px
+        rgba(212, 175, 55, 0.45);
 
 }
 
 
 /* =========================================================
-   TEXTO INICIANDO
+   TEXTO DE CARGA
 ========================================================= */
 
-.loading-label {
+.loading-text {
 
     margin-top: 35px;
 
@@ -565,10 +780,10 @@ body {
     letter-spacing: 7px;
 
     color:
-        rgba(255,255,255,0.45);
+        rgba(255, 255, 255, 0.45);
 
     animation:
-        loadingPulse
+        textPulse
         1.5s
         ease-in-out
         infinite;
@@ -576,12 +791,12 @@ body {
 }
 
 
-@keyframes loadingPulse {
+@keyframes textPulse {
 
     0%,
     100% {
 
-        opacity: 0.25;
+        opacity: 0.3;
 
     }
 
@@ -595,7 +810,7 @@ body {
 
 
 /* =========================================================
-   NOMBRE UN DÍA MÁS
+   REVELACIÓN UN DÍA MÁS
 ========================================================= */
 
 .brand-reveal {
@@ -604,13 +819,12 @@ body {
 
     z-index: 20;
 
+    text-align: center;
+
     opacity: 0;
 
     transform:
-        scale(0.85)
-        translateY(15px);
-
-    pointer-events: none;
+        scale(0.85);
 
 }
 
@@ -618,26 +832,24 @@ body {
 .brand-title {
 
     font-size:
-        clamp(38px, 7vw, 76px);
+        clamp(38px, 7vw, 78px);
 
     font-weight: 300;
 
-    letter-spacing:
-        12px;
+    letter-spacing: 12px;
 
-    padding-left:
-        12px;
+    padding-left: 12px;
 
     color:
-        #f8f2df;
+        #f5f0df;
 
     text-shadow:
 
         0 0 15px
-        rgba(212,175,55,0.4),
+        rgba(212, 175, 55, 0.5),
 
         0 0 40px
-        rgba(212,175,55,0.2);
+        rgba(212, 175, 55, 0.2);
 
 }
 
@@ -651,6 +863,7 @@ body {
     margin: 18px auto 0;
 
     background:
+
         linear-gradient(
             90deg,
             transparent,
@@ -662,29 +875,15 @@ body {
 
 
 /* =========================================================
-   ESTADO FINAL DEL NOMBRE
+   ESTADO REVELACIÓN
 ========================================================= */
 
-#splash.show-brand .splash-center {
+#intro.reveal .intro-center {
 
     opacity: 0;
 
     transform:
-        scale(0.8);
-
-    transition:
-        all 1s ease;
-
-}
-
-
-#splash.show-brand .brand-reveal {
-
-    opacity: 1;
-
-    transform:
-        scale(1)
-        translateY(0);
+        scale(0.75);
 
     transition:
         all 1.2s ease;
@@ -692,9 +891,22 @@ body {
 }
 
 
-#splash.show-brand .brand-line {
+#intro.reveal .brand-reveal {
 
-    width: 180px;
+    opacity: 1;
+
+    transform:
+        scale(1);
+
+    transition:
+        all 1.3s ease;
+
+}
+
+
+#intro.reveal .brand-line {
+
+    width: 220px;
 
     transition:
         width 1.2s ease
@@ -725,7 +937,7 @@ body {
 
         radial-gradient(
             circle at 50% 20%,
-            #102b50,
+            #102b50 0%,
             #050914 75%
         );
 
@@ -733,7 +945,7 @@ body {
 
 
 /* =========================================================
-   HEADER
+   HEADER APP
 ========================================================= */
 
 .app-header {
@@ -744,14 +956,14 @@ body {
 
     gap: 15px;
 
-    padding: 25px 30px;
+    padding: 24px 30px;
 
     border-bottom:
         1px solid
-        rgba(212,175,55,0.15);
+        rgba(212, 175, 55, 0.15);
 
     background:
-        rgba(4,8,18,0.7);
+        rgba(4, 8, 18, 0.7);
 
 }
 
@@ -777,12 +989,13 @@ body {
     color:
         #ffd966;
 
-    font-weight:
-        bold;
+    font-size: 12px;
+
+    font-weight: bold;
 
     box-shadow:
         0 0 20px
-        rgba(212,175,55,0.15);
+        rgba(212, 175, 55, 0.15);
 
 }
 
@@ -805,16 +1018,16 @@ body {
     font-size: 11px;
 
     color:
-        rgba(255,255,255,0.45);
+        rgba(255, 255, 255, 0.45);
 
 }
 
 
 /* =========================================================
-   CONTENIDO
+   CONTENIDO APP
 ========================================================= */
 
-.app-main {
+.app-content {
 
     flex: 1;
 
@@ -829,7 +1042,7 @@ body {
 }
 
 
-.welcome-card {
+.main-card {
 
     width:
         min(620px, 100%);
@@ -840,19 +1053,17 @@ body {
 
     border:
         1px solid
-        rgba(212,175,55,0.2);
+        rgba(212, 175, 55, 0.2);
 
     border-radius: 30px;
 
     background:
-        rgba(8,18,36,0.7);
-
-    backdrop-filter:
-        blur(20px);
+        rgba(8, 18, 36, 0.72);
 
     box-shadow:
+
         0 30px 80px
-        rgba(0,0,0,0.3);
+        rgba(0, 0, 0, 0.3);
 
 }
 
@@ -869,7 +1080,7 @@ body {
 }
 
 
-.welcome-card h1 {
+.main-card h1 {
 
     margin-top: 20px;
 
@@ -879,17 +1090,21 @@ body {
 }
 
 
-.welcome-card p {
+.main-card p {
 
     margin-top: 15px;
 
     color:
-        rgba(255,255,255,0.55);
+        rgba(255, 255, 255, 0.55);
 
 }
 
 
-.card-orbit {
+/* =========================================================
+   CÍRCULO APP
+========================================================= */
+
+.app-orbit {
 
     position: relative;
 
@@ -897,7 +1112,8 @@ body {
 
     height: 120px;
 
-    margin: 40px auto 0;
+    margin:
+        40px auto 0;
 
     display: flex;
 
@@ -905,19 +1121,21 @@ body {
 
     justify-content: center;
 
-    border-radius: 50%;
-
     border:
         1px solid
-        rgba(212,175,55,0.35);
+        rgba(212, 175, 55, 0.4);
+
+    border-radius: 50%;
 
     color:
         #ffd966;
 
+    font-weight: bold;
+
 }
 
 
-.card-orbit-ring {
+.app-orbit-ring {
 
     position: absolute;
 
@@ -925,7 +1143,7 @@ body {
 
     border:
         1px dashed
-        rgba(22,135,255,0.3);
+        rgba(30, 130, 255, 0.35);
 
     border-radius: 50%;
 
@@ -953,49 +1171,50 @@ body {
     letter-spacing: 5px;
 
     color:
-        rgba(255,255,255,0.3);
+        rgba(255, 255, 255, 0.3);
 
 }
 
 
 /* =========================================================
-   MÓVIL
+   RESPONSIVE
 ========================================================= */
 
 @media (max-width: 600px) {
 
+
     .loader {
 
-        width: 260px;
+        width: 270px;
 
-        height: 260px;
-
-    }
-
-
-    .loader-ring-outer {
-
-        width: 250px;
-
-        height: 250px;
+        height: 270px;
 
     }
 
 
-    .loader-ring-inner {
+    .outer-ring {
 
-        width: 205px;
+        width: 255px;
 
-        height: 205px;
+        height: 255px;
 
     }
 
 
-    .loader-spinner {
+    .tech-ring {
 
         width: 235px;
 
         height: 235px;
+
+    }
+
+
+    .loading-circle {
+
+        width: 225px;
+
+        height: 225px;
 
     }
 
@@ -1009,9 +1228,9 @@ body {
     }
 
 
-    .loader-symbol {
+    .udm {
 
-        font-size: 28px;
+        font-size: 29px;
 
         letter-spacing: 6px;
 
@@ -1022,6 +1241,8 @@ body {
 
     .brand-title {
 
+        font-size: 34px;
+
         letter-spacing: 7px;
 
         padding-left: 7px;
@@ -1029,10 +1250,59 @@ body {
     }
 
 
-    .welcome-card {
+    .brand-line {
+
+        margin-top: 15px;
+
+    }
+
+
+    .main-card {
 
         padding:
             40px 25px;
+
+    }
+
+}
+
+
+@media (max-height: 650px) {
+
+    .loader {
+
+        transform:
+            scale(0.8);
+
+    }
+
+
+    .loading-text {
+
+        margin-top: 0;
+
+    }
+
+}
+
+
+/* =========================================================
+   ANIMACIÓN APP
+========================================================= */
+
+@keyframes rotateRight {
+
+    from {
+
+        transform:
+            rotate(0deg);
+
+    }
+
+    to {
+
+        transform:
+            rotate(360deg);
 
     }
 
