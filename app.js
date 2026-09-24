@@ -1,6 +1,6 @@
 /* =========================================================
-   UN DÍA MÁS
-   INTRO + REPRODUCTOR
+   UDM — UN DÍA MÁS
+   INTRO AUTOMÁTICO
 ========================================================= */
 
 
@@ -10,9 +10,7 @@
 
 const CONFIG = {
 
-    introDuration: 7500,
-
-    todayAudio: "audio/hoy.mp3"
+    introDuration: 6000
 
 };
 
@@ -21,60 +19,23 @@ const CONFIG = {
    ELEMENTOS
 ========================================================= */
 
-const splashScreen =
-    document.getElementById("splashScreen");
+const intro =
+    document.getElementById("intro");
 
-const audioScreen =
-    document.getElementById("audioScreen");
+const app =
+    document.getElementById("app");
 
+const progressCircle =
+    document.getElementById("progressCircle");
 
-const welcomePhase =
-    document.getElementById("welcomePhase");
+const loadingText =
+    document.getElementById("loadingText");
 
-const mist =
-    document.getElementById("mist");
+const logo =
+    document.getElementById("logo");
 
-const udmLogo =
-    document.getElementById("udmLogo");
-
-const logoGlow =
-    document.getElementById("logoGlow");
-
-const loadingIndicator =
-    document.getElementById("loadingIndicator");
-
-const progressBar =
-    document.getElementById("progressBar");
-
-
-/* AUDIO */
-
-const audioPlayer =
-    document.getElementById("audioPlayer");
-
-const playButton =
-    document.getElementById("playButton");
-
-const playIcon =
-    document.getElementById("playIcon");
-
-const downloadButton =
-    document.getElementById("downloadButton");
-
-const audioProgress =
-    document.getElementById("audioProgress");
-
-const audioProgressValue =
-    document.getElementById("audioProgressValue");
-
-const currentTime =
-    document.getElementById("currentTime");
-
-const duration =
-    document.getElementById("duration");
-
-const waveform =
-    document.getElementById("waveform");
+const subtitle =
+    document.getElementById("subtitle");
 
 
 /* =========================================================
@@ -83,7 +44,7 @@ const waveform =
 
 let startTime = null;
 
-let introFinished = false;
+let finished = false;
 
 
 /* =========================================================
@@ -96,8 +57,6 @@ window.addEventListener(
 
         prepareIntro();
 
-        prepareAudio();
-
         startIntro();
 
     }
@@ -105,50 +64,36 @@ window.addEventListener(
 
 
 /* =========================================================
-   PREPARAR INTRO
+   PREPARAR
 ========================================================= */
 
 function prepareIntro() {
 
-    if (welcomePhase) {
+    if (progressCircle) {
 
-        welcomePhase.style.opacity = "1";
+        progressCircle.style.strokeDasharray =
+            "848";
 
-        welcomePhase.style.transform =
-            "scale(1)";
-
-    }
-
-
-    if (mist) {
-
-        mist.classList.remove(
-            "active"
-        );
+        progressCircle.style.strokeDashoffset =
+            "848";
 
     }
 
 
-    if (udmLogo) {
+    if (app) {
 
-        udmLogo.style.opacity = "0";
+        app.style.opacity =
+            "0";
 
-        udmLogo.style.transform =
-            "scale(0.55)";
-
-    }
-
-
-    if (logoGlow) {
-
-        logoGlow.style.opacity = "0";
+        app.style.visibility =
+            "hidden";
 
     }
 
 
-    if (loadingIndicator) {
+    if (intro) {
 
-        loadingIndicator.style.opacity =
+        intro.style.opacity =
             "1";
 
     }
@@ -157,7 +102,7 @@ function prepareIntro() {
 
 
 /* =========================================================
-   INICIAR INTRO
+   INICIAR
 ========================================================= */
 
 function startIntro() {
@@ -166,7 +111,7 @@ function startIntro() {
         performance.now();
 
     requestAnimationFrame(
-        introLoop
+        animationLoop
     );
 
 }
@@ -176,7 +121,7 @@ function startIntro() {
    LOOP
 ========================================================= */
 
-function introLoop(
+function animationLoop(
     currentTime
 ) {
 
@@ -185,15 +130,19 @@ function introLoop(
         startTime;
 
 
-    const progress =
-        Math.min(
-            elapsed /
-            CONFIG.introDuration,
-            1
-        );
+    let progress =
+        elapsed /
+        CONFIG.introDuration;
 
 
-    updateIntro(
+    if (progress > 1) {
+
+        progress = 1;
+
+    }
+
+
+    updateProgress(
         progress
     );
 
@@ -201,7 +150,7 @@ function introLoop(
     if (progress < 1) {
 
         requestAnimationFrame(
-            introLoop
+            animationLoop
         );
 
     } else {
@@ -214,184 +163,57 @@ function introLoop(
 
 
 /* =========================================================
-   ANIMACIÓN
+   ACTUALIZAR CARGA
 ========================================================= */
 
-function updateIntro(
+function updateProgress(
     progress
 ) {
 
+    if (progressCircle) {
 
-    /* -----------------------------------------
-       0 - 35%
-       BIENVENIDOS
-    ----------------------------------------- */
+        const circumference =
+            848;
 
-    if (
-        progress >= 0 &&
-        progress < 0.35
-    ) {
-
-        if (welcomePhase) {
-
-            welcomePhase.style.opacity =
-                "1";
-
-            welcomePhase.style.transform =
-                "scale(1)";
-
-        }
-
-    }
-
-
-    /* -----------------------------------------
-       35 - 48%
-       DESAPARECE BIENVENIDOS
-    ----------------------------------------- */
-
-    if (
-        progress >= 0.35 &&
-        progress < 0.48
-    ) {
-
-        const p =
-            (progress - 0.35) /
-            0.13;
-
-
-        if (welcomePhase) {
-
-            welcomePhase.style.opacity =
-                String(
-                    1 - p
-                );
-
-            welcomePhase.style.transform =
-                "scale(" +
-                String(
-                    1 -
-                    (p * 0.08)
-                ) +
-                ")";
-
-        }
-
-
-        if (mist) {
-
-            mist.classList.add(
-                "active"
+        const offset =
+            circumference -
+            (
+                circumference *
+                progress
             );
 
-        }
-
-    }
-
-
-    /* -----------------------------------------
-       48 - 75%
-       APARECE UDM
-    ----------------------------------------- */
-
-    if (
-        progress >= 0.48 &&
-        progress < 0.75
-    ) {
-
-        const p =
-            (progress - 0.48) /
-            0.27;
-
-
-        if (welcomePhase) {
-
-            welcomePhase.style.opacity =
-                "0";
-
-        }
-
-
-        if (udmLogo) {
-
-            udmLogo.style.opacity =
-                String(
-                    p
-                );
-
-            udmLogo.style.transform =
-                "scale(" +
-                String(
-                    0.55 +
-                    (p * 0.45)
-                ) +
-                ")";
-
-        }
-
-
-        if (logoGlow) {
-
-            logoGlow.style.opacity =
-                String(
-                    p * 0.8
-                );
-
-        }
-
-    }
-
-
-    /* -----------------------------------------
-       75 - 100%
-       UDM SE CONSOLIDA
-    ----------------------------------------- */
-
-    if (
-        progress >= 0.75
-    ) {
-
-        if (welcomePhase) {
-
-            welcomePhase.style.opacity =
-                "0";
-
-        }
-
-
-        if (udmLogo) {
-
-            udmLogo.style.opacity =
-                "1";
-
-            udmLogo.style.transform =
-                "scale(1)";
-
-        }
-
-
-        if (logoGlow) {
-
-            logoGlow.style.opacity =
-                "1";
-
-            logoGlow.classList.add(
-                "active"
-            );
-
-        }
-
-    }
-
-
-    /* BARRA */
-
-    if (progressBar) {
-
-        progressBar.style.width =
+        progressCircle.style.strokeDashoffset =
             String(
-                progress * 100
-            ) + "%";
+                offset
+            );
+
+    }
+
+
+    /*
+       Pequeños cambios de estado
+       para darle sensación de
+       arranque tecnológico.
+    */
+
+    if (
+        loadingText &&
+        progress > 0.75
+    ) {
+
+        loadingText.textContent =
+            "LISTO";
+
+    }
+
+
+    if (
+        logo &&
+        progress > 0.85
+    ) {
+
+        logo.style.textShadow =
+            "0 0 25px rgba(255,215,100,0.9)";
 
     }
 
@@ -404,419 +226,96 @@ function updateIntro(
 
 function finishIntro() {
 
-    if (introFinished) {
+    if (finished) {
+
+        return;
+
+    }
+
+    finished =
+        true;
+
+
+    /*
+       Pequeño destello final.
+    */
+
+    if (logo) {
+
+        logo.style.transform =
+            "scale(1.08)";
+
+        logo.style.transition =
+            "transform 0.4s ease";
+
+    }
+
+
+    /*
+       Esperamos un pequeño momento
+       antes de entrar a la app.
+    */
+
+    setTimeout(
+        function () {
+
+            hideIntro();
+
+        },
+        450
+    );
+
+}
+
+
+/* =========================================================
+   OCULTAR INTRO
+========================================================= */
+
+function hideIntro() {
+
+    if (!intro) {
 
         return;
 
     }
 
 
-    introFinished =
-        true;
+    intro.style.transition =
+        "opacity 1.2s ease";
 
 
-    if (loadingIndicator) {
-
-        loadingIndicator.style.opacity =
-            "0";
-
-    }
+    intro.style.opacity =
+        "0";
 
 
     setTimeout(
         function () {
 
-            if (!splashScreen) {
+            intro.style.display =
+                "none";
 
-                return;
+
+            if (app) {
+
+                app.style.visibility =
+                    "visible";
+
+                app.style.opacity =
+                    "1";
+
+                app.style.transition =
+                    "opacity 0.8s ease";
 
             }
 
 
-            splashScreen.style.transition =
-                "opacity 1s ease";
+            document.body.style.overflow =
+                "auto";
 
-
-            splashScreen.style.opacity =
-                "0";
-
-
-            setTimeout(
-                function () {
-
-                    splashScreen.style.display =
-                        "none";
-
-
-                    if (audioScreen) {
-
-                        audioScreen.style.display =
-                            "block";
-
-                    }
-
-
-                    window.scrollTo(
-                        0,
-                        0
-                    );
-
-                },
-                1000
-            );
 
         },
-        500
-    );
-
-}
-
-
-/* =========================================================
-   AUDIO
-========================================================= */
-
-function prepareAudio() {
-
-    if (!audioPlayer) {
-
-        return;
-
-    }
-
-
-    audioPlayer.src =
-        CONFIG.todayAudio;
-
-    audioPlayer.preload =
-        "metadata";
-
-    audioPlayer.load();
-
-}
-
-
-/* =========================================================
-   PLAY / PAUSE
-========================================================= */
-
-if (playButton) {
-
-    playButton.addEventListener(
-        "click",
-        function () {
-
-            if (!audioPlayer) {
-
-                return;
-
-            }
-
-
-            if (audioPlayer.paused) {
-
-                audioPlayer.play();
-
-            } else {
-
-                audioPlayer.pause();
-
-            }
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   EVENTOS AUDIO
-========================================================= */
-
-if (audioPlayer) {
-
-
-    audioPlayer.addEventListener(
-        "play",
-        function () {
-
-            updatePlayButton(true);
-
-            if (waveform) {
-
-                waveform.classList.add(
-                    "is-playing"
-                );
-
-            }
-
-        }
-    );
-
-
-    audioPlayer.addEventListener(
-        "pause",
-        function () {
-
-            updatePlayButton(false);
-
-            if (waveform) {
-
-                waveform.classList.remove(
-                    "is-playing"
-                );
-
-            }
-
-        }
-    );
-
-
-    audioPlayer.addEventListener(
-        "loadedmetadata",
-        function () {
-
-            if (duration) {
-
-                duration.textContent =
-                    formatTime(
-                        audioPlayer.duration
-                    );
-
-            }
-
-        }
-    );
-
-
-    audioPlayer.addEventListener(
-        "timeupdate",
-        function () {
-
-            updateAudioProgress();
-
-        }
-    );
-
-
-    audioPlayer.addEventListener(
-        "ended",
-        function () {
-
-            updatePlayButton(false);
-
-            if (waveform) {
-
-                waveform.classList.remove(
-                    "is-playing"
-                );
-
-            }
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   BOTÓN
-========================================================= */
-
-function updatePlayButton(
-    playing
-) {
-
-    if (playIcon) {
-
-        playIcon.textContent =
-            playing
-                ? "Ⅱ"
-                : "▶";
-
-    }
-
-
-    if (playButton) {
-
-        playButton.setAttribute(
-            "aria-label",
-            playing
-                ? "Pausar mensaje"
-                : "Reproducir mensaje"
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   PROGRESO
-========================================================= */
-
-function updateAudioProgress() {
-
-    if (!audioPlayer) {
-
-        return;
-
-    }
-
-
-    const current =
-        audioPlayer.currentTime || 0;
-
-
-    const total =
-        audioPlayer.duration || 0;
-
-
-    if (currentTime) {
-
-        currentTime.textContent =
-            formatTime(
-                current
-            );
-
-    }
-
-
-    if (
-        total > 0 &&
-        audioProgressValue
-    ) {
-
-        audioProgressValue.style.width =
-            String(
-                (current / total) * 100
-            ) + "%";
-
-    }
-
-}
-
-
-/* =========================================================
-   CLIC EN BARRA
-========================================================= */
-
-if (audioProgress) {
-
-    audioProgress.addEventListener(
-        "click",
-        function (event) {
-
-            if (
-                !audioPlayer ||
-                !audioPlayer.duration
-            ) {
-
-                return;
-
-            }
-
-
-            const rect =
-                audioProgress.getBoundingClientRect();
-
-
-            const position =
-                event.clientX -
-                rect.left;
-
-
-            const percentage =
-                position /
-                rect.width;
-
-
-            audioPlayer.currentTime =
-                audioPlayer.duration *
-                percentage;
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   DESCARGA
-========================================================= */
-
-if (downloadButton) {
-
-    downloadButton.addEventListener(
-        "click",
-        function () {
-
-            const link =
-                document.createElement(
-                    "a"
-                );
-
-
-            link.href =
-                CONFIG.todayAudio;
-
-
-            link.download =
-                "un-dia-mas-hoy.mp3";
-
-
-            document.body.appendChild(
-                link
-            );
-
-
-            link.click();
-
-
-            document.body.removeChild(
-                link
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   FORMATO TIEMPO
-========================================================= */
-
-function formatTime(
-    seconds
-) {
-
-    if (
-        !seconds ||
-        !isFinite(seconds)
-    ) {
-
-        return "00:00";
-
-    }
-
-
-    const minutes =
-        Math.floor(
-            seconds / 60
-        );
-
-
-    const secs =
-        Math.floor(
-            seconds % 60
-        );
-
-
-    return (
-        String(minutes).padStart(2, "0") +
-        ":" +
-        String(secs).padStart(2, "0")
+        1200
     );
 
 }
