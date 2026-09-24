@@ -1,8 +1,3 @@
-/* =====================================================
-   UN DÍA MÁS
-   Animación de entrada - 15 segundos
-===================================================== */
-
 const TOTAL_TIME = 15000;
 
 const splashScreen = document.getElementById("splashScreen");
@@ -11,298 +6,399 @@ const audioScreen = document.getElementById("audioScreen");
 const welcomeText = document.getElementById("welcomeText");
 const udmLogo = document.getElementById("udmLogo");
 const logoGlow = document.getElementById("logoGlow");
-
 const introMessage = document.getElementById("introMessage");
-const enterButton = document.getElementById("enterButton");
 
+const enterButton = document.getElementById("enterButton");
+const loadingIndicator = document.getElementById("loadingIndicator");
 const progressBar = document.getElementById("progressBar");
 const timer = document.getElementById("timer");
-const loadingIndicator = document.getElementById("loadingIndicator");
 
 const letters = document.querySelectorAll(".letter");
 
+let startTime = null;
+let finished = false;
 
-/* =====================================================
+
+/* ==============================
    INICIO
-===================================================== */
+================================ */
 
-let startTime = performance.now();
+window.addEventListener("load", () => {
 
-function animationLoop(currentTime) {
+    // Estado inicial
+    welcomeText.style.opacity = "1";
+    welcomeText.style.transform = "scale(1)";
 
-  const elapsed = currentTime - startTime;
+    udmLogo.style.opacity = "0";
+    udmLogo.style.transform = "scale(0.6)";
 
-  const progress = Math.min(
-    elapsed / TOTAL_TIME,
-    1
-  );
+    logoGlow.style.opacity = "0";
 
-  updateProgress(progress);
+    introMessage.style.opacity = "0";
+    introMessage.style.transform = "translateY(20px)";
 
-  animateSequence(progress);
+    enterButton.style.opacity = "0";
+    enterButton.style.transform = "translateY(20px)";
+    enterButton.style.pointerEvents = "none";
 
-  if (progress < 1) {
+    loadingIndicator.style.opacity = "1";
+
+    startTime = performance.now();
 
     requestAnimationFrame(animationLoop);
+});
 
-  } else {
 
-    finishIntro();
+/* ==============================
+   ANIMACIÓN PRINCIPAL
+================================ */
 
-  }
+function animationLoop(now) {
 
+    if (!startTime) {
+        startTime = now;
+    }
+
+    const elapsed = now - startTime;
+
+    const progress = Math.min(
+        elapsed / TOTAL_TIME,
+        1
+    );
+
+    updateProgress(progress);
+
+    animateSequence(progress);
+
+    if (progress < 1) {
+
+        requestAnimationFrame(animationLoop);
+
+    } else {
+
+        finishIntro();
+
+    }
 }
 
-requestAnimationFrame(animationLoop);
 
-
-/* =====================================================
-   BARRA DE PROGRESO
-===================================================== */
+/* ==============================
+   PROGRESO
+================================ */
 
 function updateProgress(progress) {
 
-  progressBar.style.width =
-    `${progress * 100}%`;
+    if (progressBar) {
 
-  const remaining =
-    Math.ceil(
-      TOTAL_TIME / 1000 -
-      progress * TOTAL_TIME / 1000
-    );
+        progressBar.style.width =
+            `${progress * 100}%`;
 
-  timer.textContent =
-    remaining > 0
-      ? remaining
-      : "Listo";
+    }
 
+    if (timer) {
+
+        const remaining =
+            Math.ceil(
+                15 - (progress * 15)
+            );
+
+        timer.textContent =
+            remaining > 0
+                ? remaining
+                : "Listo";
+    }
 }
 
 
-/* =====================================================
-   SECUENCIA DE ANIMACIÓN
-===================================================== */
+/* ==============================
+   SECUENCIA
+================================ */
 
 function animateSequence(progress) {
 
-  /*
-    0.00 - 0.30
-    Aparece "Bienvenidos a Un Día Más"
-  */
 
-  if (progress < 0.30) {
+    /* --------------------------------
+       0% - 30%
+       BIENVENIDOS
+    -------------------------------- */
 
-    welcomeText.style.opacity = "1";
+    if (progress < 0.30) {
 
-  }
+        welcomeText.style.opacity = "1";
 
+        welcomeText.style.transform =
+            "scale(1) translateY(0)";
 
-  /*
-    0.30 - 0.55
-    Las letras empiezan a desaparecer
-  */
-
-  if (progress >= 0.30 && progress < 0.55) {
-
-    const disappearanceProgress =
-      (progress - 0.30) / 0.25;
-
-    letters.forEach((letter, index) => {
-
-      /*
-        Dejamos U, D y M.
-      */
-
-      const character =
-        letter.dataset.letter;
-
-      const keep =
-        character === "U" ||
-        character === "D" ||
-        character === "M";
-
-      if (keep) {
-
-        letter.style.opacity = "1";
-
-      } else {
-
-        const delay =
-          index * 0.06;
-
-        const local =
-          Math.max(
-            0,
-            Math.min(
-              1,
-              (disappearanceProgress - delay) / 0.35
-            )
-          );
-
-        letter.style.opacity =
-          `${1 - local}`;
-
-        letter.style.transform =
-          `translateY(${-20 * local}px) scale(${1 - local * 0.15})`;
-
-      }
-
-    });
-
-  }
+    }
 
 
-  /*
-    0.55 - 0.70
-    UDM se separa del texto
-  */
+    /* --------------------------------
+       30% - 55%
+       DESAPARECEN LAS LETRAS
+    -------------------------------- */
 
-  if (progress >= 0.55 && progress < 0.70) {
+    if (
+        progress >= 0.30 &&
+        progress < 0.55
+    ) {
 
-    welcomeText.style.opacity = "0";
+        const p =
+            (progress - 0.30) / 0.25;
 
-    welcomeText.style.transform =
-      "scale(0.8) translateY(-20px)";
+        letters.forEach((letter, index) => {
 
-    udmLogo.style.opacity = "1";
+            const character =
+                letter.dataset.letter;
 
-    udmLogo.style.transform =
-      "scale(1)";
+            // U, D y M permanecen
+            const keep =
+                character === "U" ||
+                character === "D" ||
+                character === "M";
 
-  }
+            if (keep) {
 
+                letter.style.opacity = "1";
 
-  /*
-    0.70 - 0.82
-    Las letras U D M se juntan
-  */
+                letter.style.transform =
+                    "translateY(0) scale(1)";
 
-  if (progress >= 0.70 && progress < 0.82) {
+            } else {
 
-    const p =
-      (progress - 0.70) / 0.12;
+                // desaparición progresiva
+                const delay =
+                    index * 0.045;
 
-    udmLogo.style.opacity = "1";
+                const local =
+                    Math.max(
+                        0,
+                        Math.min(
+                            1,
+                            (p - delay) / 0.65
+                        )
+                    );
 
-    udmLogo.style.transform =
-      `scale(${1 + p * 0.08})`;
+                letter.style.opacity =
+                    `${1 - local}`;
 
-    const u =
-      document.querySelector(".udm-u");
+                letter.style.transform =
+                    `
+                    translateY(${-30 * local}px)
+                    scale(${1 - local * 0.2})
+                    `;
+            }
 
-    const d =
-      document.querySelector(".udm-d");
+        });
 
-    const m =
-      document.querySelector(".udm-m");
-
-    u.style.transform =
-      `translateX(${30 - p * 30}px)`;
-
-    d.style.transform =
-      `translateX(0)`;
-
-    m.style.transform =
-      `translateX(${-30 + p * 30}px)`;
-
-  }
-
-
-  /*
-    0.82 - 0.92
-    Brillo
-  */
-
-  if (progress >= 0.82 && progress < 0.92) {
-
-    logoGlow.style.opacity = "1";
-
-    logoGlow.style.animation =
-      "logoGlow 1.5s ease forwards";
-
-    udmLogo.style.transform =
-      "scale(1.08)";
-
-  }
+    }
 
 
-  /*
-    0.92 - 1.00
-    Preparar botón
-  */
+    /* --------------------------------
+       55% - 70%
+       TRANSICIÓN AL LOGO
+    -------------------------------- */
 
-  if (progress >= 0.92) {
+    if (
+        progress >= 0.55 &&
+        progress < 0.70
+    ) {
 
-    udmLogo.style.transform =
-      "scale(1)";
+        const p =
+            (progress - 0.55) / 0.15;
 
-    introMessage.style.opacity = "1";
+        welcomeText.style.opacity =
+            `${1 - p}`;
 
-    introMessage.style.transform =
-      "translateY(0)";
+        welcomeText.style.transform =
+            `
+            scale(${1 - p * 0.2})
+            translateY(${-20 * p}px)
+            `;
 
-  }
+        udmLogo.style.opacity =
+            `${p}`;
 
+        udmLogo.style.transform =
+            `
+            scale(${0.65 + p * 0.35})
+            `;
+    }
+
+
+    /* --------------------------------
+       70% - 82%
+       U D M SE JUNTAN
+    -------------------------------- */
+
+    if (
+        progress >= 0.70 &&
+        progress < 0.82
+    ) {
+
+        const p =
+            (progress - 0.70) / 0.12;
+
+        udmLogo.style.opacity = "1";
+
+        udmLogo.style.transform =
+            `
+            scale(${1 + p * 0.08})
+            `;
+
+        const u =
+            document.querySelector(".udm-u");
+
+        const d =
+            document.querySelector(".udm-d");
+
+        const m =
+            document.querySelector(".udm-m");
+
+        if (u) {
+
+            u.style.transform =
+                `translateX(${25 - p * 25}px)`;
+
+        }
+
+        if (d) {
+
+            d.style.transform =
+                "translateX(0)";
+
+        }
+
+        if (m) {
+
+            m.style.transform =
+                `translateX(${-25 + p * 25}px)`;
+
+        }
+    }
+
+
+    /* --------------------------------
+       82% - 92%
+       BRILLO
+    -------------------------------- */
+
+    if (
+        progress >= 0.82 &&
+        progress < 0.92
+    ) {
+
+        udmLogo.style.opacity = "1";
+
+        udmLogo.style.transform =
+            "scale(1.08)";
+
+        logoGlow.style.opacity = "1";
+
+    }
+
+
+    /* --------------------------------
+       92% - 100%
+       MENSAJE
+    -------------------------------- */
+
+    if (progress >= 0.92) {
+
+        udmLogo.style.opacity = "1";
+
+        udmLogo.style.transform =
+            "scale(1)";
+
+        logoGlow.style.opacity = "1";
+
+        introMessage.style.opacity = "1";
+
+        introMessage.style.transform =
+            "translateY(0)";
+    }
 }
 
 
-/* =====================================================
+/* ==============================
    FINAL
-===================================================== */
+================================ */
 
 function finishIntro() {
 
-  progressBar.style.width = "100%";
+    if (finished) return;
 
-  timer.textContent = "Listo";
+    finished = true;
 
-  loadingIndicator.style.opacity = "0";
+    if (progressBar) {
 
-  enterButton.style.opacity = "1";
+        progressBar.style.width = "100%";
 
-  enterButton.style.transform =
-    "translateY(0)";
+    }
 
-  enterButton.style.pointerEvents =
-    "auto";
+    if (timer) {
 
+        timer.textContent = "Listo";
+
+    }
+
+    if (loadingIndicator) {
+
+        loadingIndicator.style.opacity = "0";
+
+    }
+
+    // Mostrar botón
+    setTimeout(() => {
+
+        enterButton.style.opacity = "1";
+
+        enterButton.style.transform =
+            "translateY(0)";
+
+        enterButton.style.pointerEvents =
+            "auto";
+
+    }, 300);
 }
 
 
-/* =====================================================
-   ENTRAR
-===================================================== */
+/* ==============================
+   BOTÓN ENTRAR
+================================ */
 
 enterButton.addEventListener(
-  "click",
-  enterApplication
+    "click",
+    enterApplication
 );
 
 
 function enterApplication() {
 
-  enterButton.style.transform =
-    "scale(0.95)";
-
-  setTimeout(() => {
-
-    splashScreen.style.opacity = "0";
-
-    splashScreen.style.transition =
-      "opacity 0.8s ease";
+    enterButton.style.transform =
+        "scale(0.95)";
 
     setTimeout(() => {
 
-      splashScreen.style.display =
-        "none";
+        splashScreen.style.transition =
+            "opacity 0.8s ease";
 
-      audioScreen.style.display =
-        "block";
+        splashScreen.style.opacity =
+            "0";
 
-      window.scrollTo(0, 0);
+        setTimeout(() => {
 
-    }, 800);
+            splashScreen.style.display =
+                "none";
 
-  }, 150);
+            audioScreen.style.display =
+                "block";
 
+            window.scrollTo(
+                0,
+                0
+            );
+
+        }, 800);
+
+    }, 150);
 }
