@@ -436,10 +436,21 @@ function cargarAudioAyer() {
       "metadata";
 
 
-    audioAyer.addEventListener(
-      "loadedmetadata",
-      actualizarDuracionAyer
-    );
+  audioAyer.addEventListener(
+  "loadedmetadata",
+  () => {
+
+    if (yesterdayDuration) {
+
+      yesterdayDuration.textContent =
+        formatearTiempo(
+          audioAyer.duration
+        );
+
+    }
+
+  }
+);
 
 
     audioAyer.addEventListener(
