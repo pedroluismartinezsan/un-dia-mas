@@ -1,972 +1,615 @@
+```javascript
 /* =========================================================
    UN DÍA MÁS
-   SISTEMA DE INICIO + REPRODUCTOR DE AUDIO
-========================================================= */
+   APP.JS
+   Reproductor principal
+   ========================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    /* =====================================================
+       CONFIGURACIÓN
+       ===================================================== */
+
+    const AUDIO_HOY = "audio/hoy.mp3";
+    const AUDIO_AYER = "audio/ayer.mp3";
 
 
-/* =========================================================
-   CONFIGURACIÓN
-========================================================= */
+    /* =====================================================
+       ELEMENTOS
+       ===================================================== */
 
-var TIEMPO_CARGA = 5000;
+    const audio = document.getElementById("audioPlayer");
 
+    const playButton = document.getElementById("playButton");
+    const playIcon = document.getElementById("playIcon");
 
-/*
-   AUDIO DE PRUEBA
+    const rewindButton = document.getElementById("rewindButton");
+    const forwardButton = document.getElementById("forwardButton");
 
-   Cambia esta dirección por la ubicación real
-   de tu archivo MP3 cuando lo tengas.
+    const progress = document.getElementById("progress");
+    const progressBar = document.querySelector(".progress-bar");
 
-   Por ahora puedes colocar un MP3 dentro de tu
-   proyecto y escribir aquí su nombre.
-*/
-var AUDIO_HOY = "audio/hoy.mp3";
+    const currentTime = document.getElementById("currentTime");
+    const duration = document.getElementById("duration");
 
+    const downloadButton =
+        document.getElementById("downloadButton");
 
-/* =========================================================
-   ELEMENTOS DEL INTRO
-========================================================= */
+    const todayTitle =
+        document.getElementById("todayTitle");
 
-var intro = document.getElementById("intro");
-var app = document.getElementById("app");
-var loadingText = document.getElementById("loadingText");
+    const todayDescription =
+        document.getElementById("todayDescription");
 
+    const currentDate =
+        document.getElementById("currentDate");
 
-/* =========================================================
-   ELEMENTOS DEL REPRODUCTOR
-========================================================= */
-
-var audioPlayer = document.getElementById("audioPlayer");
-
-var playButton = document.getElementById("playButton");
-var mainPlayButton = document.getElementById("mainPlayButton");
-var mainPlayIcon = document.getElementById("mainPlayIcon");
-
-var backButton = document.getElementById("backButton");
-var forwardButton = document.getElementById("forwardButton");
-
-var progressBar = document.getElementById("progressBar");
-var progressFill = document.getElementById("progressFill");
-var progressDot = document.getElementById("progressDot");
-
-var currentTimeElement = document.getElementById("currentTime");
-var durationElement = document.getElementById("duration");
-
-var downloadButton = document.getElementById("downloadButton");
-
-var audioTitle = document.getElementById("audioTitle");
-var audioDescription = document.getElementById("audioDescription");
-
-var audioPlayerContainer =
-    document.querySelector(".audio-player");
-
-var audioVisualizer =
-    document.querySelector(".audio-visualizer");
+    const audioCard =
+        document.querySelector(".today-card");
 
 
-/* =========================================================
-   INICIO
-========================================================= */
+    /* =====================================================
+       ELEMENTOS DE AYER
+       ===================================================== */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
+    const yesterdayAudio =
+        new Audio();
 
-        console.log(
-            "UN DÍA MÁS: aplicación cargada"
+    const yesterdayPlay =
+        document.getElementById("yesterdayPlay");
+
+    const yesterdayProgress =
+        document.getElementById("yesterdayProgress");
+
+    const yesterdayDuration =
+        document.getElementById("yesterdayDuration");
+
+    const yesterdayDownload =
+        document.getElementById("yesterdayDownload");
+
+    const yesterdayTitle =
+        document.getElementById("yesterdayTitle");
+
+    const yesterdayDate =
+        document.getElementById("yesterdayDate");
+
+
+    /* =====================================================
+       CARGAR AUDIO DE HOY
+       ===================================================== */
+
+    audio.src = AUDIO_HOY;
+
+    audio.load();
+
+    downloadButton.href = AUDIO_HOY;
+
+
+    /* =====================================================
+       CARGAR AUDIO DE AYER
+       ===================================================== */
+
+    yesterdayAudio.src = AUDIO_AYER;
+
+    yesterdayAudio.preload = "metadata";
+
+    yesterdayDownload.href = AUDIO_AYER;
+
+
+    /* =====================================================
+       FECHAS
+       ===================================================== */
+
+    function actualizarFechas() {
+
+        const ahora = new Date();
+
+        const opcionesHoy = {
+            weekday: "long",
+            day: "numeric",
+            month: "long"
+        };
+
+        const opcionesAyer = {
+            weekday: "short",
+            day: "numeric",
+            month: "short"
+        };
+
+        const hoyTexto =
+            ahora.toLocaleDateString(
+                "es-CO",
+                opcionesHoy
+            );
+
+        const ayer = new Date(ahora);
+
+        ayer.setDate(
+            ayer.getDate() - 1
         );
 
-        iniciarUDM();
-        prepararReproductor();
-
-    }
-);
-
-
-/* =========================================================
-   INTRO DE 5 SEGUNDOS
-========================================================= */
-
-function iniciarUDM() {
-
-    if (!intro || !app) {
-
-        console.error(
-            "UDM: no se encontraron #intro o #app"
-        );
-
-        return;
-    }
-
-
-    /*
-       La aplicación empieza oculta
-    */
-
-    app.style.opacity = "0";
-
-
-    /*
-       Esperamos 5 segundos
-    */
-
-    setTimeout(
-        function () {
-
-            console.log(
-                "UDM: mostrando nombre"
+        const ayerTexto =
+            ayer.toLocaleDateString(
+                "es-CO",
+                opcionesAyer
             );
 
 
-            if (loadingText) {
+        currentDate.textContent =
+            hoyTexto.toUpperCase();
 
-                loadingText.style.opacity = "0";
-
-            }
-
-
-            intro.classList.add(
-                "reveal"
-            );
-
-        },
-        TIEMPO_CARGA
-    );
+        yesterdayDate.textContent =
+            ayerTexto;
 
 
-    /*
-       Después de mostrar el nombre
-       entramos a la aplicación.
-    */
+        /* Títulos temporales */
 
-    setTimeout(
-        function () {
+        todayTitle.textContent =
+            "Un día más";
 
-            console.log(
-                "UDM: entrando a la aplicación"
-            );
+        todayDescription.textContent =
+            "Tómate un momento. Respira. Escucha.";
 
-
-            intro.style.transition =
-                "opacity 1s ease";
-
-            app.style.transition =
-                "opacity 1s ease";
+        yesterdayTitle.textContent =
+            "Audio de ayer";
+    }
 
 
-            intro.style.opacity =
-                "0";
-
-            app.style.opacity =
-                "1";
+    actualizarFechas();
 
 
-            setTimeout(
-                function () {
+    /* =====================================================
+       FORMATO DE TIEMPO
+       ===================================================== */
 
-                    intro.style.display =
-                        "none";
+    function formatTime(seconds) {
 
-                    document.body.style.overflow =
-                        "auto";
+        if (!Number.isFinite(seconds)) {
+            return "0:00";
+        }
 
+        const minutes =
+            Math.floor(seconds / 60);
 
-                    console.log(
-                        "UDM: aplicación visible"
-                    );
+        const secs =
+            Math.floor(seconds % 60);
 
-                },
-                1000
-            );
-
-        },
-        8000
-    );
-
-}
-
-
-/* =========================================================
-   PREPARAR REPRODUCTOR
-========================================================= */
-
-function prepararReproductor() {
-
-    if (!audioPlayer) {
-
-        console.error(
-            "UDM: no existe #audioPlayer"
+        return (
+            minutes +
+            ":" +
+            secs.toString().padStart(2, "0")
         );
-
-        return;
     }
 
 
-    /*
-       Cargar audio de hoy
-    */
+    /* =====================================================
+       REPRODUCIR / PAUSAR
+       ===================================================== */
 
-    audioPlayer.src = AUDIO_HOY;
+    playButton.addEventListener(
+        "click",
+        async () => {
 
-    audioPlayer.load();
+            try {
 
+                if (audio.paused) {
 
-    /*
-       Información inicial
-    */
+                    /* Detener audio de ayer */
 
-    if (audioTitle) {
+                    if (!yesterdayAudio.paused) {
+                        yesterdayAudio.pause();
+                    }
 
-        audioTitle.textContent =
-            "Mensaje de hoy";
 
-    }
+                    await audio.play();
 
+                } else {
 
-    if (audioDescription) {
+                    audio.pause();
 
-        audioDescription.textContent =
-            "Un mensaje para este día.";
+                }
 
-    }
-
-
-    /*
-       Eventos
-    */
-
-    audioPlayer.addEventListener(
-        "loadedmetadata",
-        actualizarDuracion
-    );
-
-
-    audioPlayer.addEventListener(
-        "timeupdate",
-        actualizarProgreso
-    );
-
-
-    audioPlayer.addEventListener(
-        "play",
-        reproductorIniciado
-    );
-
-
-    audioPlayer.addEventListener(
-        "pause",
-        reproductorPausado
-    );
-
-
-    audioPlayer.addEventListener(
-        "ended",
-        reproductorTerminado
-    );
-
-
-    /*
-       Botón principal grande
-    */
-
-    if (playButton) {
-
-        playButton.addEventListener(
-            "click",
-            alternarReproduccion
-        );
-
-    }
-
-
-    /*
-       Botón Play inferior
-    */
-
-    if (mainPlayButton) {
-
-        mainPlayButton.addEventListener(
-            "click",
-            alternarReproduccion
-        );
-
-    }
-
-
-    /*
-       Retroceder 15 segundos
-    */
-
-    if (backButton) {
-
-        backButton.addEventListener(
-            "click",
-            function () {
-
-                cambiarTiempo(
-                    -15
-                );
-
-            }
-        );
-
-    }
-
-
-    /*
-       Adelantar 15 segundos
-    */
-
-    if (forwardButton) {
-
-        forwardButton.addEventListener(
-            "click",
-            function () {
-
-                cambiarTiempo(
-                    15
-                );
-
-            }
-        );
-
-    }
-
-
-    /*
-       Barra de progreso
-    */
-
-    if (progressBar) {
-
-        progressBar.addEventListener(
-            "click",
-            buscarEnAudio
-        );
-
-    }
-
-
-    /*
-       Descargar audio
-    */
-
-    if (downloadButton) {
-
-        downloadButton.addEventListener(
-            "click",
-            descargarAudio
-        );
-
-    }
-
-
-    console.log(
-        "UDM: reproductor preparado"
-    );
-
-}
-
-
-/* =========================================================
-   PLAY / PAUSA
-========================================================= */
-
-function alternarReproduccion() {
-
-    if (!audioPlayer) {
-        return;
-    }
-
-
-    if (audioPlayer.paused) {
-
-        reproducirAudio();
-
-    } else {
-
-        pausarAudio();
-
-    }
-
-}
-
-
-/* =========================================================
-   REPRODUCIR
-========================================================= */
-
-function reproducirAudio() {
-
-    var promesa =
-        audioPlayer.play();
-
-
-    /*
-       Algunos navegadores devuelven
-       una promesa al intentar reproducir.
-    */
-
-    if (promesa !== undefined) {
-
-        promesa.catch(
-            function (error) {
+            } catch (error) {
 
                 console.error(
-                    "UDM: no se pudo reproducir el audio",
+                    "No se pudo reproducir el audio:",
                     error
                 );
 
             }
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   PAUSAR
-========================================================= */
-
-function pausarAudio() {
-
-    if (!audioPlayer) {
-        return;
-    }
-
-    audioPlayer.pause();
-
-}
-
-
-/* =========================================================
-   EVENTO PLAY
-========================================================= */
-
-function reproductorIniciado() {
-
-    console.log(
-        "UDM: reproduciendo audio"
-    );
-
-
-    actualizarIcono(
-        true
-    );
-
-
-    if (audioPlayerContainer) {
-
-        audioPlayerContainer.classList.add(
-            "is-playing"
-        );
-
-    }
-
-
-    if (audioVisualizer) {
-
-        audioVisualizer.classList.add(
-            "is-playing"
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   EVENTO PAUSA
-========================================================= */
-
-function reproductorPausado() {
-
-    console.log(
-        "UDM: audio pausado"
-    );
-
-
-    actualizarIcono(
-        false
-    );
-
-
-    if (audioPlayerContainer) {
-
-        audioPlayerContainer.classList.remove(
-            "is-playing"
-        );
-
-    }
-
-
-    if (audioVisualizer) {
-
-        audioVisualizer.classList.remove(
-            "is-playing"
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   AUDIO TERMINADO
-========================================================= */
-
-function reproductorTerminado() {
-
-    console.log(
-        "UDM: audio terminado"
-    );
-
-
-    actualizarIcono(
-        false
-    );
-
-
-    if (audioPlayerContainer) {
-
-        audioPlayerContainer.classList.remove(
-            "is-playing"
-        );
-
-    }
-
-
-    if (audioVisualizer) {
-
-        audioVisualizer.classList.remove(
-            "is-playing"
-        );
-
-    }
-
-
-    if (progressFill) {
-
-        progressFill.style.width =
-            "100%";
-
-    }
-
-
-    if (progressDot) {
-
-        progressDot.style.left =
-            "100%";
-
-    }
-
-}
-
-
-/* =========================================================
-   CAMBIAR ICONO PLAY / PAUSA
-========================================================= */
-
-function actualizarIcono(
-    reproduciendo
-) {
-
-    if (!mainPlayIcon) {
-        return;
-    }
-
-
-    if (reproduciendo) {
-
-        /*
-           Icono de pausa
-        */
-
-        mainPlayIcon.textContent =
-            "❚❚";
-
-    } else {
-
-        /*
-           Icono de Play
-        */
-
-        mainPlayIcon.textContent =
-            "▶";
-
-    }
-
-}
-
-
-/* =========================================================
-   DURACIÓN
-========================================================= */
-
-function actualizarDuracion() {
-
-    if (!audioPlayer) {
-        return;
-    }
-
-
-    if (!isFinite(audioPlayer.duration)) {
-        return;
-    }
-
-
-    if (durationElement) {
-
-        durationElement.textContent =
-            formatearTiempo(
-                audioPlayer.duration
-            );
-
-    }
-
-
-    actualizarProgreso();
-
-}
-
-
-/* =========================================================
-   ACTUALIZAR PROGRESO
-========================================================= */
-
-function actualizarProgreso() {
-
-    if (!audioPlayer) {
-        return;
-    }
-
-
-    var duracion =
-        audioPlayer.duration;
-
-    var actual =
-        audioPlayer.currentTime;
-
-
-    if (!isFinite(duracion) || duracion <= 0) {
-        return;
-    }
-
-
-    var porcentaje =
-        (actual / duracion) * 100;
-
-
-    if (progressFill) {
-
-        progressFill.style.width =
-            porcentaje + "%";
-
-    }
-
-
-    if (progressDot) {
-
-        progressDot.style.left =
-            porcentaje + "%";
-
-    }
-
-
-    if (currentTimeElement) {
-
-        currentTimeElement.textContent =
-            formatearTiempo(
-                actual
-            );
-
-    }
-
-}
-
-
-/* =========================================================
-   BUSCAR EN LA BARRA
-========================================================= */
-
-function buscarEnAudio(
-    evento
-) {
-
-    if (!audioPlayer || !progressBar) {
-        return;
-    }
-
-
-    if (!isFinite(audioPlayer.duration)) {
-        return;
-    }
-
-
-    var rect =
-        progressBar.getBoundingClientRect();
-
-
-    var posicion =
-        evento.clientX - rect.left;
-
-
-    var porcentaje =
-        posicion / rect.width;
-
-
-    if (porcentaje < 0) {
-        porcentaje = 0;
-    }
-
-
-    if (porcentaje > 1) {
-        porcentaje = 1;
-    }
-
-
-    audioPlayer.currentTime =
-        porcentaje *
-        audioPlayer.duration;
-
-}
-
-
-/* =========================================================
-   ADELANTAR / RETROCEDER
-========================================================= */
-
-function cambiarTiempo(
-    segundos
-) {
-
-    if (!audioPlayer) {
-        return;
-    }
-
-
-    if (!isFinite(audioPlayer.duration)) {
-        return;
-    }
-
-
-    var nuevoTiempo =
-        audioPlayer.currentTime +
-        segundos;
-
-
-    if (nuevoTiempo < 0) {
-
-        nuevoTiempo = 0;
-
-    }
-
-
-    if (
-        nuevoTiempo >
-        audioPlayer.duration
-    ) {
-
-        nuevoTiempo =
-            audioPlayer.duration;
-
-    }
-
-
-    audioPlayer.currentTime =
-        nuevoTiempo;
-
-}
-
-
-/* =========================================================
-   FORMATO DE TIEMPO
-========================================================= */
-
-function formatearTiempo(
-    segundos
-) {
-
-    if (!isFinite(segundos)) {
-
-        return "0:00";
-
-    }
-
-
-    segundos =
-        Math.floor(
-            segundos
-        );
-
-
-    var minutos =
-        Math.floor(
-            segundos / 60
-        );
-
-
-    var segundosRestantes =
-        segundos % 60;
-
-
-    if (segundosRestantes < 10) {
-
-        segundosRestantes =
-            "0" +
-            segundosRestantes;
-
-    }
-
-
-    return (
-        minutos +
-        ":" +
-        segundosRestantes
-    );
-
-}
-
-
-/* =========================================================
-   DESCARGAR AUDIO
-========================================================= */
-
-function descargarAudio() {
-
-    if (!audioPlayer) {
-        return;
-    }
-
-
-    var url =
-        audioPlayer.currentSrc ||
-        audioPlayer.src;
-
-
-    if (!url) {
-
-        console.error(
-            "UDM: no existe audio para descargar"
-        );
-
-        return;
-
-    }
-
-
-    var enlace =
-        document.createElement(
-            "a"
-        );
-
-
-    enlace.href =
-        url;
-
-    enlace.download =
-        "un-dia-mas.mp3";
-
-    enlace.target =
-        "_blank";
-
-    enlace.rel =
-        "noopener";
-
-
-    document.body.appendChild(
-        enlace
-    );
-
-
-    enlace.click();
-
-
-    document.body.removeChild(
-        enlace
-    );
-
-}
-
-
-/* =========================================================
-   TECLADO
-   Opcional: controles rápidos
-========================================================= */
-
-document.addEventListener(
-    "keydown",
-    function (evento) {
-
-        /*
-           No activar mientras se escribe
-           en un campo de texto.
-        */
-
-        var elemento =
-            document.activeElement;
-
-
-        if (
-            elemento &&
-            (
-                elemento.tagName === "INPUT" ||
-                elemento.tagName === "TEXTAREA"
-            )
-        ) {
-
-            return;
 
         }
+    );
 
 
-        /*
-           Barra espaciadora
-        */
+    /* =====================================================
+       AUDIO INICIADO
+       ===================================================== */
 
-        if (
-            evento.code ===
-            "Space"
-        ) {
+    audio.addEventListener(
+        "play",
+        () => {
 
-            evento.preventDefault();
+            playIcon.textContent = "Ⅱ";
 
-            alternarReproduccion();
-
-        }
-
-
-        /*
-           Flecha izquierda
-        */
-
-        if (
-            evento.code ===
-            "ArrowLeft"
-        ) {
-
-            cambiarTiempo(
-                -15
+            audioCard.classList.add(
+                "playing"
             );
 
         }
+    );
 
 
-        /*
-           Flecha derecha
-        */
+    /* =====================================================
+       AUDIO PAUSADO
+       ===================================================== */
 
-        if (
-            evento.code ===
-            "ArrowRight"
-        ) {
+    audio.addEventListener(
+        "pause",
+        () => {
 
-            cambiarTiempo(
-                15
+            playIcon.textContent = "▶";
+
+            audioCard.classList.remove(
+                "playing"
             );
 
         }
+    );
 
-    }
-);
+
+    /* =====================================================
+       AUDIO TERMINADO
+       ===================================================== */
+
+    audio.addEventListener(
+        "ended",
+        () => {
+
+            playIcon.textContent = "▶";
+
+            audioCard.classList.remove(
+                "playing"
+            );
+
+            progress.style.width = "0%";
+
+            currentTime.textContent =
+                "0:00";
+
+        }
+    );
+
+
+    /* =====================================================
+       DURACIÓN
+       ===================================================== */
+
+    audio.addEventListener(
+        "loadedmetadata",
+        () => {
+
+            duration.textContent =
+                formatTime(audio.duration);
+
+        }
+    );
+
+
+    /* =====================================================
+       PROGRESO
+       ===================================================== */
+
+    audio.addEventListener(
+        "timeupdate",
+        () => {
+
+            if (!audio.duration) {
+                return;
+            }
+
+            const percentage =
+                (audio.currentTime /
+                    audio.duration) * 100;
+
+            progress.style.width =
+                percentage + "%";
+
+
+            currentTime.textContent =
+                formatTime(
+                    audio.currentTime
+                );
+
+        }
+    );
+
+
+    /* =====================================================
+       TOCAR EN LA BARRA
+       ===================================================== */
+
+    progressBar.addEventListener(
+        "click",
+        (event) => {
+
+            if (!audio.duration) {
+                return;
+            }
+
+            const rect =
+                progressBar.getBoundingClientRect();
+
+            const position =
+                event.clientX -
+                rect.left;
+
+            const percentage =
+                position /
+                rect.width;
+
+            audio.currentTime =
+                percentage *
+                audio.duration;
+
+        }
+    );
+
+
+    /* =====================================================
+       RETROCEDER 10 SEGUNDOS
+       ===================================================== */
+
+    rewindButton.addEventListener(
+        "click",
+        () => {
+
+            audio.currentTime =
+                Math.max(
+                    0,
+                    audio.currentTime - 10
+                );
+
+        }
+    );
+
+
+    /* =====================================================
+       AVANZAR 10 SEGUNDOS
+       ===================================================== */
+
+    forwardButton.addEventListener(
+        "click",
+        () => {
+
+            audio.currentTime =
+                Math.min(
+                    audio.duration || 0,
+                    audio.currentTime + 10
+                );
+
+        }
+    );
+
+
+    /* =====================================================
+       AUDIO DE AYER
+       ===================================================== */
+
+    yesterdayPlay.addEventListener(
+        "click",
+        async () => {
+
+            try {
+
+                /* Si está sonando el de hoy,
+                   detenerlo */
+
+                if (!audio.paused) {
+                    audio.pause();
+                }
+
+
+                if (yesterdayAudio.paused) {
+
+                    await yesterdayAudio.play();
+
+                    yesterdayPlay.textContent =
+                        "Ⅱ";
+
+                } else {
+
+                    yesterdayAudio.pause();
+
+                    yesterdayPlay.textContent =
+                        "▶";
+
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "No se pudo reproducir el audio de ayer:",
+                    error
+                );
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       METADATA DE AYER
+       ===================================================== */
+
+    yesterdayAudio.addEventListener(
+        "loadedmetadata",
+        () => {
+
+            yesterdayDuration.textContent =
+                formatTime(
+                    yesterdayAudio.duration
+                );
+
+        }
+    );
+
+
+    /* =====================================================
+       PROGRESO DE AYER
+       ===================================================== */
+
+    yesterdayAudio.addEventListener(
+        "timeupdate",
+        () => {
+
+            if (!yesterdayAudio.duration) {
+                return;
+            }
+
+            const percentage =
+                (yesterdayAudio.currentTime /
+                    yesterdayAudio.duration) * 100;
+
+            yesterdayProgress.style.width =
+                percentage + "%";
+
+        }
+    );
+
+
+    /* =====================================================
+       AYER TERMINADO
+       ===================================================== */
+
+    yesterdayAudio.addEventListener(
+        "ended",
+        () => {
+
+            yesterdayPlay.textContent =
+                "▶";
+
+            yesterdayProgress.style.width =
+                "0%";
+
+        }
+    );
+
+
+    /* =====================================================
+       CAMBIO AUTOMÁTICO DE REPRODUCTOR
+       ===================================================== */
+
+    audio.addEventListener(
+        "play",
+        () => {
+
+            yesterdayPlay.textContent =
+                "▶";
+
+        }
+    );
+
+
+    yesterdayAudio.addEventListener(
+        "play",
+        () => {
+
+            playIcon.textContent =
+                "▶";
+
+            audioCard.classList.remove(
+                "playing"
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       CONTROL DE TECLADO
+       ===================================================== */
+
+    document.addEventListener(
+        "keydown",
+        (event) => {
+
+            /* Espacio */
+
+            if (
+                event.code === "Space" &&
+                document.activeElement.tagName !== "BUTTON"
+            ) {
+
+                event.preventDefault();
+
+                playButton.click();
+
+            }
+
+
+            /* Flecha izquierda */
+
+            if (
+                event.code === "ArrowLeft"
+            ) {
+
+                audio.currentTime =
+                    Math.max(
+                        0,
+                        audio.currentTime - 5
+                    );
+
+            }
+
+
+            /* Flecha derecha */
+
+            if (
+                event.code === "ArrowRight"
+            ) {
+
+                audio.currentTime =
+                    Math.min(
+                        audio.duration || 0,
+                        audio.currentTime + 5
+                    );
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       EVITAR ERROR SI TODAVÍA NO EXISTE EL AUDIO
+       ===================================================== */
+
+    audio.addEventListener(
+        "error",
+        () => {
+
+            console.warn(
+                "El audio de hoy todavía no está disponible."
+            );
+
+        }
+    );
+
+
+    yesterdayAudio.addEventListener(
+        "error",
+        () => {
+
+            console.warn(
+                "El audio de ayer todavía no está disponible."
+            );
+
+        }
+    );
+
+
+});
+```
