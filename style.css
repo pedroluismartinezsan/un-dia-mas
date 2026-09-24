@@ -1,120 +1,92 @@
+```css
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 html,
 body {
   width: 100%;
-  height: 100%;
-}
-
-body {
-  font-family:
-    "Segoe UI",
-    Arial,
-    Helvetica,
-    sans-serif;
-
+  min-height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
   background: #061426;
   color: white;
 }
 
 
-/* =====================================================
-   PANTALLA DE INTRO
-===================================================== */
+/* =================================
+   INTRO
+================================= */
 
 .splash-screen {
-
   position: fixed;
-
   inset: 0;
-
-  width: 100%;
-  height: 100%;
-
-  overflow: hidden;
+  z-index: 9999;
 
   display: flex;
-
   align-items: center;
   justify-content: center;
 
-  background:
+  overflow: hidden;
 
+  background:
     radial-gradient(
       circle at 50% 45%,
-      #12365a 0%,
-      #0a213c 35%,
-      #061426 72%,
-      #030b16 100%
+      #102b4c 0%,
+      #081b32 35%,
+      #040d1a 75%,
+      #020711 100%
     );
 
-  z-index: 100;
+  transition: opacity 1.2s ease;
 }
 
 
-/* =====================================================
+/* =================================
    LUCES
-===================================================== */
+================================= */
 
 .ambient-light {
-
   position: absolute;
+
+  width: 500px;
+  height: 500px;
 
   border-radius: 50%;
 
+  filter: blur(100px);
+
+  opacity: 0.18;
+
   pointer-events: none;
-
-  filter: blur(80px);
-
-  opacity: 0.35;
-
 }
 
 .light-one {
-
-  width: 350px;
-  height: 350px;
-
-  background: #176da5;
-
-  top: -150px;
-  left: -120px;
-
+  top: -200px;
+  left: -150px;
+  background: #1c73b8;
 }
 
 .light-two {
-
-  width: 300px;
-  height: 300px;
-
-  background: #b48a32;
-
-  right: -130px;
-  bottom: -120px;
-
+  right: -180px;
+  bottom: -200px;
+  background: #c9a646;
 }
 
 
-/* =====================================================
-   ESTRELLAS / PARTÍCULAS
-===================================================== */
+/* =================================
+   ESTRELLAS
+================================= */
 
 .stars {
-
   position: absolute;
-
   inset: 0;
 
   pointer-events: none;
-
 }
 
 .stars span {
-
   position: absolute;
 
   width: 2px;
@@ -122,203 +94,217 @@ body {
 
   border-radius: 50%;
 
-  background: rgba(255,255,255,0.55);
+  background: rgba(255,255,255,0.6);
 
-  animation: twinkle 4s infinite ease-in-out;
-
+  animation: twinkle 3s infinite ease-in-out;
 }
 
 .stars span:nth-child(1) {
-  top: 18%;
-  left: 12%;
+  top: 15%;
+  left: 20%;
 }
 
 .stars span:nth-child(2) {
-  top: 28%;
-  left: 82%;
-}
-
-.stars span:nth-child(3) {
-  top: 72%;
-  left: 18%;
-}
-
-.stars span:nth-child(4) {
-  top: 80%;
-  left: 75%;
-}
-
-.stars span:nth-child(5) {
-  top: 15%;
-  left: 55%;
-}
-
-.stars span:nth-child(6) {
-  top: 62%;
-  left: 90%;
-}
-
-.stars span:nth-child(7) {
-  top: 45%;
-  left: 7%;
-}
-
-.stars span:nth-child(8) {
-  top: 90%;
-  left: 48%;
-}
-
-.stars span:nth-child(9) {
-  top: 35%;
+  top: 25%;
   left: 70%;
 }
 
-.stars span:nth-child(10) {
+.stars span:nth-child(3) {
+  top: 42%;
+  left: 12%;
+}
+
+.stars span:nth-child(4) {
+  top: 55%;
+  left: 82%;
+}
+
+.stars span:nth-child(5) {
+  top: 70%;
+  left: 25%;
+}
+
+.stars span:nth-child(6) {
+  top: 80%;
+  left: 65%;
+}
+
+.stars span:nth-child(7) {
+  top: 30%;
+  left: 45%;
+}
+
+.stars span:nth-child(8) {
   top: 65%;
-  left: 55%;
+  left: 50%;
+}
+
+.stars span:nth-child(9) {
+  top: 18%;
+  left: 88%;
+}
+
+.stars span:nth-child(10) {
+  top: 88%;
+  left: 10%;
+}
+
+@keyframes twinkle {
+
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.8);
+  }
 }
 
 
-/* =====================================================
-   INTRO
-===================================================== */
+/* =================================
+   INTRO CONTENEDOR
+================================= */
 
 .intro {
-
   position: relative;
 
-  z-index: 5;
-
   width: 100%;
-
-  text-align: center;
+  height: 100%;
 
   display: flex;
-
-  flex-direction: column;
-
   align-items: center;
+  justify-content: center;
 
+  text-align: center;
 }
 
 
-/* =====================================================
-   TEXTO BIENVENIDOS
-===================================================== */
+/* =================================
+   BIENVENIDOS
+================================= */
 
-.welcome-text {
+.welcome-phase {
+  position: absolute;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   transition:
     opacity 1s ease,
     transform 1s ease;
-
 }
 
-.line {
-
-  display: flex;
-
-  justify-content: center;
-
-  gap: 10px;
-
-  margin-bottom: 16px;
-
-  overflow: hidden;
-
-}
-
-.word {
-
-  font-size: clamp(18px, 4vw, 25px);
-
-  letter-spacing: 3px;
+.welcome-word {
+  font-size: clamp(2.5rem, 7vw, 6rem);
 
   font-weight: 300;
 
-  color: rgba(255,255,255,0.72);
+  letter-spacing: 0.35em;
 
-  animation: wordAppear 1.5s ease forwards;
+  color: #ffffff;
 
+  text-shadow:
+    0 0 20px rgba(255,255,255,0.25),
+    0 0 50px rgba(50,130,200,0.2);
 }
 
 
-/* =====================================================
-   UN DÍA MÁS
-===================================================== */
+/* =================================
+   ESTÁS ESCUCHANDO
+================================= */
 
-.main-title {
-
-  display: flex;
-
-  justify-content: center;
-
-  align-items: center;
-
-  white-space: nowrap;
-
-}
-
-.letter {
-
-  display: inline-block;
-
-  font-size: clamp(42px, 11vw, 78px);
-
-  font-weight: 300;
-
-  letter-spacing: 4px;
-
-  color: white;
+.listening-phase {
+  position: absolute;
 
   opacity: 0;
 
-  transform: translateY(30px);
+  transform: scale(0.92);
 
-  animation: letterAppear 0.8s ease forwards;
-
+  transition:
+    opacity 1.2s ease,
+    transform 1.2s ease;
 }
 
-.letter:nth-child(1) {
-  animation-delay: 0.2s;
+.listening-small {
+  font-size: clamp(0.9rem, 2vw, 1.3rem);
+
+  letter-spacing: 0.35em;
+
+  color: rgba(255,255,255,0.7);
+
+  margin-bottom: 18px;
 }
 
-.letter:nth-child(2) {
-  animation-delay: 0.3s;
-}
+.listening-title {
+  font-size: clamp(3rem, 9vw, 7rem);
 
-.letter:nth-child(4) {
-  animation-delay: 0.4s;
-}
+  font-weight: 600;
 
-.letter:nth-child(5) {
-  animation-delay: 0.5s;
-}
+  letter-spacing: 0.08em;
 
-.letter:nth-child(6) {
-  animation-delay: 0.6s;
-}
+  color: #ffffff;
 
-.letter:nth-child(8) {
-  animation-delay: 0.7s;
-}
-
-.letter:nth-child(9) {
-  animation-delay: 0.8s;
-}
-
-.letter:nth-child(10) {
-  animation-delay: 0.9s;
+  text-shadow:
+    0 0 20px rgba(255,255,255,0.25),
+    0 0 60px rgba(40,120,200,0.25);
 }
 
 
-/* =====================================================
-   LOGO UDM
-===================================================== */
+/* =================================
+   NIEBLA
+================================= */
+
+.mist {
+  position: absolute;
+
+  inset: -20%;
+
+  z-index: 5;
+
+  pointer-events: none;
+
+  opacity: 0;
+
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(255,255,255,0.18) 0%,
+      rgba(150,190,220,0.12) 25%,
+      rgba(40,80,110,0.08) 45%,
+      transparent 70%
+    );
+
+  filter: blur(35px);
+
+  transform: scale(0.7);
+
+  transition:
+    opacity 2s ease,
+    transform 3s ease,
+    backdrop-filter 3s ease;
+}
+
+.mist.active {
+  opacity: 1;
+
+  transform: scale(1.25);
+
+  backdrop-filter: blur(10px);
+}
+
+
+/* =================================
+   UDM
+================================= */
 
 .udm-logo {
-
   position: absolute;
+
+  z-index: 10;
 
   display: flex;
 
@@ -330,783 +316,462 @@ body {
 
   opacity: 0;
 
-  transform: scale(0.6);
+  transform: scale(0.5);
 
-  pointer-events: none;
-
+  transition:
+    opacity 1.2s ease,
+    transform 1.5s cubic-bezier(.2,.8,.2,1);
 }
 
 .udm-letter {
-
   display: inline-block;
 
-  font-size: clamp(70px, 17vw, 125px);
+  font-size: clamp(5rem, 16vw, 13rem);
 
-  font-weight: 500;
+  font-weight: 700;
 
   line-height: 1;
 
-  color: white;
+  color: #ffffff;
 
   text-shadow:
-
-    0 0 12px rgba(255,255,255,0.25),
-
-    0 0 35px rgba(116,190,235,0.25);
+    0 0 10px rgba(255,255,255,0.7),
+    0 0 30px rgba(70,150,220,0.8),
+    0 0 70px rgba(70,150,220,0.45);
 
   transition:
-
-    transform 1.5s cubic-bezier(.2,.8,.2,1),
-
-    color 1s ease;
-
+    transform 1.5s cubic-bezier(.2,.8,.2,1);
 }
 
 
-/* =====================================================
+/* =================================
    BRILLO
-===================================================== */
+================================= */
 
 .logo-glow {
-
   position: absolute;
 
-  width: 10px;
-  height: 10px;
+  width: 260px;
+  height: 260px;
 
   border-radius: 50%;
 
-  background: #e1b85b;
+  z-index: 6;
 
   opacity: 0;
 
-  box-shadow:
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,255,255,0.35) 0%,
+      rgba(70,150,220,0.18) 30%,
+      transparent 70%
+    );
 
-    0 0 15px #e1b85b,
-
-    0 0 40px #e1b85b,
-
-    0 0 80px rgba(225,184,91,0.6),
-
-    0 0 140px rgba(225,184,91,0.35);
+  filter: blur(35px);
 
   pointer-events: none;
+}
 
+.logo-glow.active {
+  animation: logoPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes logoPulse {
+
+  0%,
+  100% {
+    transform: scale(0.85);
+    opacity: 0.35;
+  }
+
+  50% {
+    transform: scale(1.3);
+    opacity: 0.8;
+  }
 }
 
 
-/* =====================================================
-   MENSAJE
-===================================================== */
-
-.intro-message {
-
-  position: absolute;
-
-  top: calc(50% + 125px);
-
-  width: 90%;
-
-  max-width: 450px;
-
-  font-size: 14px;
-
-  letter-spacing: 1.5px;
-
-  line-height: 1.6;
-
-  color: rgba(255,255,255,0.55);
-
-  opacity: 0;
-
-  transform: translateY(15px);
-
-  transition:
-
-    opacity 1s ease,
-
-    transform 1s ease;
-
-}
-
-
-/* =====================================================
-   BOTÓN
-===================================================== */
-
-.enter-button {
-
-  position: absolute;
-
-  top: calc(50% + 180px);
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  gap: 12px;
-
-  min-width: 150px;
-
-  padding: 14px 25px;
-
-  border-radius: 50px;
-
-  border: 1px solid rgba(225,184,91,0.5);
-
-  background: rgba(255,255,255,0.05);
-
-  color: white;
-
-  font-size: 15px;
-
-  letter-spacing: 2px;
-
-  cursor: pointer;
-
-  opacity: 0;
-
-  transform: translateY(20px);
-
-  pointer-events: none;
-
-  backdrop-filter: blur(15px);
-
-  box-shadow:
-
-    0 0 25px rgba(225,184,91,0.08);
-
-  transition:
-
-    opacity 1s ease,
-
-    transform 1s ease,
-
-    background 0.3s ease,
-
-    box-shadow 0.3s ease;
-
-}
-
-.enter-button:hover {
-
-  background: rgba(225,184,91,0.12);
-
-  box-shadow:
-
-    0 0 30px rgba(225,184,91,0.2);
-
-}
-
-.enter-button .arrow {
-
-  font-size: 20px;
-
-  transition: transform 0.3s ease;
-
-}
-
-.enter-button:hover .arrow {
-
-  transform: translateX(5px);
-
-}
-
-
-/* =====================================================
-   INDICADOR
-===================================================== */
+/* =================================
+   CARGA
+================================= */
 
 .loading-indicator {
-
   position: absolute;
 
-  z-index: 10;
+  bottom: 55px;
 
-  bottom: 65px;
+  left: 50%;
 
-  width: min(75%, 330px);
+  width: min(320px, 70vw);
+
+  transform: translateX(-50%);
+
+  z-index: 20;
 
   transition: opacity 0.8s ease;
-
 }
 
 .progress-track {
-
   width: 100%;
-
   height: 2px;
-
-  overflow: hidden;
 
   background: rgba(255,255,255,0.12);
 
-  border-radius: 5px;
-
+  overflow: hidden;
 }
 
 .progress-bar {
-
   width: 0%;
-
   height: 100%;
 
-  background: linear-gradient(
-    90deg,
-    #6ea9cf,
-    #e1b85b
-  );
+  background: rgba(255,255,255,0.8);
 
-  box-shadow:
-
-    0 0 12px rgba(225,184,91,0.5);
-
+  transition: width 0.1s linear;
 }
 
 .loading-info {
-
   display: flex;
 
   justify-content: space-between;
 
   margin-top: 10px;
 
-  font-size: 10px;
+  font-size: 0.65rem;
 
-  letter-spacing: 1.5px;
+  letter-spacing: 0.18em;
 
-  color: rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.45);
 
+  text-transform: uppercase;
 }
 
 
-/* =====================================================
+/* =================================
    FOOTER
-===================================================== */
+================================= */
 
-footer {
-
+.splash-screen footer {
   position: absolute;
 
   bottom: 20px;
 
-  left: 0;
+  left: 50%;
 
-  right: 0;
+  transform: translateX(-50%);
 
-  text-align: center;
+  font-size: 0.6rem;
 
-  font-size: 9px;
+  letter-spacing: 0.35em;
 
-  letter-spacing: 4px;
-
-  color: rgba(255,255,255,0.18);
-
+  color: rgba(255,255,255,0.25);
 }
 
 
-/* =====================================================
-   PANTALLA DE AUDIOS
-===================================================== */
+/* =================================
+   PANTALLA AUDIO
+================================= */
 
 .audio-screen {
-
   display: none;
 
   min-height: 100vh;
 
-  padding: 25px 18px 50px;
+  padding: 25px;
 
   background:
-
     radial-gradient(
-      circle at 50% 0%,
-      #12365a,
-      #07182b 40%,
-      #04101e 100%
+      circle at top,
+      #102a48,
+      #061426 55%,
+      #030a12
     );
-
 }
 
 
-/* Header */
+/* HEADER */
 
 .audio-header {
-
-  max-width: 600px;
-
-  margin: 0 auto 35px;
-
   display: flex;
 
   align-items: center;
 
   gap: 15px;
 
+  max-width: 900px;
+
+  margin: 0 auto 30px;
 }
 
 .mini-logo {
-
-  width: 50px;
-  height: 50px;
-
-  border-radius: 16px;
-
   display: flex;
 
   align-items: center;
   justify-content: center;
 
-  border: 1px solid rgba(225,184,91,0.4);
+  width: 55px;
+  height: 55px;
 
-  color: #e1b85b;
+  border-radius: 15px;
 
-  font-size: 13px;
+  background: rgba(255,255,255,0.06);
 
-  letter-spacing: 2px;
+  border: 1px solid rgba(255,255,255,0.1);
 
-  background: rgba(255,255,255,0.05);
+  color: white;
 
+  font-weight: bold;
+
+  letter-spacing: 0.08em;
 }
 
 .audio-header h1 {
-
-  font-size: 23px;
-
-  font-weight: 400;
-
+  font-size: 1.5rem;
 }
 
 .audio-header p {
+  margin-top: 4px;
 
-  margin-top: 3px;
+  color: rgba(255,255,255,0.5);
 
-  font-size: 12px;
-
-  color: rgba(255,255,255,0.45);
-
+  font-size: 0.85rem;
 }
 
 
-/* Tarjeta */
+/* TODAY CARD */
 
 .today-card {
+  max-width: 900px;
 
-  position: relative;
+  margin: 0 auto;
 
-  max-width: 600px;
+  padding: 35px;
 
-  margin: auto;
-
-  padding: 35px 25px;
-
-  text-align: center;
-
-  border-radius: 28px;
-
-  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 25px;
 
   background: rgba(255,255,255,0.05);
 
-  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.08);
+
+  text-align: center;
 
   box-shadow:
-
-    0 20px 60px rgba(0,0,0,0.25);
-
+    0 20px 80px rgba(0,0,0,0.25);
 }
 
 .audio-icon {
-
   width: 70px;
   height: 70px;
 
   margin: 0 auto 20px;
 
-  border-radius: 50%;
-
   display: flex;
-
   align-items: center;
   justify-content: center;
 
-  font-size: 30px;
+  border-radius: 50%;
 
-  color: #e1b85b;
+  background: rgba(255,255,255,0.08);
 
-  border: 1px solid rgba(225,184,91,0.35);
-
-  background: rgba(225,184,91,0.06);
-
+  font-size: 2rem;
 }
 
 .today-label {
+  font-size: 0.7rem;
 
-  font-size: 10px;
+  letter-spacing: 0.2em;
 
-  letter-spacing: 3px;
-
-  color: #e1b85b;
-
+  color: rgba(255,255,255,0.5);
 }
 
 .today-card h2 {
-
   margin-top: 12px;
 
-  font-size: 28px;
-
-  font-weight: 400;
-
+  font-size: 2rem;
 }
 
-.today-card > p {
-
+.today-card p {
   margin-top: 8px;
 
-  color: rgba(255,255,255,0.48);
-
-  font-size: 13px;
-
+  color: rgba(255,255,255,0.55);
 }
 
 
-/* Player */
+/* PLAYER */
 
 .player {
+  max-width: 600px;
 
-  margin-top: 30px;
-
+  margin: 30px auto 0;
 }
 
 .time-row {
-
   display: flex;
 
   justify-content: space-between;
 
-  font-size: 10px;
+  margin-bottom: 8px;
 
-  color: rgba(255,255,255,0.35);
+  font-size: 0.7rem;
 
+  color: rgba(255,255,255,0.45);
 }
 
 .audio-progress {
-
-  height: 3px;
-
-  margin-top: 8px;
+  width: 100%;
+  height: 4px;
 
   border-radius: 10px;
 
   background: rgba(255,255,255,0.12);
 
+  overflow: hidden;
 }
 
 .audio-progress div {
-
-  width: 25%;
-
+  width: 0%;
   height: 100%;
 
-  border-radius: 10px;
-
-  background: #e1b85b;
-
+  background: white;
 }
 
 .play-button {
+  margin-top: 20px;
 
-  width: 65px;
-  height: 65px;
-
-  margin-top: 25px;
+  width: 60px;
+  height: 60px;
 
   border: none;
 
   border-radius: 50%;
 
-  cursor: pointer;
+  background: white;
 
   color: #061426;
 
-  background: #e1b85b;
+  font-size: 1.1rem;
 
-  font-size: 20px;
-
-  box-shadow:
-
-    0 0 30px rgba(225,184,91,0.18);
-
+  cursor: pointer;
 }
 
 
-/* =====================================================
-   MENSAJES RECIENTES
-===================================================== */
+/* =================================
+   RECIENTES
+================================= */
 
 .recent-section {
+  max-width: 900px;
 
-  max-width: 600px;
-
-  margin: 35px auto 0;
-
+  margin: 35px auto;
 }
 
 .section-title h2 {
-
-  font-size: 18px;
-
-  font-weight: 400;
+  font-size: 1.1rem;
 
   margin-bottom: 15px;
-
 }
 
 .audio-list {
-
-  display: flex;
-
-  flex-direction: column;
+  display: grid;
 
   gap: 10px;
-
 }
 
 .audio-item {
-
   display: flex;
 
   align-items: center;
 
   gap: 15px;
 
-  padding: 14px;
+  padding: 15px;
 
-  border-radius: 18px;
+  border-radius: 15px;
 
   background: rgba(255,255,255,0.04);
 
-  border: 1px solid rgba(255,255,255,0.05);
-
+  border: 1px solid rgba(255,255,255,0.06);
 }
 
 .date-box {
-
-  min-width: 52px;
+  width: 60px;
 
   text-align: center;
-
-  padding: 6px;
-
-  border-radius: 12px;
-
-  background: rgba(255,255,255,0.05);
-
 }
 
 .date-box strong {
-
   display: block;
 
-  font-size: 8px;
+  font-size: 0.65rem;
 
-  color: #e1b85b;
+  letter-spacing: 0.08em;
 
+  color: rgba(255,255,255,0.5);
 }
 
 .date-box span {
-
-  display: block;
-
-  margin-top: 2px;
-
-  font-size: 17px;
-
+  font-size: 1.2rem;
 }
 
 .audio-info {
-
   flex: 1;
-
 }
 
 .audio-info strong {
-
   display: block;
-
-  font-size: 14px;
-
-  font-weight: 400;
-
 }
 
 .audio-info span {
-
   display: block;
 
-  margin-top: 4px;
+  margin-top: 3px;
 
-  font-size: 11px;
+  font-size: 0.75rem;
 
-  color: rgba(255,255,255,0.35);
-
+  color: rgba(255,255,255,0.4);
 }
 
 .small-play {
+  width: 42px;
+  height: 42px;
 
-  width: 38px;
-  height: 38px;
-
-  border: 1px solid rgba(225,184,91,0.3);
+  border: none;
 
   border-radius: 50%;
 
-  background: transparent;
+  background: rgba(255,255,255,0.08);
 
-  color: #e1b85b;
+  color: white;
 
   cursor: pointer;
-
 }
 
 
-/* =====================================================
-   ANIMACIONES
-===================================================== */
-
-@keyframes wordAppear {
-
-  from {
-
-    opacity: 0;
-
-    transform: translateY(20px);
-
-  }
-
-  to {
-
-    opacity: 1;
-
-    transform: translateY(0);
-
-  }
-
-}
-
-@keyframes letterAppear {
-
-  from {
-
-    opacity: 0;
-
-    transform: translateY(30px);
-
-  }
-
-  to {
-
-    opacity: 1;
-
-    transform: translateY(0);
-
-  }
-
-}
-
-@keyframes twinkle {
-
-  0%,
-  100% {
-
-    opacity: 0.2;
-
-  }
-
-  50% {
-
-    opacity: 1;
-
-  }
-
-}
-
-@keyframes logoGlow {
-
-  0% {
-
-    transform: scale(1);
-
-    opacity: 0.4;
-
-  }
-
-  50% {
-
-    transform: scale(7);
-
-    opacity: 0.15;
-
-  }
-
-  100% {
-
-    transform: scale(1);
-
-    opacity: 0;
-
-  }
-
-}
-
-
-/* =====================================================
-   MÓVILES
-===================================================== */
+/* =================================
+   MÓVIL
+================================= */
 
 @media (max-width: 600px) {
 
-  .welcome-text {
-
-    transform: scale(0.92);
-
+  .welcome-word {
+    font-size: 2.3rem;
+    letter-spacing: 0.2em;
   }
 
-  .letter {
-
-    font-size: clamp(35px, 11vw, 58px);
-
-    letter-spacing: 2px;
-
+  .listening-small {
+    font-size: 0.75rem;
   }
 
-  .udm-letter {
-
-    font-size: clamp(65px, 19vw, 105px);
-
+  .listening-title {
+    font-size: 2.7rem;
   }
 
-  .intro-message {
-
-    top: calc(50% + 110px);
-
-    font-size: 13px;
-
+  .today-card {
+    padding: 25px 18px;
   }
 
-  .enter-button {
-
-    top: calc(50% + 165px);
-
+  .audio-screen {
+    padding: 18px;
   }
-
-  .loading-indicator {
-
-    bottom: 55px;
-
-  }
-
 }
+```
