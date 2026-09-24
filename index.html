@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 
@@ -12,14 +13,14 @@
 
     <meta
         name="theme-color"
-        content="#050914"
+        content="#061126"
     >
 
     <title>UN DÍA MÁS</title>
 
     <link
         rel="stylesheet"
-        href="style.css?v=2"
+        href="style.css?v=5"
     >
 
 </head>
@@ -139,27 +140,38 @@
     <main id="app">
 
 
-        <!-- =================================================
-             HEADER
-        ================================================== -->
+        <!-- HEADER -->
 
         <header class="app-header">
 
 
-            <div class="app-logo">
-                UDM
+            <div class="header-logo">
+
+                <span>UDM</span>
+
             </div>
 
 
-            <div class="app-brand">
+            <div class="header-brand">
 
-                <div class="app-title">
+                <div class="header-title">
                     UN DÍA MÁS
                 </div>
 
-                <div class="app-subtitle">
+                <div class="header-subtitle">
                     Un mensaje para cada día
                 </div>
+
+            </div>
+
+
+            <div class="header-status">
+
+                <span class="status-dot"></span>
+
+                <span>
+                    EN LÍNEA
+                </span>
 
             </div>
 
@@ -168,125 +180,174 @@
 
 
 
-        <!-- =================================================
-             CONTENIDO
-        ================================================== -->
+        <!-- CONTENIDO -->
 
         <section class="app-content">
 
 
-            <div class="player-card">
+            <!-- FECHA -->
 
+            <div class="today-label">
 
-                <!-- ETIQUETA -->
+                <span class="today-line"></span>
 
-                <div class="player-label">
+                <span>
                     MENSAJE DE HOY
-                </div>
+                </span>
+
+                <span class="today-line"></span>
+
+            </div>
+
+
+            <div class="today-date">
+                24 SEPTIEMBRE 2026
+            </div>
 
 
 
-                <!-- CÍRCULO DEL REPRODUCTOR -->
+            <!-- =================================================
+                 REPRODUCTOR FUTURISTA
+            ================================================== -->
 
-                <div
-                    id="playerCircle"
-                    class="player-circle"
-                >
-
-
-                    <div class="player-ring"></div>
-
-                    <div class="player-ring ring-two"></div>
+            <section class="audio-player">
 
 
-                    <div class="player-core">
+                <!-- HALO DE FONDO -->
+
+                <div class="player-halo"></div>
 
 
-                        <div class="audio-icon">
+                <!-- VISUALIZADOR -->
 
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-
-                        </div>
+                <div class="audio-visualizer">
 
 
-                        <button
-                            id="playButton"
-                            class="play-button"
-                            aria-label="Reproducir"
-                        >
+                    <div class="visual-ring ring-1"></div>
 
-                            <span
-                                id="playIcon"
-                                class="play-icon"
-                            >
-                                ▶
-                            </span>
+                    <div class="visual-ring ring-2"></div>
 
-                        </button>
+                    <div class="visual-ring ring-3"></div>
 
+
+                    <div class="wave wave-1"></div>
+                    <div class="wave wave-2"></div>
+                    <div class="wave wave-3"></div>
+
+
+                    <div class="audio-bars">
+
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
 
                     </div>
 
 
+                    <!-- BOTÓN CENTRAL -->
+
+                    <button
+                        id="playButton"
+                        class="main-play"
+                        aria-label="Reproducir mensaje"
+                    >
+
+                        <span
+                            id="playIcon"
+                            class="play-symbol"
+                        >
+                            ▶
+                        </span>
+
+                    </button>
+
+
                 </div>
 
 
 
-                <!-- TÍTULO -->
+                <!-- INFORMACIÓN -->
 
-                <h1 id="audioTitle">
-                    Un nuevo día
-                </h1>
+                <div class="audio-info">
 
 
-
-                <!-- DESCRIPCIÓN -->
-
-                <p id="audioDescription">
-
-                    Detente un momento.
-                    Escucha este mensaje
-                    y continúa tu día.
-
-                </p>
+                    <div class="audio-type">
+                        MENSAJE DEL DÍA
+                    </div>
 
 
+                    <h1 id="audioTitle">
+                        Un nuevo día
+                    </h1>
 
-                <!-- BARRA DE PROGRESO -->
 
-                <div class="progress-container">
+                    <p id="audioDescription">
 
+                        Detente un momento.
+                        Escucha este mensaje
+                        y continúa tu día.
+
+                    </p>
+
+
+                </div>
+
+
+
+                <!-- TIEMPOS -->
+
+                <div class="time-row">
 
                     <span id="currentTime">
                         00:00
                     </span>
 
-
-                    <div
-                        id="progressBar"
-                        class="progress-bar"
-                    >
-
-                        <div
-                            id="progressFill"
-                            class="progress-fill"
-                        ></div>
-
-                        <div
-                            id="progressDot"
-                            class="progress-dot"
-                        ></div>
-
-                    </div>
-
-
                     <span id="duration">
-                        01:48
+                        01:42
                     </span>
 
+                </div>
+
+
+
+                <!-- PROGRESO -->
+
+                <div
+                    id="progressBar"
+                    class="progress-track"
+                >
+
+                    <div
+                        id="progressFill"
+                        class="progress-fill"
+                    ></div>
+
+                    <div
+                        id="progressDot"
+                        class="progress-dot"
+                    ></div>
 
                 </div>
 
@@ -299,16 +360,24 @@
 
                     <button
                         id="backButton"
-                        class="control-button"
-                        aria-label="Retroceder"
+                        class="round-control"
+                        aria-label="Retroceder 15 segundos"
                     >
-                        ↶
+
+                        <span class="control-icon">
+                            ↶
+                        </span>
+
+                        <small>
+                            15
+                        </small>
+
                     </button>
 
 
                     <button
                         id="mainPlayButton"
-                        class="main-play-button"
+                        class="center-control"
                         aria-label="Reproducir"
                     >
 
@@ -321,10 +390,18 @@
 
                     <button
                         id="forwardButton"
-                        class="control-button"
-                        aria-label="Avanzar"
+                        class="round-control"
+                        aria-label="Avanzar 15 segundos"
                     >
-                        ↷
+
+                        <span class="control-icon">
+                            ↷
+                        </span>
+
+                        <small>
+                            15
+                        </small>
+
                     </button>
 
 
@@ -332,55 +409,100 @@
 
 
 
-                <!-- DESCARGAR -->
+                <!-- DESCARGA -->
 
                 <button
                     id="downloadButton"
                     class="download-button"
                 >
 
-                    <span class="download-icon">
+                    <span class="download-symbol">
                         ↓
                     </span>
 
-                    DESCARGAR AUDIO
+                    <span>
+                        DESCARGAR AUDIO
+                    </span>
 
                 </button>
 
 
+            </section>
 
-                <!-- ANTERIORES -->
 
-                <div class="previous-title">
+
+            <!-- =================================================
+                 MENSAJES ANTERIORES
+            ================================================== -->
+
+            <section class="previous-section">
+
+
+                <div class="section-heading">
+
+                    <span></span>
+
                     MENSAJES ANTERIORES
+
+                    <span></span>
+
                 </div>
 
 
-                <div class="previous-buttons">
+                <div class="previous-grid">
 
 
                     <button
-                        class="previous-button"
+                        class="previous-card"
                     >
 
-                        <span>
+                        <div class="previous-icon">
                             ◀
-                        </span>
+                        </div>
 
-                        AYER
+                        <div class="previous-content">
+
+                            <small>
+                                AYER
+                            </small>
+
+                            <strong>
+                                23 SEPTIEMBRE
+                            </strong>
+
+                        </div>
+
+                        <div class="previous-arrow">
+                            →
+                        </div>
 
                     </button>
 
 
+
                     <button
-                        class="previous-button"
+                        class="previous-card"
                     >
 
-                        ANTEAYER
+                        <div class="previous-icon">
+                            ◀
+                        </div>
 
-                        <span>
-                            ▶
-                        </span>
+                        <div class="previous-content">
+
+                            <small>
+                                ANTEAYER
+                            </small>
+
+                            <strong>
+                                22 SEPTIEMBRE
+                            </strong>
+
+                        </div>
+
+                        <div class="previous-arrow">
+                            →
+                        </div>
 
                     </button>
 
@@ -388,20 +510,22 @@
                 </div>
 
 
-            </div>
+            </section>
 
 
         </section>
 
 
 
-        <!-- =================================================
-             FOOTER
-        ================================================== -->
+        <!-- FOOTER -->
 
         <footer class="app-footer">
 
+            <span class="footer-line"></span>
+
             UN DÍA MÁS
+
+            <span class="footer-line"></span>
 
         </footer>
 
@@ -421,9 +545,10 @@
 
     <!-- JAVASCRIPT -->
 
-    <script src="app.js?v=2"></script>
+    <script src="app.js?v=5"></script>
 
 
 </body>
 
 </html>
+```
