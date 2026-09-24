@@ -15,76 +15,77 @@
         content="#050914"
     >
 
-    <title>UDM - Un Día Más</title>
+    <title>Un Día Más</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
 </head>
 
+
 <body>
 
-    <!-- ==============================
-         INTRO UDM
-    =============================== -->
 
-    <section id="intro">
+    <!-- ==================================================
+         PANTALLA DE INICIO
+    =================================================== -->
 
-        <div class="background"></div>
-
-        <div class="grid"></div>
-
-        <div class="stars"></div>
-
-        <div class="gold-glow"></div>
-
-        <div class="blue-glow"></div>
+    <section id="splash">
 
 
-        <!-- CONTENEDOR -->
+        <!-- Fondo -->
 
-        <div class="intro-center">
+        <div class="splash-background">
+
+            <div class="background-grid"></div>
+
+            <div class="blue-light"></div>
+
+            <div class="gold-light"></div>
+
+            <div class="stars"></div>
+
+        </div>
 
 
-            <!-- CÍRCULO -->
+        <!-- Contenedor central -->
+
+        <div class="splash-center">
+
+
+            <!-- CÍRCULO DE CARGA -->
 
             <div class="loader">
 
 
-                <!-- Círculo de fondo -->
+                <!-- Anillo exterior -->
 
-                <div class="circle circle-background"></div>
-
-
-                <!-- Círculo que gira -->
-
-                <div
-                    id="loadingCircle"
-                    class="circle circle-loading"
-                ></div>
+                <div class="loader-ring-outer"></div>
 
 
-                <!-- Anillos -->
+                <!-- Anillo interior -->
 
-                <div class="ring ring-one"></div>
-
-                <div class="ring ring-two"></div>
+                <div class="loader-ring-inner"></div>
 
 
-                <!-- PUNTO -->
+                <!-- Arco luminoso -->
 
-                <div class="orbit-point"></div>
+                <div class="loader-spinner"></div>
 
 
-                <!-- LOGO -->
+                <!-- Punto luminoso -->
 
-                <div class="logo-container">
+                <div class="loader-point"></div>
 
-                    <div id="logo">
+
+                <!-- Centro -->
+
+                <div class="loader-center">
+
+                    <div class="loader-symbol">
                         UDM
-                    </div>
-
-                    <div id="subtitle">
-                        UN DÍA MÁS
                     </div>
 
                 </div>
@@ -93,62 +94,124 @@
             </div>
 
 
-            <!-- TEXTO -->
+            <!-- Texto pequeño -->
 
-            <div
-                id="loadingText"
-                class="loading-text"
-            >
+            <div class="loading-label">
+
                 INICIANDO
+
             </div>
 
 
         </div>
 
+
+        <!-- ==================================================
+             NOMBRE
+        =================================================== -->
+
+        <div
+            id="brandReveal"
+            class="brand-reveal"
+        >
+
+            <div class="brand-title">
+                UN DÍA MÁS
+            </div>
+
+            <div class="brand-line"></div>
+
+        </div>
+
+
     </section>
 
 
 
-    <!-- ==============================
-         APP
-    =============================== -->
+    <!-- ==================================================
+         INTERFAZ PRINCIPAL
+    =================================================== -->
 
-    <main id="app">
+    <main
+        id="app"
+        class="app"
+    >
 
-        <header>
 
-            <div class="brand">
+        <header class="app-header">
+
+
+            <div class="app-logo">
                 UDM
             </div>
 
-            <div class="brand-name">
-                UN DÍA MÁS
+
+            <div class="app-brand">
+
+                <div class="app-title">
+                    UN DÍA MÁS
+                </div>
+
+                <div class="app-subtitle">
+                    Un mensaje para cada día
+                </div>
+
             </div>
+
 
         </header>
 
 
-        <section class="content">
 
-            <div class="card">
+        <section class="app-main">
 
-                <small>
+
+            <div class="welcome-card">
+
+
+                <div class="card-label">
                     MENSAJE DE HOY
-                </small>
+                </div>
+
 
                 <h1>
                     Un nuevo día
                 </h1>
 
+
                 <p>
-                    Detente. Escucha. Respira. Sigue adelante.
+                    Detente. Escucha. Respira.
+                    Sigue adelante.
                 </p>
+
+
+                <div class="card-orbit">
+
+                    <div class="card-orbit-ring"></div>
+
+                    <span>
+                        UDM
+                    </span>
+
+                </div>
+
 
             </div>
 
+
         </section>
 
+
+
+        <footer class="app-footer">
+
+            UN DÍA MÁS
+
+        </footer>
+
+
     </main>
+
 
 
     <script src="app.js"></script>
