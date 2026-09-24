@@ -15,7 +15,7 @@
         content="#050914"
     >
 
-    <title>Un Día Más</title>
+    <title>UDM - Un Día Más</title>
 
     <link
         rel="stylesheet"
@@ -28,63 +28,95 @@
 <body>
 
 
-    <!-- ==================================================
-         PANTALLA DE INICIO
-    =================================================== -->
+    <!-- =====================================================
+         PANTALLA DE INTRO
+    ====================================================== -->
 
-    <section id="splash">
+    <section id="intro">
 
 
-        <!-- Fondo -->
+        <!-- Fondo futurista -->
 
-        <div class="splash-background">
+        <div class="intro-background">
 
-            <div class="background-grid"></div>
+            <div class="grid"></div>
 
-            <div class="blue-light"></div>
+            <div class="blue-glow"></div>
 
-            <div class="gold-light"></div>
+            <div class="gold-glow"></div>
 
             <div class="stars"></div>
 
         </div>
 
 
-        <!-- Contenedor central -->
+        <!-- Partículas -->
 
-        <div class="splash-center">
+        <div class="particles">
+
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </div>
 
 
-            <!-- CÍRCULO DE CARGA -->
+        <!-- =================================================
+             CENTRO DEL INTRO
+        ================================================== -->
+
+        <div class="intro-center">
+
+
+            <!-- Cargador -->
 
             <div class="loader">
 
 
                 <!-- Anillo exterior -->
 
-                <div class="loader-ring-outer"></div>
+                <div class="outer-ring"></div>
 
 
-                <!-- Anillo interior -->
+                <!-- Anillo tecnológico -->
 
-                <div class="loader-ring-inner"></div>
+                <div class="tech-ring">
+
+                    <span class="tech-mark mark-1"></span>
+                    <span class="tech-mark mark-2"></span>
+                    <span class="tech-mark mark-3"></span>
+                    <span class="tech-mark mark-4"></span>
+
+                </div>
 
 
-                <!-- Arco luminoso -->
+                <!-- Círculo de carga -->
 
-                <div class="loader-spinner"></div>
+                <div
+                    id="loadingCircle"
+                    class="loading-circle"
+                ></div>
 
 
-                <!-- Punto luminoso -->
+                <!-- Punto orbital -->
 
-                <div class="loader-point"></div>
+                <div class="orbit-point"></div>
 
 
                 <!-- Centro -->
 
                 <div class="loader-center">
 
-                    <div class="loader-symbol">
+                    <div class="udm">
                         UDM
                     </div>
 
@@ -94,21 +126,22 @@
             </div>
 
 
-            <!-- Texto pequeño -->
+            <!-- Texto de estado -->
 
-            <div class="loading-label">
-
+            <div
+                id="loadingText"
+                class="loading-text"
+            >
                 INICIANDO
-
             </div>
 
 
         </div>
 
 
-        <!-- ==================================================
-             NOMBRE
-        =================================================== -->
+        <!-- =================================================
+             NOMBRE DE LA APP
+        ================================================== -->
 
         <div
             id="brandReveal"
@@ -128,15 +161,14 @@
 
 
 
-    <!-- ==================================================
+    <!-- =====================================================
          INTERFAZ PRINCIPAL
-    =================================================== -->
+    ====================================================== -->
 
-    <main
-        id="app"
-        class="app"
-    >
+    <main id="app">
 
+
+        <!-- HEADER -->
 
         <header class="app-header">
 
@@ -163,10 +195,12 @@
 
 
 
-        <section class="app-main">
+        <!-- CONTENIDO -->
+
+        <section class="app-content">
 
 
-            <div class="welcome-card">
+            <div class="main-card">
 
 
                 <div class="card-label">
@@ -185,9 +219,9 @@
                 </p>
 
 
-                <div class="card-orbit">
+                <div class="app-orbit">
 
-                    <div class="card-orbit-ring"></div>
+                    <div class="app-orbit-ring"></div>
 
                     <span>
                         UDM
@@ -203,6 +237,8 @@
 
 
 
+        <!-- FOOTER -->
+
         <footer class="app-footer">
 
             UN DÍA MÁS
@@ -214,7 +250,10 @@
 
 
 
+    <!-- JAVASCRIPT -->
+
     <script src="app.js"></script>
+
 
 </body>
 
