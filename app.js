@@ -227,6 +227,8 @@ async function cargarContenido() {
 
 function cargarAudioHoy() {
 
+  console.log("VERSION NUEVA UN DIA MAS - 24 SEPT 2026");
+
   if (!datosHoy) {
 
     console.warn(
