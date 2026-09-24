@@ -15,137 +15,85 @@
         content="#050914"
     >
 
-    <title>UDM — Un Día Más</title>
+    <title>UDM - Un Día Más</title>
 
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
 <body>
 
-    <!-- =====================================================
-         INTRO
-    ====================================================== -->
+    <!-- ==============================
+         INTRO UDM
+    =============================== -->
 
-    <section
-        id="intro"
-        class="intro"
-    >
+    <section id="intro">
 
-        <!-- Fondo -->
-        <div class="background">
+        <div class="background"></div>
 
-            <div class="grid"></div>
+        <div class="grid"></div>
 
-            <div class="glow glow-blue"></div>
+        <div class="stars"></div>
 
-            <div class="glow glow-gold"></div>
+        <div class="gold-glow"></div>
 
-            <div class="stars"></div>
-
-        </div>
+        <div class="blue-glow"></div>
 
 
-        <!-- Partículas -->
-        <div class="particles">
+        <!-- CONTENEDOR -->
 
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-
-        </div>
+        <div class="intro-center">
 
 
-        <!-- Contenedor principal -->
-        <div class="intro-content">
+            <!-- CÍRCULO -->
+
+            <div class="loader">
 
 
-            <!-- Círculo futurista -->
+                <!-- Círculo de fondo -->
 
-            <div
-                id="loader"
-                class="loader"
-            >
-
-                <!-- Anillos exteriores -->
-
-                <div class="loader-ring ring-one"></div>
-
-                <div class="loader-ring ring-two"></div>
-
-                <div class="loader-ring ring-three"></div>
+                <div class="circle circle-background"></div>
 
 
-                <!-- Arco de carga -->
+                <!-- Círculo que gira -->
 
-                <svg
-                    class="loader-progress"
-                    viewBox="0 0 300 300"
-                >
-
-                    <circle
-                        class="progress-background"
-                        cx="150"
-                        cy="150"
-                        r="135"
-                    ></circle>
-
-                    <circle
-                        id="progressCircle"
-                        class="progress-circle"
-                        cx="150"
-                        cy="150"
-                        r="135"
-                    ></circle>
-
-                </svg>
+                <div
+                    id="loadingCircle"
+                    class="circle circle-loading"
+                ></div>
 
 
-                <!-- Puntos orbitales -->
+                <!-- Anillos -->
 
-                <div class="orbit-dot dot-one"></div>
+                <div class="ring ring-one"></div>
 
-                <div class="orbit-dot dot-two"></div>
-
-                <div class="orbit-dot dot-three"></div>
+                <div class="ring ring-two"></div>
 
 
-                <!-- Logo -->
+                <!-- PUNTO -->
+
+                <div class="orbit-point"></div>
+
+
+                <!-- LOGO -->
 
                 <div class="logo-container">
 
-                    <div
-                        id="logo"
-                        class="logo"
-                    >
+                    <div id="logo">
                         UDM
                     </div>
 
-                    <div
-                        id="subtitle"
-                        class="subtitle"
-                    >
+                    <div id="subtitle">
                         UN DÍA MÁS
                     </div>
 
                 </div>
 
+
             </div>
 
 
-            <!-- Pequeña línea inferior -->
+            <!-- TEXTO -->
 
             <div
                 id="loadingText"
@@ -161,76 +109,46 @@
 
 
 
-    <!-- =====================================================
-         APLICACIÓN
-    ====================================================== -->
+    <!-- ==============================
+         APP
+    =============================== -->
 
-    <main
-        id="app"
-        class="app"
-    >
+    <main id="app">
 
-        <header class="app-header">
+        <header>
 
-            <div class="app-brand">
+            <div class="brand">
+                UDM
+            </div>
 
-                <div class="brand-logo">
-                    UDM
-                </div>
-
-                <div>
-
-                    <div class="brand-name">
-                        UN DÍA MÁS
-                    </div>
-
-                    <div class="brand-description">
-                        Un mensaje para cada día
-                    </div>
-
-                </div>
-
+            <div class="brand-name">
+                UN DÍA MÁS
             </div>
 
         </header>
 
 
-        <section class="app-content">
+        <section class="content">
 
-            <div class="app-card">
+            <div class="card">
 
-                <div class="card-label">
+                <small>
                     MENSAJE DE HOY
-                </div>
+                </small>
 
                 <h1>
                     Un nuevo día
                 </h1>
 
                 <p>
-                    Detente. Escucha. Respira.
-                    Sigue adelante.
+                    Detente. Escucha. Respira. Sigue adelante.
                 </p>
-
-                <div class="app-circle">
-
-                    <span>UDM</span>
-
-                </div>
 
             </div>
 
         </section>
 
-
-        <footer class="app-footer">
-
-            UN DÍA MÁS · UDM
-
-        </footer>
-
     </main>
-
 
 
     <script src="app.js"></script>
