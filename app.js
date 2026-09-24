@@ -1,3 +1,4 @@
+```javascript
 /* =========================================================
    UDM - UN DÍA MÁS
    SISTEMA DE INICIO
@@ -8,7 +9,7 @@
    CONFIGURACIÓN
 ========================================================= */
 
-const TIEMPO_CARGA = 10000;
+const TIEMPO_CARGA = 5000;
 
 const TIEMPO_NOMBRE = 3000;
 
@@ -53,11 +54,6 @@ function iniciarUDM() {
     );
 
 
-    /*
-       Esperamos exactamente
-       10 segundos.
-    */
-
     setTimeout(
         function () {
 
@@ -99,13 +95,6 @@ function mostrarNombre() {
     }
 
 
-    /*
-       Después de mostrar
-       UN DÍA MÁS durante
-       3 segundos entramos
-       a la aplicación.
-    */
-
     setTimeout(
         function () {
 
@@ -137,10 +126,6 @@ function entrarAplicacion() {
     }
 
 
-    /*
-       Preparar transición
-    */
-
     app.style.transition =
         "opacity 1.5s ease";
 
@@ -149,27 +134,13 @@ function entrarAplicacion() {
         "opacity 1.5s ease";
 
 
-    /*
-       Mostrar aplicación
-    */
-
     app.style.opacity =
         "1";
 
 
-    /*
-       Ocultar intro
-    */
-
     intro.style.opacity =
         "0";
 
-
-    /*
-       Eliminar completamente
-       el intro después de
-       la transición.
-    */
 
     setTimeout(
         function () {
@@ -185,3 +156,4 @@ function entrarAplicacion() {
     );
 
 }
+```
