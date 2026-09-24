@@ -281,13 +281,11 @@ function cargarAudioHoy() {
    * Utilizamos la URL enviada por Apps Script.
    ***************************************************/
   audioHoyURL =
-    datosHoy.url ||
-    "";
-
-   console.log("URL REAL HOY:", datosHoy.url);
-  console.log("URL REAL AYER:", datosAyer.url);
-
-
+  datosHoy.archivo
+    ? "https://drive.google.com/uc?export=media&id=" +
+      encodeURIComponent(datosHoy.archivo)
+    : "";
+  
   console.log(
     "Audio de hoy:",
     audioHoyURL
@@ -391,11 +389,12 @@ function cargarAudioAyer() {
   /***************************************************
    * URL
    ***************************************************/
-  audioAyerURL =
-    datosAyer.url ||
-    "";
-    console.log("URL REAL HOY:", datosHoy.url);
-  console.log("URL REAL AYER:", datosAyer.url);
+ audioAyerURL =
+  datosAyer.archivo
+    ? "https://drive.google.com/uc?export=media&id=" +
+      encodeURIComponent(datosAyer.archivo)
+    : "";
+   
 
   console.log(
     "Audio de ayer:",
