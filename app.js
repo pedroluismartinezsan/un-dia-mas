@@ -284,6 +284,8 @@ function cargarAudioHoy() {
     datosHoy.url ||
     "";
 
+   console.log("URL REAL HOY:", datosHoy.url);
+
 
   console.log(
     "Audio de hoy:",
@@ -391,7 +393,7 @@ function cargarAudioAyer() {
   audioAyerURL =
     datosAyer.url ||
     "";
-
+   console.log("URL REAL AYER:", datosAyer.url);
 
   console.log(
     "Audio de ayer:",
