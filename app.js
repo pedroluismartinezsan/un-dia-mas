@@ -1,23 +1,18 @@
-/* =========================================================
-   UDM — UN DÍA MÁS
-   INTRO AUTOMÁTICO
-========================================================= */
+/* =====================================================
+   UDM - UN DÍA MÁS
+===================================================== */
 
 
-/* =========================================================
+/* =====================================================
    CONFIGURACIÓN
-========================================================= */
+===================================================== */
 
-const CONFIG = {
-
-    introDuration: 6000
-
-};
+const INTRO_TIME = 6000;
 
 
-/* =========================================================
+/* =====================================================
    ELEMENTOS
-========================================================= */
+===================================================== */
 
 const intro =
     document.getElementById("intro");
@@ -25,37 +20,21 @@ const intro =
 const app =
     document.getElementById("app");
 
-const progressCircle =
-    document.getElementById("progressCircle");
-
 const loadingText =
     document.getElementById("loadingText");
 
-const logo =
-    document.getElementById("logo");
 
-const subtitle =
-    document.getElementById("subtitle");
-
-
-/* =========================================================
-   VARIABLES
-========================================================= */
-
-let startTime = null;
-
-let finished = false;
-
-
-/* =========================================================
+/* =====================================================
    INICIO
-========================================================= */
+===================================================== */
 
 window.addEventListener(
     "load",
     function () {
 
-        prepareIntro();
+        console.log(
+            "UDM iniciando..."
+        );
 
         startIntro();
 
@@ -63,143 +42,36 @@ window.addEventListener(
 );
 
 
-/* =========================================================
-   PREPARAR
-========================================================= */
-
-function prepareIntro() {
-
-    if (progressCircle) {
-
-        progressCircle.style.strokeDasharray =
-            "848";
-
-        progressCircle.style.strokeDashoffset =
-            "848";
-
-    }
-
-
-    if (app) {
-
-        app.style.opacity =
-            "0";
-
-        app.style.visibility =
-            "hidden";
-
-    }
-
-
-    if (intro) {
-
-        intro.style.opacity =
-            "1";
-
-    }
-
-}
-
-
-/* =========================================================
-   INICIAR
-========================================================= */
+/* =====================================================
+   INTRO
+===================================================== */
 
 function startIntro() {
 
-    startTime =
-        performance.now();
+    setTimeout(
+        function () {
 
-    requestAnimationFrame(
-        animationLoop
+            finishIntro();
+
+        },
+        INTRO_TIME
     );
 
 }
 
 
-/* =========================================================
-   LOOP
-========================================================= */
+/* =====================================================
+   FINALIZAR
+===================================================== */
 
-function animationLoop(
-    currentTime
-) {
+function finishIntro() {
 
-    const elapsed =
-        currentTime -
-        startTime;
-
-
-    let progress =
-        elapsed /
-        CONFIG.introDuration;
-
-
-    if (progress > 1) {
-
-        progress = 1;
-
-    }
-
-
-    updateProgress(
-        progress
+    console.log(
+        "UDM cargado."
     );
 
 
-    if (progress < 1) {
-
-        requestAnimationFrame(
-            animationLoop
-        );
-
-    } else {
-
-        finishIntro();
-
-    }
-
-}
-
-
-/* =========================================================
-   ACTUALIZAR CARGA
-========================================================= */
-
-function updateProgress(
-    progress
-) {
-
-    if (progressCircle) {
-
-        const circumference =
-            848;
-
-        const offset =
-            circumference -
-            (
-                circumference *
-                progress
-            );
-
-        progressCircle.style.strokeDashoffset =
-            String(
-                offset
-            );
-
-    }
-
-
-    /*
-       Pequeños cambios de estado
-       para darle sensación de
-       arranque tecnológico.
-    */
-
-    if (
-        loadingText &&
-        progress > 0.75
-    ) {
+    if (loadingText) {
 
         loadingText.textContent =
             "LISTO";
@@ -207,105 +79,42 @@ function updateProgress(
     }
 
 
-    if (
-        logo &&
-        progress > 0.85
-    ) {
-
-        logo.style.textShadow =
-            "0 0 25px rgba(255,215,100,0.9)";
-
-    }
-
-}
-
-
-/* =========================================================
-   FINALIZAR INTRO
-========================================================= */
-
-function finishIntro() {
-
-    if (finished) {
-
-        return;
-
-    }
-
-    finished =
-        true;
-
-
-    /*
-       Pequeño destello final.
-    */
-
-    if (logo) {
-
-        logo.style.transform =
-            "scale(1.08)";
-
-        logo.style.transition =
-            "transform 0.4s ease";
-
-    }
-
-
-    /*
-       Esperamos un pequeño momento
-       antes de entrar a la app.
-    */
-
     setTimeout(
         function () {
 
-            hideIntro();
+            if (intro) {
+
+                intro.style.transition =
+                    "opacity 1s ease";
+
+                intro.style.opacity =
+                    "0";
+
+            }
 
         },
-        450
+        400
     );
-
-}
-
-
-/* =========================================================
-   OCULTAR INTRO
-========================================================= */
-
-function hideIntro() {
-
-    if (!intro) {
-
-        return;
-
-    }
-
-
-    intro.style.transition =
-        "opacity 1.2s ease";
-
-
-    intro.style.opacity =
-        "0";
 
 
     setTimeout(
         function () {
 
-            intro.style.display =
-                "none";
+            if (intro) {
+
+                intro.style.display =
+                    "none";
+
+            }
 
 
             if (app) {
 
-                app.style.visibility =
-                    "visible";
+                app.style.transition =
+                    "opacity 0.8s ease";
 
                 app.style.opacity =
                     "1";
-
-                app.style.transition =
-                    "opacity 0.8s ease";
 
             }
 
@@ -315,7 +124,7 @@ function hideIntro() {
 
 
         },
-        1200
+        1500
     );
 
 }
