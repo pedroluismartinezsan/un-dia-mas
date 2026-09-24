@@ -102,9 +102,8 @@ function obtenerUrlAudio(fileId) {
 
     if (!fileId) return "";
 
-    return `https://drive.google.com/uc?export=download&id=${fileId}`;
+    return `https://drive.usercontent.google.com/download?id=${fileId}&export=download&confirm=t`;
 }
-
 
 /* =====================================================
    CARGAR INFORMACIÓN DESDE APPS SCRIPT
