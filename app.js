@@ -1,404 +1,319 @@
-const TOTAL_TIME = 15000;
+```javascript
+const TOTAL_TIME = 10000;
 
-const splashScreen = document.getElementById("splashScreen");
-const audioScreen = document.getElementById("audioScreen");
+const splashScreen =
+  document.getElementById("splashScreen");
 
-const welcomeText = document.getElementById("welcomeText");
-const udmLogo = document.getElementById("udmLogo");
-const logoGlow = document.getElementById("logoGlow");
-const introMessage = document.getElementById("introMessage");
+const audioScreen =
+  document.getElementById("audioScreen");
 
-const enterButton = document.getElementById("enterButton");
-const loadingIndicator = document.getElementById("loadingIndicator");
-const progressBar = document.getElementById("progressBar");
-const timer = document.getElementById("timer");
+const welcomePhase =
+  document.getElementById("welcomePhase");
 
-const letters = document.querySelectorAll(".letter");
+const listeningPhase =
+  document.getElementById("listeningPhase");
+
+const mist =
+  document.getElementById("mist");
+
+const udmLogo =
+  document.getElementById("udmLogo");
+
+const logoGlow =
+  document.getElementById("logoGlow");
+
+const loadingIndicator =
+  document.getElementById("loadingIndicator");
+
+const progressBar =
+  document.getElementById("progressBar");
+
+const timer =
+  document.getElementById("timer");
+
 
 let startTime = null;
 let finished = false;
 
 
-/* ==============================
+/* =================================
    INICIO
-================================ */
+================================= */
 
 window.addEventListener("load", () => {
 
-    // Estado inicial
-    welcomeText.style.opacity = "1";
-    welcomeText.style.transform = "scale(1)";
+  // Estado inicial
 
-    udmLogo.style.opacity = "0";
-    udmLogo.style.transform = "scale(0.6)";
+  welcomePhase.style.opacity = "1";
 
-    logoGlow.style.opacity = "0";
+  listeningPhase.style.opacity = "0";
 
-    introMessage.style.opacity = "0";
-    introMessage.style.transform = "translateY(20px)";
+  mist.classList.remove("active");
 
-    enterButton.style.opacity = "0";
-    enterButton.style.transform = "translateY(20px)";
-    enterButton.style.pointerEvents = "none";
+  udmLogo.style.opacity = "0";
 
-    loadingIndicator.style.opacity = "1";
+  logoGlow.style.opacity = "0";
 
-    startTime = performance.now();
 
-    requestAnimationFrame(animationLoop);
+  startTime = performance.now();
+
+  requestAnimationFrame(animationLoop);
+
 });
 
 
-/* ==============================
-   ANIMACIÓN PRINCIPAL
-================================ */
+/* =================================
+   ANIMACIÓN
+================================= */
 
 function animationLoop(now) {
 
-    if (!startTime) {
-        startTime = now;
-    }
+  const elapsed =
+    now - startTime;
 
-    const elapsed = now - startTime;
-
-    const progress = Math.min(
-        elapsed / TOTAL_TIME,
-        1
+  const progress =
+    Math.min(
+      elapsed / TOTAL_TIME,
+      1
     );
 
-    updateProgress(progress);
 
-    animateSequence(progress);
+  updateProgress(progress);
 
-    if (progress < 1) {
+  animateSequence(progress);
 
-        requestAnimationFrame(animationLoop);
 
-    } else {
+  if (progress < 1) {
 
-        finishIntro();
+    requestAnimationFrame(animationLoop);
 
-    }
+  } else {
+
+    finishIntro();
+
+  }
+
 }
 
 
-/* ==============================
+/* =================================
    PROGRESO
-================================ */
+================================= */
 
 function updateProgress(progress) {
 
-    if (progressBar) {
+  progressBar.style.width =
+    `${progress * 100}%`;
 
-        progressBar.style.width =
-            `${progress * 100}%`;
 
-    }
+  const remaining =
+    Math.ceil(
+      10 - progress * 10
+    );
 
-    if (timer) {
 
-        const remaining =
-            Math.ceil(
-                15 - (progress * 15)
-            );
+  timer.textContent =
+    remaining > 0
+      ? remaining
+      : "Listo";
 
-        timer.textContent =
-            remaining > 0
-                ? remaining
-                : "Listo";
-    }
 }
 
 
-/* ==============================
-   SECUENCIA
-================================ */
+/* =================================
+   SECUENCIA CINEMATOGRÁFICA
+================================= */
 
 function animateSequence(progress) {
 
 
-    /* --------------------------------
-       0% - 30%
-       BIENVENIDOS
-    -------------------------------- */
+  /*
+   * 0% - 25%
+   *
+   * BIENVENIDOS
+   */
 
-    if (progress < 0.30) {
+  if (progress < 0.25) {
 
-        welcomeText.style.opacity = "1";
+    welcomePhase.style.opacity = "1";
 
-        welcomeText.style.transform =
-            "scale(1) translateY(0)";
+    welcomePhase.style.transform =
+      "scale(1) translateY(0)";
 
-    }
-
-
-    /* --------------------------------
-       30% - 55%
-       DESAPARECEN LAS LETRAS
-    -------------------------------- */
-
-    if (
-        progress >= 0.30 &&
-        progress < 0.55
-    ) {
-
-        const p =
-            (progress - 0.30) / 0.25;
-
-        letters.forEach((letter, index) => {
-
-            const character =
-                letter.dataset.letter;
-
-            // U, D y M permanecen
-            const keep =
-                character === "U" ||
-                character === "D" ||
-                character === "M";
-
-            if (keep) {
-
-                letter.style.opacity = "1";
-
-                letter.style.transform =
-                    "translateY(0) scale(1)";
-
-            } else {
-
-                // desaparición progresiva
-                const delay =
-                    index * 0.045;
-
-                const local =
-                    Math.max(
-                        0,
-                        Math.min(
-                            1,
-                            (p - delay) / 0.65
-                        )
-                    );
-
-                letter.style.opacity =
-                    `${1 - local}`;
-
-                letter.style.transform =
-                    `
-                    translateY(${-30 * local}px)
-                    scale(${1 - local * 0.2})
-                    `;
-            }
-
-        });
-
-    }
+  }
 
 
-    /* --------------------------------
-       55% - 70%
-       TRANSICIÓN AL LOGO
-    -------------------------------- */
+  /*
+   * 25% - 55%
+   *
+   * ESTÁS ESCUCHANDO
+   * UN DÍA MÁS
+   */
 
-    if (
-        progress >= 0.55 &&
-        progress < 0.70
-    ) {
+  if (
+    progress >= 0.25 &&
+    progress < 0.55
+  ) {
 
-        const p =
-            (progress - 0.55) / 0.15;
-
-        welcomeText.style.opacity =
-            `${1 - p}`;
-
-        welcomeText.style.transform =
-            `
-            scale(${1 - p * 0.2})
-            translateY(${-20 * p}px)
-            `;
-
-        udmLogo.style.opacity =
-            `${p}`;
-
-        udmLogo.style.transform =
-            `
-            scale(${0.65 + p * 0.35})
-            `;
-    }
+    const p =
+      (progress - 0.25) / 0.30;
 
 
-    /* --------------------------------
-       70% - 82%
-       U D M SE JUNTAN
-    -------------------------------- */
-
-    if (
-        progress >= 0.70 &&
-        progress < 0.82
-    ) {
-
-        const p =
-            (progress - 0.70) / 0.12;
-
-        udmLogo.style.opacity = "1";
-
-        udmLogo.style.transform =
-            `
-            scale(${1 + p * 0.08})
-            `;
-
-        const u =
-            document.querySelector(".udm-u");
-
-        const d =
-            document.querySelector(".udm-d");
-
-        const m =
-            document.querySelector(".udm-m");
-
-        if (u) {
-
-            u.style.transform =
-                `translateX(${25 - p * 25}px)`;
-
-        }
-
-        if (d) {
-
-            d.style.transform =
-                "translateX(0)";
-
-        }
-
-        if (m) {
-
-            m.style.transform =
-                `translateX(${-25 + p * 25}px)`;
-
-        }
-    }
+    welcomePhase.style.opacity =
+      `${1 - p}`;
 
 
-    /* --------------------------------
-       82% - 92%
-       BRILLO
-    -------------------------------- */
-
-    if (
-        progress >= 0.82 &&
-        progress < 0.92
-    ) {
-
-        udmLogo.style.opacity = "1";
-
-        udmLogo.style.transform =
-            "scale(1.08)";
-
-        logoGlow.style.opacity = "1";
-
-    }
+    welcomePhase.style.transform =
+      `
+      scale(${1 - p * 0.12})
+      translateY(${-15 * p}px)
+      `;
 
 
-    /* --------------------------------
-       92% - 100%
-       MENSAJE
-    -------------------------------- */
+    listeningPhase.style.opacity =
+      `${p}`;
 
-    if (progress >= 0.92) {
 
-        udmLogo.style.opacity = "1";
+    listeningPhase.style.transform =
+      `
+      scale(${0.92 + p * 0.08})
+      `;
 
-        udmLogo.style.transform =
-            "scale(1)";
+  }
 
-        logoGlow.style.opacity = "1";
 
-        introMessage.style.opacity = "1";
+  /*
+   * 55% - 72%
+   *
+   * COMIENZA LA NIEBLA
+   */
 
-        introMessage.style.transform =
-            "translateY(0)";
-    }
+  if (
+    progress >= 0.55 &&
+    progress < 0.72
+  ) {
+
+    const p =
+      (progress - 0.55) / 0.17;
+
+
+    listeningPhase.style.opacity =
+      `${1 - p * 0.7}`;
+
+
+    mist.classList.add("active");
+
+  }
+
+
+  /*
+   * 72% - 88%
+   *
+   * APARECE UDM
+   */
+
+  if (
+    progress >= 0.72 &&
+    progress < 0.88
+  ) {
+
+    const p =
+      (progress - 0.72) / 0.16;
+
+
+    listeningPhase.style.opacity = "0";
+
+
+    udmLogo.style.opacity =
+      `${p}`;
+
+
+    udmLogo.style.transform =
+      `
+      scale(${0.55 + p * 0.45})
+      `;
+
+
+    logoGlow.style.opacity =
+      `${p * 0.8}`;
+
+  }
+
+
+  /*
+   * 88% - 100%
+   *
+   * UDM SE CONSOLIDA
+   */
+
+  if (progress >= 0.88) {
+
+    udmLogo.style.opacity = "1";
+
+    udmLogo.style.transform =
+      "scale(1.05)";
+
+
+    logoGlow.style.opacity = "1";
+
+    logoGlow.classList.add("active");
+
+  }
+
 }
 
 
-/* ==============================
-   FINAL
-================================ */
+/* =================================
+   TERMINAR
+================================= */
 
 function finishIntro() {
 
-    if (finished) return;
+  if (finished) return;
 
-    finished = true;
-
-    if (progressBar) {
-
-        progressBar.style.width = "100%";
-
-    }
-
-    if (timer) {
-
-        timer.textContent = "Listo";
-
-    }
-
-    if (loadingIndicator) {
-
-        loadingIndicator.style.opacity = "0";
-
-    }
-
-    // Mostrar botón
-    setTimeout(() => {
-
-        enterButton.style.opacity = "1";
-
-        enterButton.style.transform =
-            "translateY(0)";
-
-        enterButton.style.pointerEvents =
-            "auto";
-
-    }, 300);
-}
+  finished = true;
 
 
-/* ==============================
-   BOTÓN ENTRAR
-================================ */
+  progressBar.style.width =
+    "100%";
 
-enterButton.addEventListener(
-    "click",
-    enterApplication
-);
+  timer.textContent =
+    "Listo";
 
 
-function enterApplication() {
+  loadingIndicator.style.opacity =
+    "0";
 
-    enterButton.style.transform =
-        "scale(0.95)";
+
+  /*
+   * Pequeña pausa para
+   * apreciar el logo
+   */
+
+  setTimeout(() => {
+
+    splashScreen.style.opacity =
+      "0";
+
 
     setTimeout(() => {
 
-        splashScreen.style.transition =
-            "opacity 0.8s ease";
+      splashScreen.style.display =
+        "none";
 
-        splashScreen.style.opacity =
-            "0";
 
-        setTimeout(() => {
+      audioScreen.style.display =
+        "block";
 
-            splashScreen.style.display =
-                "none";
 
-            audioScreen.style.display =
-                "block";
+      window.scrollTo(
+        0,
+        0
+      );
 
-            window.scrollTo(
-                0,
-                0
-            );
+    }, 1200);
 
-        }, 800);
+  }, 700);
 
-    }, 150);
 }
+```
