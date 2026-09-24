@@ -1,127 +1,126 @@
-/* =====================================================
-   UDM - UN DÍA MÁS
-===================================================== */
+/* =========================================================
+   UN DÍA MÁS
+   INICIO
+========================================================= */
 
 
-/* =====================================================
+/* =========================================================
    CONFIGURACIÓN
-===================================================== */
+========================================================= */
 
-const INTRO_TIME = 6000;
+const TIEMPO_CARGA = 10000;
 
 
-/* =====================================================
+/* =========================================================
    ELEMENTOS
-===================================================== */
+========================================================= */
 
-const intro =
-    document.getElementById("intro");
+const splash =
+    document.getElementById("splash");
 
 const app =
     document.getElementById("app");
 
-const loadingText =
-    document.getElementById("loadingText");
 
-
-/* =====================================================
-   INICIO
-===================================================== */
+/* =========================================================
+   INICIAR
+========================================================= */
 
 window.addEventListener(
     "load",
     function () {
 
-        console.log(
-            "UDM iniciando..."
-        );
-
-        startIntro();
+        iniciarCarga();
 
     }
 );
 
 
-/* =====================================================
-   INTRO
-===================================================== */
+/* =========================================================
+   CARGA DE 10 SEGUNDOS
+========================================================= */
 
-function startIntro() {
+function iniciarCarga() {
 
     setTimeout(
         function () {
 
-            finishIntro();
+            mostrarNombre();
 
         },
-        INTRO_TIME
+        TIEMPO_CARGA
     );
 
 }
 
 
-/* =====================================================
-   FINALIZAR
-===================================================== */
+/* =========================================================
+   MOSTRAR UN DÍA MÁS
+========================================================= */
 
-function finishIntro() {
+function mostrarNombre() {
 
-    console.log(
-        "UDM cargado."
-    );
+    if (!splash) {
 
-
-    if (loadingText) {
-
-        loadingText.textContent =
-            "LISTO";
+        return;
 
     }
 
 
-    setTimeout(
-        function () {
-
-            if (intro) {
-
-                intro.style.transition =
-                    "opacity 1s ease";
-
-                intro.style.opacity =
-                    "0";
-
-            }
-
-        },
-        400
+    splash.classList.add(
+        "show-brand"
     );
 
 
     setTimeout(
         function () {
 
-            if (intro) {
+            entrarAplicacion();
 
-                intro.style.display =
-                    "none";
+        },
+        3000
+    );
 
-            }
+}
 
 
-            if (app) {
+/* =========================================================
+   ENTRAR A LA APP
+========================================================= */
 
-                app.style.transition =
-                    "opacity 0.8s ease";
+function entrarAplicacion() {
 
-                app.style.opacity =
-                    "1";
+    if (!splash || !app) {
 
-            }
+        return;
 
+    }
+
+
+    splash.style.transition =
+        "opacity 1.5s ease";
+
+
+    splash.style.opacity =
+        "0";
+
+
+    app.style.transition =
+        "opacity 1.5s ease";
+
+
+    app.style.opacity =
+        "1";
+
+
+    setTimeout(
+        function () {
+
+            splash.style.display =
+                "none";
 
             document.body.style.overflow =
                 "auto";
-
 
         },
         1500
