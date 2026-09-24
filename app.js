@@ -613,3 +613,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js")
+      .then(() => {
+        console.log("UN DÍA MÁS: Service Worker activo");
+      })
+      .catch(error => {
+        console.error("Error del Service Worker:", error);
+      });
+  });
+}
+
