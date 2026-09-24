@@ -1,6 +1,6 @@
 /* =========================================================
-   UN DÍA MÁS
-   INICIO
+   UDM - UN DÍA MÁS
+   SISTEMA DE INICIO
 ========================================================= */
 
 
@@ -10,37 +10,53 @@
 
 const TIEMPO_CARGA = 10000;
 
+const TIEMPO_NOMBRE = 3000;
+
 
 /* =========================================================
    ELEMENTOS
 ========================================================= */
 
-const splash =
-    document.getElementById("splash");
+const intro =
+    document.getElementById("intro");
 
 const app =
     document.getElementById("app");
 
+const loadingText =
+    document.getElementById("loadingText");
+
 
 /* =========================================================
-   INICIAR
+   INICIO
 ========================================================= */
 
 window.addEventListener(
     "load",
     function () {
 
-        iniciarCarga();
+        iniciarUDM();
 
     }
 );
 
 
 /* =========================================================
-   CARGA DE 10 SEGUNDOS
+   INICIAR UDM
 ========================================================= */
 
-function iniciarCarga() {
+function iniciarUDM() {
+
+
+    console.log(
+        "UDM: iniciando aplicación"
+    );
+
+
+    /*
+       Esperamos exactamente
+       10 segundos.
+    */
 
     setTimeout(
         function () {
@@ -60,17 +76,35 @@ function iniciarCarga() {
 
 function mostrarNombre() {
 
-    if (!splash) {
 
-        return;
+    console.log(
+        "UDM: mostrando nombre"
+    );
+
+
+    if (loadingText) {
+
+        loadingText.style.opacity =
+            "0";
 
     }
 
 
-    splash.classList.add(
-        "show-brand"
-    );
+    if (intro) {
 
+        intro.classList.add(
+            "reveal"
+        );
+
+    }
+
+
+    /*
+       Después de mostrar
+       UN DÍA MÁS durante
+       3 segundos entramos
+       a la aplicación.
+    */
 
     setTimeout(
         function () {
@@ -78,45 +112,69 @@ function mostrarNombre() {
             entrarAplicacion();
 
         },
-        3000
+        TIEMPO_NOMBRE
     );
 
 }
 
 
 /* =========================================================
-   ENTRAR A LA APP
+   ENTRAR A LA APLICACIÓN
 ========================================================= */
 
 function entrarAplicacion() {
 
-    if (!splash || !app) {
+
+    console.log(
+        "UDM: entrando a la aplicación"
+    );
+
+
+    if (!intro || !app) {
 
         return;
 
     }
 
 
-    splash.style.transition =
-        "opacity 1.5s ease";
-
-
-    splash.style.opacity =
-        "0";
-
+    /*
+       Preparar transición
+    */
 
     app.style.transition =
         "opacity 1.5s ease";
 
 
+    intro.style.transition =
+        "opacity 1.5s ease";
+
+
+    /*
+       Mostrar aplicación
+    */
+
     app.style.opacity =
         "1";
 
 
+    /*
+       Ocultar intro
+    */
+
+    intro.style.opacity =
+        "0";
+
+
+    /*
+       Eliminar completamente
+       el intro después de
+       la transición.
+    */
+
     setTimeout(
         function () {
 
-            splash.style.display =
+            intro.style.display =
                 "none";
 
             document.body.style.overflow =
