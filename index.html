@@ -15,11 +15,11 @@
         content="#050914"
     >
 
-    <title>UDM - Un Día Más</title>
+    <title>UN DÍA MÁS</title>
 
     <link
         rel="stylesheet"
-        href="style.css"
+        href="style.css?v=2"
     >
 
 </head>
@@ -29,13 +29,11 @@
 
 
     <!-- =====================================================
-         PANTALLA DE INTRO
+         INTRO
     ====================================================== -->
 
     <section id="intro">
 
-
-        <!-- Fondo futurista -->
 
         <div class="intro-background">
 
@@ -49,8 +47,6 @@
 
         </div>
 
-
-        <!-- Partículas -->
 
         <div class="particles">
 
@@ -70,24 +66,12 @@
         </div>
 
 
-        <!-- =================================================
-             CENTRO DEL INTRO
-        ================================================== -->
-
         <div class="intro-center">
 
 
-            <!-- Cargador -->
-
             <div class="loader">
 
-
-                <!-- Anillo exterior -->
-
                 <div class="outer-ring"></div>
-
-
-                <!-- Anillo tecnológico -->
 
                 <div class="tech-ring">
 
@@ -99,20 +83,14 @@
                 </div>
 
 
-                <!-- Círculo de carga -->
-
                 <div
                     id="loadingCircle"
                     class="loading-circle"
                 ></div>
 
 
-                <!-- Punto orbital -->
-
                 <div class="orbit-point"></div>
 
-
-                <!-- Centro -->
 
                 <div class="loader-center">
 
@@ -122,11 +100,8 @@
 
                 </div>
 
-
             </div>
 
-
-            <!-- Texto de estado -->
 
             <div
                 id="loadingText"
@@ -138,10 +113,6 @@
 
         </div>
 
-
-        <!-- =================================================
-             NOMBRE DE LA APP
-        ================================================== -->
 
         <div
             id="brandReveal"
@@ -162,13 +133,15 @@
 
 
     <!-- =====================================================
-         INTERFAZ PRINCIPAL
+         APLICACIÓN
     ====================================================== -->
 
     <main id="app">
 
 
-        <!-- HEADER -->
+        <!-- =================================================
+             HEADER
+        ================================================== -->
 
         <header class="app-header">
 
@@ -195,37 +168,222 @@
 
 
 
-        <!-- CONTENIDO -->
+        <!-- =================================================
+             CONTENIDO
+        ================================================== -->
 
         <section class="app-content">
 
 
-            <div class="main-card">
+            <div class="player-card">
 
 
-                <div class="card-label">
+                <!-- ETIQUETA -->
+
+                <div class="player-label">
                     MENSAJE DE HOY
                 </div>
 
 
-                <h1>
+
+                <!-- CÍRCULO DEL REPRODUCTOR -->
+
+                <div
+                    id="playerCircle"
+                    class="player-circle"
+                >
+
+
+                    <div class="player-ring"></div>
+
+                    <div class="player-ring ring-two"></div>
+
+
+                    <div class="player-core">
+
+
+                        <div class="audio-icon">
+
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+
+                        </div>
+
+
+                        <button
+                            id="playButton"
+                            class="play-button"
+                            aria-label="Reproducir"
+                        >
+
+                            <span
+                                id="playIcon"
+                                class="play-icon"
+                            >
+                                ▶
+                            </span>
+
+                        </button>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- TÍTULO -->
+
+                <h1 id="audioTitle">
                     Un nuevo día
                 </h1>
 
 
-                <p>
-                    Detente. Escucha. Respira.
-                    Sigue adelante.
+
+                <!-- DESCRIPCIÓN -->
+
+                <p id="audioDescription">
+
+                    Detente un momento.
+                    Escucha este mensaje
+                    y continúa tu día.
+
                 </p>
 
 
-                <div class="app-orbit">
 
-                    <div class="app-orbit-ring"></div>
+                <!-- BARRA DE PROGRESO -->
 
-                    <span>
-                        UDM
+                <div class="progress-container">
+
+
+                    <span id="currentTime">
+                        00:00
                     </span>
+
+
+                    <div
+                        id="progressBar"
+                        class="progress-bar"
+                    >
+
+                        <div
+                            id="progressFill"
+                            class="progress-fill"
+                        ></div>
+
+                        <div
+                            id="progressDot"
+                            class="progress-dot"
+                        ></div>
+
+                    </div>
+
+
+                    <span id="duration">
+                        01:48
+                    </span>
+
+
+                </div>
+
+
+
+                <!-- CONTROLES -->
+
+                <div class="player-controls">
+
+
+                    <button
+                        id="backButton"
+                        class="control-button"
+                        aria-label="Retroceder"
+                    >
+                        ↶
+                    </button>
+
+
+                    <button
+                        id="mainPlayButton"
+                        class="main-play-button"
+                        aria-label="Reproducir"
+                    >
+
+                        <span id="mainPlayIcon">
+                            ▶
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        id="forwardButton"
+                        class="control-button"
+                        aria-label="Avanzar"
+                    >
+                        ↷
+                    </button>
+
+
+                </div>
+
+
+
+                <!-- DESCARGAR -->
+
+                <button
+                    id="downloadButton"
+                    class="download-button"
+                >
+
+                    <span class="download-icon">
+                        ↓
+                    </span>
+
+                    DESCARGAR AUDIO
+
+                </button>
+
+
+
+                <!-- ANTERIORES -->
+
+                <div class="previous-title">
+                    MENSAJES ANTERIORES
+                </div>
+
+
+                <div class="previous-buttons">
+
+
+                    <button
+                        class="previous-button"
+                    >
+
+                        <span>
+                            ◀
+                        </span>
+
+                        AYER
+
+                    </button>
+
+
+                    <button
+                        class="previous-button"
+                    >
+
+                        ANTEAYER
+
+                        <span>
+                            ▶
+                        </span>
+
+                    </button>
+
 
                 </div>
 
@@ -237,7 +395,9 @@
 
 
 
-        <!-- FOOTER -->
+        <!-- =================================================
+             FOOTER
+        ================================================== -->
 
         <footer class="app-footer">
 
@@ -250,9 +410,18 @@
 
 
 
+    <!-- AUDIO -->
+
+    <audio
+        id="audioPlayer"
+        preload="metadata"
+    ></audio>
+
+
+
     <!-- JAVASCRIPT -->
 
-    <script src="app.js"></script>
+    <script src="app.js?v=2"></script>
 
 
 </body>
