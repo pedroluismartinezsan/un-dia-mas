@@ -1,4 +1,4 @@
-```javascript
+
 /* =========================================================
    UN DÍA MÁS
    APP.JS
@@ -612,4 +612,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 });
-```
+
