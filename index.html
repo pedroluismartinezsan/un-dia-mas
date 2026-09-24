@@ -1,31 +1,27 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
 
     <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+          content="width=device-width, initial-scale=1.0">
 
-    <meta name="theme-color" content="#07152f">
+    <meta name="theme-color"
+          content="#07152f">
 
     <meta name="description"
           content="UN DÍA MÁS — Un momento para escuchar, reflexionar y seguir adelante.">
 
     <title>UN DÍA MÁS</title>
 
-    <!-- PWA -->
-    <link rel="manifest" href="manifest.json">
-
-    <!-- Iconos -->
-    <link rel="icon" type="image/png" href="assets/icon-192.png">
-
-    <!-- Estilos -->
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- Fondo decorativo -->
+    <!-- FONDO -->
     <div class="background">
         <div class="glow glow-1"></div>
         <div class="glow glow-2"></div>
@@ -33,10 +29,10 @@
     </div>
 
 
-    <!-- CONTENEDOR PRINCIPAL -->
+    <!-- APLICACIÓN -->
     <main class="app">
 
-        <!-- ENCABEZADO -->
+        <!-- HEADER -->
         <header class="header">
 
             <div class="brand">
@@ -68,9 +64,14 @@
 
                 <div class="card-glow"></div>
 
+
+                <!-- ETIQUETA -->
                 <div class="today-label">
+
                     <span class="status-dot"></span>
+
                     AUDIO DE HOY
+
                 </div>
 
 
@@ -113,14 +114,19 @@
                 <!-- REPRODUCTOR -->
                 <div class="player">
 
+
+                    <!-- BARRA DE PROGRESO -->
                     <div class="progress-container">
 
-                        <div class="progress-bar">
-                            <div
-                                class="progress"
-                                id="progress">
+                        <div class="progress-bar"
+                             id="progressBar">
+
+                            <div class="progress"
+                                 id="progress">
                             </div>
+
                         </div>
+
 
                         <div class="time">
 
@@ -139,6 +145,7 @@
 
                     <!-- CONTROLES -->
                     <div class="controls">
+
 
                         <button
                             class="control-button"
@@ -171,10 +178,11 @@
 
                         </button>
 
+
                     </div>
 
 
-                    <!-- AUDIO HTML -->
+                    <!-- AUDIO -->
                     <audio
                         id="audioPlayer"
                         preload="metadata">
@@ -182,7 +190,7 @@
                     </audio>
 
 
-                    <!-- DESCARGAR -->
+                    <!-- DESCARGA -->
                     <a
                         id="downloadButton"
                         class="download-button"
@@ -204,6 +212,7 @@
             </article>
 
 
+
             <!-- AUDIO DE AYER -->
             <article class="yesterday-card">
 
@@ -221,6 +230,7 @@
 
                     </div>
 
+
                     <span
                         class="yesterday-date"
                         id="yesterdayDate">
@@ -230,6 +240,7 @@
 
 
                 <div class="yesterday-player">
+
 
                     <button
                         class="mini-play"
@@ -247,7 +258,10 @@
                             Audio de ayer
                         </strong>
 
-                        <div class="mini-progress">
+
+                        <div
+                            class="mini-progress"
+                            id="yesterdayProgressBar">
 
                             <div
                                 id="yesterdayProgress">
@@ -300,6 +314,7 @@
 
         </footer>
 
+
     </main>
 
 
@@ -307,5 +322,6 @@
     <script src="app.js"></script>
 
 </body>
-</html>
 
+</html>
+```
