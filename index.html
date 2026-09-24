@@ -12,15 +12,10 @@
 
     <meta
         name="theme-color"
-        content="#050b18"
+        content="#050914"
     >
 
-    <meta
-        name="description"
-        content="Un Día Más — Un mensaje para cada día"
-    >
-
-    <title>Un Día Más</title>
+    <title>UDM — Un Día Más</title>
 
     <link
         rel="stylesheet"
@@ -29,163 +24,167 @@
 
 </head>
 
-
 <body>
 
+    <!-- =====================================================
+         INTRO
+    ====================================================== -->
 
-<!-- =========================================================
-     INTRO CINEMATOGRÁFICA
-========================================================= -->
-
-<section id="splashScreen" class="splash-screen">
-
-    <div class="splash-background">
-
-        <div class="splash-orb splash-orb-blue"></div>
-        <div class="splash-orb splash-orb-gold"></div>
-
-        <div class="splash-grid"></div>
-
-        <div class="splash-stars"></div>
-
-    </div>
-
-
-    <!-- BIENVENIDOS -->
-
-    <div
-        id="welcomePhase"
-        class="welcome-phase"
+    <section
+        id="intro"
+        class="intro"
     >
 
-        <div class="welcome-line"></div>
+        <!-- Fondo -->
+        <div class="background">
 
-        <div class="welcome-word">
-            BIENVENIDOS
-        </div>
+            <div class="grid"></div>
 
-        <div class="welcome-line"></div>
+            <div class="glow glow-blue"></div>
 
-    </div>
+            <div class="glow glow-gold"></div>
 
-
-    <!-- NIEBLA / TRANSICIÓN -->
-
-    <div
-        id="mist"
-        class="mist"
-    ></div>
-
-
-    <!-- LOGO UDM -->
-
-    <div
-        id="udmLogo"
-        class="udm-logo"
-    >
-
-        <div class="udm-ring ring-one"></div>
-
-        <div class="udm-ring ring-two"></div>
-
-        <div class="udm-ring ring-three"></div>
-
-
-        <div class="udm-core">
-
-            <span class="udm-letter">U</span>
-            <span class="udm-letter">D</span>
-            <span class="udm-letter">M</span>
+            <div class="stars"></div>
 
         </div>
 
-    </div>
+
+        <!-- Partículas -->
+        <div class="particles">
+
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </div>
 
 
-    <div
-        id="logoGlow"
-        class="logo-glow"
-    ></div>
+        <!-- Contenedor principal -->
+        <div class="intro-content">
 
 
-    <!-- CARGA -->
-
-    <div
-        id="loadingIndicator"
-        class="loading-indicator"
-    >
-
-        <div class="loading-track">
+            <!-- Círculo futurista -->
 
             <div
-                id="progressBar"
-                class="progress-bar"
-            ></div>
+                id="loader"
+                class="loader"
+            >
 
-        </div>
+                <!-- Anillos exteriores -->
 
-    </div>
+                <div class="loader-ring ring-one"></div>
 
-</section>
+                <div class="loader-ring ring-two"></div>
 
-
-<!-- =========================================================
-     APLICACIÓN
-========================================================= -->
-
-<main
-    id="audioScreen"
-    class="audio-screen"
->
+                <div class="loader-ring ring-three"></div>
 
 
-    <!-- FONDO -->
+                <!-- Arco de carga -->
 
-    <div class="app-background">
+                <svg
+                    class="loader-progress"
+                    viewBox="0 0 300 300"
+                >
 
-        <div class="background-grid"></div>
+                    <circle
+                        class="progress-background"
+                        cx="150"
+                        cy="150"
+                        r="135"
+                    ></circle>
 
-        <div class="background-glow glow-blue"></div>
+                    <circle
+                        id="progressCircle"
+                        class="progress-circle"
+                        cx="150"
+                        cy="150"
+                        r="135"
+                    ></circle>
 
-        <div class="background-glow glow-gold"></div>
-
-        <div class="background-stars"></div>
-
-    </div>
-
-
-
-    <!-- CONTENEDOR -->
-
-    <div class="app-container">
-
-
-        <!-- =================================================
-             HEADER
-        ================================================== -->
-
-        <header class="app-header">
+                </svg>
 
 
-            <div class="brand">
+                <!-- Puntos orbitales -->
+
+                <div class="orbit-dot dot-one"></div>
+
+                <div class="orbit-dot dot-two"></div>
+
+                <div class="orbit-dot dot-three"></div>
 
 
-                <div class="brand-mark">
+                <!-- Logo -->
 
-                    <span>U</span>
-                    <span>D</span>
-                    <span>M</span>
+                <div class="logo-container">
+
+                    <div
+                        id="logo"
+                        class="logo"
+                    >
+                        UDM
+                    </div>
+
+                    <div
+                        id="subtitle"
+                        class="subtitle"
+                    >
+                        UN DÍA MÁS
+                    </div>
 
                 </div>
 
+            </div>
 
-                <div class="brand-text">
+
+            <!-- Pequeña línea inferior -->
+
+            <div
+                id="loadingText"
+                class="loading-text"
+            >
+                INICIANDO
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         APLICACIÓN
+    ====================================================== -->
+
+    <main
+        id="app"
+        class="app"
+    >
+
+        <header class="app-header">
+
+            <div class="app-brand">
+
+                <div class="brand-logo">
+                    UDM
+                </div>
+
+                <div>
 
                     <div class="brand-name">
                         UN DÍA MÁS
                     </div>
 
-                    <div class="brand-tagline">
+                    <div class="brand-description">
                         Un mensaje para cada día
                     </div>
 
@@ -193,571 +192,48 @@
 
             </div>
 
-
-            <div class="live-status">
-
-                <span class="live-dot"></span>
-
-                <span>
-                    EN LÍNEA
-                </span>
-
-            </div>
-
-
         </header>
 
 
+        <section class="app-content">
 
-        <!-- =================================================
-             CONTENIDO PRINCIPAL
-        ================================================== -->
+            <div class="app-card">
 
-        <div class="main-layout">
-
-
-            <!-- =================================================
-                 COLUMNA HERO
-            ================================================== -->
-
-            <section class="hero-section">
-
-
-                <div class="hero-date">
-
-                    <span class="date-line"></span>
-
-                    <span>
-                        24 SEPTIEMBRE 2026
-                    </span>
-
-                    <span class="date-line"></span>
-
+                <div class="card-label">
+                    MENSAJE DE HOY
                 </div>
 
+                <h1>
+                    Un nuevo día
+                </h1>
 
+                <p>
+                    Detente. Escucha. Respira.
+                    Sigue adelante.
+                </p>
 
-                <!-- ORBE UDM -->
+                <div class="app-circle">
 
-                <div class="hero-orb">
-
-
-                    <div class="hero-orbit orbit-a"></div>
-
-                    <div class="hero-orbit orbit-b"></div>
-
-                    <div class="hero-orbit orbit-c"></div>
-
-
-                    <div class="hero-dot dot-a"></div>
-
-                    <div class="hero-dot dot-b"></div>
-
-                    <div class="hero-dot dot-c"></div>
-
-
-                    <div class="hero-core">
-
-
-                        <div class="hero-core-inner">
-
-                            <span class="core-u">
-                                U
-                            </span>
-
-                            <span class="core-d">
-                                D
-                            </span>
-
-                            <span class="core-m">
-                                M
-                            </span>
-
-                        </div>
-
-
-                        <div class="core-label">
-                            UN DÍA MÁS
-                        </div>
-
-
-                    </div>
-
+                    <span>UDM</span>
 
                 </div>
-
-
-
-                <!-- TEXTOS -->
-
-                <div class="hero-content">
-
-
-                    <div class="hero-kicker">
-
-                        MENSAJE DE HOY
-
-                    </div>
-
-
-                    <h1 class="hero-title">
-
-                        Un nuevo día
-
-                    </h1>
-
-
-                    <p class="hero-description">
-
-                        Detente.
-                        Escucha.
-                        Respira.
-                        Sigue adelante.
-
-                    </p>
-
-
-                </div>
-
-
-            </section>
-
-
-
-            <!-- =================================================
-                 COLUMNA REPRODUCTOR
-            ================================================== -->
-
-            <section class="player-section">
-
-
-                <div class="player-card">
-
-
-                    <!-- HEADER -->
-
-                    <div class="player-top">
-
-
-                        <div>
-
-                            <div class="player-kicker">
-                                MENSAJE DE HOY
-                            </div>
-
-
-                            <h2 class="player-title">
-
-                                Un nuevo día,
-                                una nueva oportunidad
-
-                            </h2>
-
-                        </div>
-
-
-                        <button
-                            id="downloadButton"
-                            class="download-button"
-                            type="button"
-                            aria-label="Descargar mensaje"
-                        >
-
-                            <span>
-                                ↓
-                            </span>
-
-                        </button>
-
-
-                    </div>
-
-
-
-                    <!-- INFORMACIÓN -->
-
-                    <div class="player-info">
-
-
-                        <div class="player-icon">
-
-                            <span>
-                                UDM
-                            </span>
-
-                        </div>
-
-
-                        <div class="player-meta">
-
-                            <span>
-                                MENSAJE DEL DÍA
-                            </span>
-
-                            <strong>
-                                01:42
-                            </strong>
-
-                        </div>
-
-
-                    </div>
-
-
-
-                    <!-- ONDA -->
-
-                    <div
-                        class="waveform"
-                        id="waveform"
-                        aria-hidden="true"
-                    >
-
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-
-                    </div>
-
-
-
-                    <!-- TIEMPOS -->
-
-                    <div class="audio-times">
-
-                        <span id="currentTime">
-                            00:00
-                        </span>
-
-                        <span id="duration">
-                            01:42
-                        </span>
-
-                    </div>
-
-
-
-                    <!-- PROGRESO -->
-
-                    <div
-                        class="audio-progress"
-                        id="audioProgress"
-                    >
-
-                        <div
-                            id="audioProgressValue"
-                            class="audio-progress-value"
-                        ></div>
-
-                    </div>
-
-
-
-                    <!-- CONTROLES -->
-
-                    <div class="player-controls">
-
-
-                        <button
-                            id="playButton"
-                            class="play-button"
-                            type="button"
-                            aria-label="Reproducir"
-                        >
-
-                            <span
-                                id="playIcon"
-                                class="play-icon"
-                            >
-                                ▶
-                            </span>
-
-                        </button>
-
-
-                    </div>
-
-
-
-                    <!-- PIE -->
-
-                    <div class="player-footer">
-
-                        <span>
-                            ESCUCHA
-                        </span>
-
-                        <span class="footer-dot">
-                            •
-                        </span>
-
-                        <span>
-                            REFLEXIONA
-                        </span>
-
-                        <span class="footer-dot">
-                            •
-                        </span>
-
-                        <span>
-                            AVANZA
-                        </span>
-
-                    </div>
-
-
-                </div>
-
-
-            </section>
-
-
-        </div>
-
-
-
-        <!-- =================================================
-             MENSAJES ANTERIORES
-        ================================================== -->
-
-        <section class="recent-section">
-
-
-            <div class="section-header">
-
-
-                <div>
-
-                    <div class="section-kicker">
-                        HISTORIAL
-                    </div>
-
-                    <h2>
-                        Mensajes recientes
-                    </h2>
-
-                </div>
-
-
-                <div class="section-count">
-                    3 MENSAJES
-                </div>
-
 
             </div>
 
-
-
-            <div class="recent-grid">
-
-
-                <!-- AYER -->
-
-                <article class="recent-card active-card">
-
-
-                    <div class="recent-date-box">
-
-                        <span>
-                            23
-                        </span>
-
-                        <small>
-                            SEP
-                        </small>
-
-                    </div>
-
-
-                    <div class="recent-content">
-
-                        <span>
-                            AYER
-                        </span>
-
-                        <h3>
-                            Un paso más
-                        </h3>
-
-                        <p>
-                            Escucha el mensaje
-                        </p>
-
-                    </div>
-
-
-                    <button
-                        class="recent-play"
-                        type="button"
-                        aria-label="Reproducir mensaje"
-                    >
-
-                        ▶
-
-                    </button>
-
-
-                </article>
-
-
-
-                <!-- ANTEAYER -->
-
-                <article class="recent-card">
-
-
-                    <div class="recent-date-box">
-
-                        <span>
-                            22
-                        </span>
-
-                        <small>
-                            SEP
-                        </small>
-
-                    </div>
-
-
-                    <div class="recent-content">
-
-                        <span>
-                            ANTERIOR
-                        </span>
-
-                        <h3>
-                            No te detengas
-                        </h3>
-
-                        <p>
-                            Escucha el mensaje
-                        </p>
-
-                    </div>
-
-
-                    <button
-                        class="recent-play"
-                        type="button"
-                        aria-label="Reproducir mensaje"
-                    >
-
-                        ▶
-
-                    </button>
-
-
-                </article>
-
-
-            </div>
-
-
         </section>
 
-
-
-        <!-- =================================================
-             FRASE
-        ================================================== -->
-
-        <section class="quote-section">
-
-            <div class="quote-line"></div>
-
-            <p>
-                Cada día trae consigo
-                una nueva oportunidad.
-            </p>
-
-            <div class="quote-line"></div>
-
-        </section>
-
-
-
-        <!-- =================================================
-             FOOTER
-        ================================================== -->
 
         <footer class="app-footer">
 
-
-            <div class="footer-brand">
-
-                UDM
-
-            </div>
-
-
-            <div class="footer-text">
-
-                UN DÍA MÁS
-                <span>•</span>
-                ESCUCHA
-                <span>•</span>
-                REFLEXIONA
-                <span>•</span>
-                AVANZA
-
-            </div>
-
-
-            <div class="footer-year">
-
-                2026
-
-            </div>
-
+            UN DÍA MÁS · UDM
 
         </footer>
 
-
-    </div>
-
-
-    <!-- AUDIO REAL -->
-
-    <audio
-        id="audioPlayer"
-        preload="metadata"
-    ></audio>
-
-
-</main>
+    </main>
 
 
 
-<script src="app.js"></script>
-
+    <script src="app.js"></script>
 
 </body>
 
