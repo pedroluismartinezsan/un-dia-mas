@@ -1,3 +1,39 @@
+/* =========================================================
+   UN DÍA MÁS
+   Interfaz azul oscuro + dorado
+   ========================================================= */
+
+:root {
+    --navy: #050b18;
+    --navy-2: #081326;
+    --navy-3: #0c1c35;
+
+    --blue: #123b70;
+    --blue-light: #1b5aa5;
+
+    --gold: #d6ad55;
+    --gold-light: #f4d889;
+    --gold-dark: #9f792d;
+
+    --white: #f7f9fc;
+    --text: #d9e2ef;
+    --muted: #8fa2bb;
+
+    --glass: rgba(12, 28, 53, 0.72);
+    --border: rgba(214, 173, 85, 0.25);
+
+    --shadow:
+        0 20px 60px rgba(0, 0, 0, 0.45);
+
+    --gold-glow:
+        0 0 20px rgba(214, 173, 85, 0.20),
+        0 0 45px rgba(214, 173, 85, 0.08);
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
 
 * {
     box-sizing: border-box;
@@ -5,319 +41,958 @@
     padding: 0;
 }
 
-:root {
-    --navy: #07152f;
-    --navy-2: #0b2042;
-    --blue: #123c73;
-    --gold: #d9ad4a;
-    --gold-light: #f0cf78;
-    --white: #ffffff;
-    --text: #e9f0fa;
-    --muted: #9eabc0;
-    --glass: rgba(10, 30, 61, 0.72);
-    --border: rgba(217, 173, 74, 0.25);
-}
-
 html {
-    min-height: 100%;
-    background: var(--navy);
+    scroll-behavior: smooth;
 }
 
 body {
     min-height: 100vh;
-    font-family: Arial, Helvetica, sans-serif;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
     color: var(--text);
+
     background:
-        radial-gradient(circle at 20% 20%, rgba(18, 60, 115, 0.35), transparent 35%),
-        radial-gradient(circle at 80% 70%, rgba(217, 173, 74, 0.10), transparent 30%),
-        linear-gradient(145deg, #040d20, #07152f 45%, #0b2042);
+        radial-gradient(
+            circle at 50% -10%,
+            rgba(24, 83, 150, 0.35),
+            transparent 42%
+        ),
+
+        radial-gradient(
+            circle at 10% 45%,
+            rgba(214, 173, 85, 0.06),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 90% 70%,
+            rgba(21, 82, 150, 0.12),
+            transparent 30%
+        ),
+
+        linear-gradient(
+            145deg,
+            #030814 0%,
+            #061022 45%,
+            #07152a 100%
+        );
+
     overflow-x: hidden;
 }
 
 
-/* =====================================================
-   FONDO
-===================================================== */
+/* =========================================================
+   LUCES DE FONDO
+   ========================================================= */
 
-.background {
+body::before {
+    content: "";
+
     position: fixed;
-    inset: 0;
+
+    width: 420px;
+    height: 420px;
+
+    top: -220px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(214, 173, 85, 0.13),
+            transparent 68%
+        );
+
+    filter: blur(25px);
+
+    pointer-events: none;
+
     z-index: -1;
+
+    animation: lightPulse 7s ease-in-out infinite;
+}
+
+
+body::after {
+    content: "";
+
+    position: fixed;
+
+    width: 280px;
+    height: 280px;
+
+    right: -120px;
+    bottom: 10%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(20, 92, 170, 0.18),
+            transparent 70%
+        );
+
+    filter: blur(35px);
+
+    pointer-events: none;
+
+    z-index: -1;
+}
+
+
+@keyframes lightPulse {
+
+    0%,
+    100% {
+        opacity: 0.65;
+        transform: translateX(-50%) scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1.12);
+    }
+}
+
+
+/* =========================================================
+   APP
+   ========================================================= */
+
+.app {
+    width: 100%;
+    max-width: 720px;
+
+    margin: 0 auto;
+
+    padding:
+        24px
+        18px
+        35px;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+header {
+    text-align: center;
+
+    padding:
+        12px
+        0
+        28px;
+}
+
+
+.brand {
+    font-size: 30px;
+
+    font-weight: 800;
+
+    letter-spacing: 5px;
+
+    color: var(--white);
+
+    text-shadow:
+        0 0 10px rgba(214, 173, 85, 0.18);
+
+    margin-bottom: 7px;
+}
+
+
+.subtitle {
+    font-size: 14px;
+
+    color: var(--muted);
+
+    letter-spacing: 1.4px;
+}
+
+
+#currentDate {
+    margin-top: 13px;
+
+    font-size: 13px;
+
+    color: var(--gold-light);
+
+    letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   TARJETAS
+   ========================================================= */
+
+.today-card,
+.yesterday-card {
+
+    position: relative;
+
     overflow: hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(15, 36, 67, 0.82),
+            rgba(5, 15, 30, 0.90)
+        );
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 26px;
+
+    box-shadow:
+        var(--shadow),
+        inset 0 1px 0 rgba(255,255,255,0.035);
+
+    backdrop-filter: blur(18px);
+
+    -webkit-backdrop-filter: blur(18px);
+}
+
+
+/* luz interna */
+
+.today-card::before,
+.yesterday-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 250px;
+    height: 250px;
+
+    top: -170px;
+    right: -80px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(214, 173, 85, 0.16),
+            transparent 70%
+        );
+
+    filter: blur(15px);
+
     pointer-events: none;
 }
 
-.glow {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(70px);
-    opacity: 0.35;
-}
 
-.glow-1 {
-    width: 320px;
-    height: 320px;
-    top: -120px;
-    left: -100px;
-    background: #1555a0;
-}
+/* =========================================================
+   TARJETA PRINCIPAL
+   ========================================================= */
 
-.glow-2 {
-    width: 280px;
-    height: 280px;
-    right: -100px;
-    bottom: -100px;
-    background: #b88926;
-    opacity: 0.16;
-}
+.today-card {
+    padding: 27px 23px 25px;
 
-.particles {
-    position: absolute;
-    inset: 0;
-    background-image:
-        radial-gradient(circle, rgba(255,255,255,0.18) 1px, transparent 1px);
-    background-size: 80px 80px;
-    opacity: 0.10;
-}
+    border-color:
+        rgba(214, 173, 85, 0.35);
 
-
-/* =====================================================
-   APLICACIÓN
-===================================================== */
-
-.app {
-    width: min(100%, 760px);
-    margin: 0 auto;
-    padding: 30px 20px 25px;
-}
-
-
-/* =====================================================
-   HEADER
-===================================================== */
-
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    margin-bottom: 28px;
-}
-
-.brand {
-    display: flex;
-    align-items: center;
-    gap: 13px;
-}
-
-.brand-icon {
-    width: 48px;
-    height: 48px;
-    border: 1px solid rgba(217, 173, 74, 0.55);
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(217, 173, 74, 0.08);
     box-shadow:
-        0 0 25px rgba(217, 173, 74, 0.12),
-        inset 0 0 18px rgba(217, 173, 74, 0.05);
-}
-
-.brand-icon span {
-    color: var(--gold-light);
-    font-size: 27px;
-    font-weight: bold;
-}
-
-.brand-text h1 {
-    color: var(--white);
-    font-size: 21px;
-    letter-spacing: 3px;
-    font-weight: 700;
-}
-
-.brand-text p {
-    margin-top: 4px;
-    color: var(--muted);
-    font-size: 12px;
-}
-
-.date {
-    padding: 8px 13px;
-    border: 1px solid rgba(217, 173, 74, 0.22);
-    border-radius: 20px;
-    color: var(--gold-light);
-    background: rgba(217, 173, 74, 0.06);
-    font-size: 11px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    white-space: nowrap;
+        0 25px 70px rgba(0, 0, 0, 0.48),
+        0 0 35px rgba(214, 173, 85, 0.06);
 }
 
 
-/* =====================================================
-   CONTENIDO
-===================================================== */
+/* =========================================================
+   ETIQUETA
+   ========================================================= */
 
-.content {
+.label {
+
     display: flex;
-    flex-direction: column;
+
+    align-items: center;
+
+    gap: 9px;
+
+    color: var(--gold-light);
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 20px;
+}
+
+
+.label::before {
+
+    content: "";
+
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: var(--gold);
+
+    box-shadow:
+        0 0 8px rgba(214, 173, 85, 0.8),
+        0 0 18px rgba(214, 173, 85, 0.45);
+
+    animation: statusPulse 2s ease-in-out infinite;
+}
+
+
+@keyframes statusPulse {
+
+    0%,
+    100% {
+        opacity: 0.65;
+        transform: scale(0.9);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.15);
+    }
+}
+
+
+/* =========================================================
+   INFORMACIÓN DEL AUDIO
+   ========================================================= */
+
+#todayTitle {
+
+    color: var(--white);
+
+    font-size: 25px;
+
+    line-height: 1.25;
+
+    margin-bottom: 9px;
+}
+
+
+#todayDescription {
+
+    color: var(--muted);
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    margin-bottom: 23px;
+}
+
+
+/* =========================================================
+   VISUALIZADOR
+   ========================================================= */
+
+.visualizer {
+
+    height: 48px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 5px;
+
+    margin:
+        4px
+        0
+        24px;
+}
+
+
+.visualizer span {
+
+    width: 4px;
+
+    height: 12px;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            to top,
+            var(--gold-dark),
+            var(--gold-light)
+        );
+
+    box-shadow:
+        0 0 9px rgba(214, 173, 85, 0.28);
+
+    opacity: 0.75;
+
+    transition:
+        height 0.18s ease,
+        opacity 0.18s ease;
+}
+
+
+/* =========================================================
+   BARRA DE PROGRESO
+   ========================================================= */
+
+.progress-bar {
+
+    position: relative;
+
+    width: 100%;
+
+    height: 6px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(255,255,255,0.08);
+
+    cursor: pointer;
+
+    overflow: hidden;
+
+    margin-bottom: 8px;
+}
+
+
+.progress {
+
+    width: 0%;
+
+    height: 100%;
+
+    border-radius: inherit;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--gold-dark),
+            var(--gold-light)
+        );
+
+    box-shadow:
+        0 0 12px rgba(214, 173, 85, 0.5);
+
+    transition:
+        width 0.1s linear;
+}
+
+
+/* =========================================================
+   TIEMPO
+   ========================================================= */
+
+.time {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+    margin-bottom: 20px;
+}
+
+
+/* =========================================================
+   CONTROLES
+   ========================================================= */
+
+.controls {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
     gap: 18px;
 }
 
 
-/* =====================================================
-   TARJETA PRINCIPAL
-===================================================== */
+.controls button {
 
-.audio-card {
-    position: relative;
-    overflow: hidden;
-    padding: 28px;
-    border: 1px solid var(--border);
-    border-radius: 28px;
+    border: none;
+
+    cursor: pointer;
+
+    color: var(--white);
+
+    background:
+        rgba(255,255,255,0.055);
+
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.controls button:hover {
+
+    transform: translateY(-2px);
+
+    background:
+        rgba(214,173,85,0.10);
+
+    box-shadow:
+        0 7px 22px rgba(0,0,0,0.25);
+}
+
+
+.controls button:active {
+
+    transform: scale(0.94);
+}
+
+
+/* avanzar / retroceder */
+
+#rewindButton,
+#forwardButton {
+
+    width: 46px;
+    height: 46px;
+
+    border-radius: 50%;
+
+    font-size: 15px;
+}
+
+
+/* PLAY */
+
+#playButton {
+
+    width: 72px;
+    height: 72px;
+
+    border-radius: 50%;
+
     background:
         linear-gradient(
             145deg,
-            rgba(15, 45, 87, 0.82),
-            rgba(5, 18, 39, 0.88)
+            var(--gold-light),
+            var(--gold-dark)
         );
+
+    color: #07101d;
+
+    border:
+        1px solid rgba(255,255,255,0.35);
+
+    font-size: 23px;
+
     box-shadow:
-        0 25px 70px rgba(0, 0, 0, 0.35),
-        inset 0 1px 0 rgba(255,255,255,0.04);
-    backdrop-filter: blur(15px);
-}
+        0 8px 25px rgba(0,0,0,0.35),
+        0 0 20px rgba(214,173,85,0.28);
 
-.card-glow {
-    position: absolute;
-    width: 250px;
-    height: 250px;
-    top: -160px;
-    right: -80px;
-    border-radius: 50%;
-    background: rgba(217, 173, 74, 0.10);
-    filter: blur(45px);
-    pointer-events: none;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.25s ease;
 }
 
 
-/* =====================================================
-   ETIQUETA
-===================================================== */
+#playButton:hover {
 
-.today-label {
-    position: relative;
+    transform: scale(1.06);
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.4),
+        0 0 30px rgba(214,173,85,0.45);
+}
+
+
+/* =========================================================
+   DESCARGA
+   ========================================================= */
+
+#downloadButton {
+
     display: flex;
+
     align-items: center;
-    gap: 9px;
-    color: var(--gold-light);
-    font-size: 11px;
-    font-weight: bold;
-    letter-spacing: 2px;
-}
 
-.status-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--gold-light);
-    box-shadow: 0 0 12px rgba(240, 207, 120, 0.8);
-}
-
-
-/* =====================================================
-   VISUALIZADOR
-===================================================== */
-
-.visualizer {
-    height: 110px;
-    display: flex;
-    align-items: center;
     justify-content: center;
-    gap: 6px;
-    margin: 25px 0 18px;
-}
 
-.visualizer span {
-    display: block;
-    width: 5px;
-    height: 25px;
-    border-radius: 5px;
-    background: linear-gradient(
-        to top,
-        var(--gold),
-        var(--gold-light)
-    );
-    opacity: 0.65;
-    transition: height 0.15s ease;
-}
+    gap: 8px;
 
-.visualizer span:nth-child(1),
-.visualizer span:nth-child(15) {
-    height: 22px;
-}
+    width: 100%;
 
-.visualizer span:nth-child(2),
-.visualizer span:nth-child(14) {
-    height: 36px;
-}
+    margin-top: 22px;
 
-.visualizer span:nth-child(3),
-.visualizer span:nth-child(13) {
-    height: 48px;
-}
+    padding: 13px;
 
-.visualizer span:nth-child(4),
-.visualizer span:nth-child(12) {
-    height: 64px;
-}
+    border-radius: 14px;
 
-.visualizer span:nth-child(5),
-.visualizer span:nth-child(11) {
-    height: 76px;
-}
+    text-decoration: none;
 
-.visualizer span:nth-child(6),
-.visualizer span:nth-child(10) {
-    height: 90px;
-}
+    color: var(--gold-light);
 
-.visualizer span:nth-child(7),
-.visualizer span:nth-child(9) {
-    height: 70px;
-}
+    background:
+        rgba(214,173,85,0.055);
 
-.visualizer span:nth-child(8) {
-    height: 98px;
-}
+    border:
+        1px solid rgba(214,173,85,0.18);
 
+    font-size: 12px;
 
-/* =====================================================
-   INFORMACIÓN DEL AUDIO
-===================================================== */
-
-.audio-info {
-    position: relative;
-    text-align: center;
-    margin-bottom: 25px;
-}
-
-.audio-info h2 {
-    color: var(--white);
-    font-size: 25px;
-    line-height: 1.25;
     font-weight: 700;
+
+    letter-spacing: 0.8px;
+
+    transition:
+        background 0.2s ease,
+        border 0.2s ease,
+        transform 0.2s ease;
 }
 
-.audio-info p {
-    max-width: 500px;
-    margin: 9px auto 0;
+
+#downloadButton:hover {
+
+    background:
+        rgba(214,173,85,0.11);
+
+    border-color:
+        rgba(214,173,85,0.38);
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   AYER
+   ========================================================= */
+
+.yesterday-card {
+
+    margin-top: 18px;
+
+    padding: 21px;
+
+    border-color:
+        rgba(255,255,255,0.08);
+}
+
+
+.yesterday-card .label {
+
+    margin-bottom: 12px;
+
     color: var(--muted);
-    font-size: 14px;
-    line-height: 1.5;
 }
 
 
-/* ====================*
+#yesterdayDate {
 
+    font-size: 12px;
+
+    color: var(--gold);
+
+    margin-bottom: 5px;
+}
+
+
+#yesterdayTitle {
+
+    font-size: 17px;
+
+    color: var(--white);
+
+    margin-bottom: 17px;
+}
+
+
+/* =========================================================
+   CONTROLES AYER
+   ========================================================= */
+
+.yesterday-controls {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+}
+
+
+#yesterdayPlay {
+
+    width: 48px;
+    height: 48px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    border:
+        1px solid rgba(214,173,85,0.35);
+
+    background:
+        rgba(214,173,85,0.08);
+
+    color: var(--gold-light);
+
+    cursor: pointer;
+
+    font-size: 16px;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+#yesterdayPlay:hover {
+
+    transform: scale(1.06);
+
+    background:
+        rgba(214,173,85,0.14);
+
+    box-shadow:
+        0 0 20px rgba(214,173,85,0.15);
+}
+
+
+#yesterdayProgressBar {
+
+    flex: 1;
+
+    height: 5px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(255,255,255,0.08);
+
+    cursor: pointer;
+
+    overflow: hidden;
+}
+
+
+#yesterdayProgress {
+
+    width: 0%;
+
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--gold-dark),
+            var(--gold-light)
+        );
+
+    border-radius: inherit;
+}
+
+
+#yesterdayDuration {
+
+    min-width: 36px;
+
+    text-align: right;
+
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+
+#yesterdayDownload {
+
+    display: block;
+
+    margin-top: 17px;
+
+    text-align: right;
+
+    color: var(--gold);
+
+    font-size: 11px;
+
+    text-decoration: none;
+
+    opacity: 0.85;
+
+    transition: opacity 0.2s ease;
+}
+
+
+#yesterdayDownload:hover {
+
+    opacity: 1;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+
+    text-align: center;
+
+    padding-top: 28px;
+
+    color: #64758c;
+
+    font-size: 10px;
+
+    letter-spacing: 0.8px;
+}
+
+
+/* =========================================================
+   EFECTO DE BRILLO SUAVE
+   ========================================================= */
+
+.today-card,
+.yesterday-card {
+
+    animation:
+        cardAppear 0.7s ease both;
+}
+
+
+.yesterday-card {
+
+    animation-delay: 0.12s;
+}
+
+
+@keyframes cardAppear {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(12px);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+
+/* =========================================================
+   SELECCIÓN
+   ========================================================= */
+
+::selection {
+
+    background:
+        rgba(214,173,85,0.3);
+
+    color: white;
+}
+
+
+/* =========================================================
+   MÓVIL
+   ========================================================= */
+
+@media (max-width: 520px) {
+
+    .app {
+
+        padding:
+            18px
+            13px
+            28px;
+    }
+
+
+    .brand {
+
+        font-size: 25px;
+
+        letter-spacing: 4px;
+    }
+
+
+    .today-card {
+
+        padding:
+            23px
+            18px
+            21px;
+
+        border-radius: 22px;
+    }
+
+
+    #todayTitle {
+
+        font-size: 22px;
+    }
+
+
+    .controls {
+
+        gap: 14px;
+    }
+
+
+    #playButton {
+
+        width: 66px;
+        height: 66px;
+    }
+
+
+    #rewindButton,
+    #forwardButton {
+
+        width: 43px;
+        height: 43px;
+    }
+
+
+    .yesterday-card {
+
+        border-radius: 20px;
+    }
+}
+
+
+/* =========================================================
+   PANTALLAS GRANDES
+   ========================================================= */
+
+@media (min-width: 900px) {
+
+    .app {
+
+        padding-top: 40px;
+    }
+
+    .brand {
+
+        font-size: 34px;
+    }
+}
