@@ -1,12 +1,11 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <meta name="theme-color" content="#061426">
   <meta name="description" content="Un día Más - Un mensaje para acompañarte cada día">
-
   <title>Un día Más</title>
 
   <link rel="stylesheet" href="style.css">
@@ -14,9 +13,12 @@
 
 <body>
 
+  <!-- =========================
+       INTRO
+  ========================== -->
+
   <main id="splashScreen" class="splash-screen">
 
-    <!-- Fondo -->
     <div class="ambient-light light-one"></div>
     <div class="ambient-light light-two"></div>
 
@@ -33,38 +35,34 @@
       <span></span>
     </div>
 
-    <!-- INTRO -->
+    <!-- NUBE / DESENFOQUE -->
+    <div id="mist" class="mist"></div>
+
     <section id="intro" class="intro">
 
-      <div id="welcomeText" class="welcome-text">
+      <!-- 1. BIENVENIDOS -->
+      <div id="welcomePhase" class="welcome-phase">
+        <div class="welcome-word">
+          BIENVENIDOS
+        </div>
+      </div>
 
-        <div class="line">
-          <span class="word">Bienvenidos</span>
-          <span class="word">a</span>
+
+      <!-- 2. ESTÁS ESCUCHANDO -->
+      <div id="listeningPhase" class="listening-phase">
+
+        <div class="listening-small">
+          ESTÁS ESCUCHANDO
         </div>
 
-        <div class="main-title">
-
-          <span class="letter" data-letter="U">U</span>
-          <span class="letter" data-letter="N">N</span>
-
-          <span class="letter space"> </span>
-
-          <span class="letter" data-letter="D">D</span>
-          <span class="letter" data-letter="Í">Í</span>
-          <span class="letter" data-letter="A">A</span>
-
-          <span class="letter space"> </span>
-
-          <span class="letter" data-letter="M">M</span>
-          <span class="letter" data-letter="Á">Á</span>
-          <span class="letter" data-letter="S">S</span>
-
+        <div class="listening-title">
+          UN DÍA MÁS
         </div>
 
       </div>
 
-      <!-- Logo UDM -->
+
+      <!-- 3. UDM -->
       <div id="udmLogo" class="udm-logo">
 
         <span class="udm-letter udm-u">U</span>
@@ -73,22 +71,14 @@
 
       </div>
 
+
+      <!-- BRILLO DEL LOGO -->
       <div id="logoGlow" class="logo-glow"></div>
-
-      <!-- Mensaje -->
-      <p id="introMessage" class="intro-message">
-        Un mensaje para acompañarte cada día.
-      </p>
-
-      <!-- Botón -->
-      <button id="enterButton" class="enter-button">
-        <span>Entrar</span>
-        <span class="arrow">→</span>
-      </button>
 
     </section>
 
-    <!-- Indicador de carga -->
+
+    <!-- CARGA -->
     <div id="loadingIndicator" class="loading-indicator">
 
       <div class="progress-track">
@@ -97,12 +87,12 @@
 
       <div class="loading-info">
         <span>Preparando tu día</span>
-        <span id="timer">15</span>
+        <span id="timer">10</span>
       </div>
 
     </div>
 
-    <!-- Pie -->
+
     <footer>
       UN DÍA MÁS
     </footer>
@@ -110,7 +100,10 @@
   </main>
 
 
-  <!-- INTERFAZ DE AUDIOS -->
+  <!-- =========================
+       APLICACIÓN
+  ========================== -->
+
   <main id="audioScreen" class="audio-screen">
 
     <header class="audio-header">
@@ -126,6 +119,8 @@
 
     </header>
 
+
+    <!-- MENSAJE DE HOY -->
 
     <section class="today-card">
 
@@ -166,13 +161,17 @@
     </section>
 
 
+    <!-- MENSAJES ANTERIORES -->
+
     <section class="recent-section">
 
       <div class="section-title">
         <h2>Mensajes recientes</h2>
       </div>
 
+
       <div class="audio-list">
+
 
         <article class="audio-item">
 
@@ -230,6 +229,7 @@
 
         </article>
 
+
       </div>
 
     </section>
@@ -241,3 +241,4 @@
 
 </body>
 </html>
+```
