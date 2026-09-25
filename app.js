@@ -1,1358 +1,585 @@
 /* =========================================================
    UN DÍA MÁS
-   FUTURE AUDIO INTERFACE
-   Azul oscuro + azul eléctrico + dorado
+   APP.JS
+   Reproductor Hoy + Ayer
    ========================================================= */
 
-:root {
-    --bg-1: #020711;
-    --bg-2: #061225;
-    --bg-3: #091a31;
+console.log("UN DÍA MÁS: aplicación iniciada");
 
-    --panel: rgba(7, 19, 38, 0.78);
-    --panel-light: rgba(14, 34, 62, 0.62);
 
-    --blue: #1677ff;
-    --blue-light: #55aaff;
-    --blue-soft: rgba(22, 119, 255, 0.25);
+// =========================================================
+// ELEMENTOS - AUDIO DE HOY
+// =========================================================
 
-    --gold: #d9b45c;
-    --gold-light: #ffe6a0;
-    --gold-soft: rgba(217, 180, 92, 0.25);
+const audioHoy = document.getElementById("audioPlayer");
 
-    --white: #f4f8ff;
-    --text: #d8e5f5;
-    --muted: #7890ad;
+const playButton = document.getElementById("playButton");
+const playIcon = document.getElementById("playIcon");
 
-    --line: rgba(102, 156, 214, 0.16);
-    --line-gold: rgba(217, 180, 92, 0.28);
+const progressBar = document.getElementById("progressBar");
+const progress = document.getElementById("progress");
+
+const currentTime = document.getElementById("currentTime");
+const duration = document.getElementById("duration");
+
+const rewindButton = document.getElementById("rewindButton");
+const forwardButton = document.getElementById("forwardButton");
+
+const downloadButton = document.getElementById("downloadButton");
+
+const todayTitle = document.getElementById("todayTitle");
+const todayDescription = document.getElementById("todayDescription");
+
+const currentDate = document.getElementById("currentDate");
+
+
+// =========================================================
+// ELEMENTOS - AUDIO DE AYER
+// =========================================================
+
+const audioAyer = new Audio();
+
+const yesterdayPlay = document.getElementById("yesterdayPlay");
+
+const yesterdayProgressBar =
+    document.getElementById("yesterdayProgressBar");
+
+const yesterdayProgress =
+    document.getElementById("yesterdayProgress");
+
+const yesterdayDuration =
+    document.getElementById("yesterdayDuration");
+
+const yesterdayDownload =
+    document.getElementById("yesterdayDownload");
+
+const yesterdayDate =
+    document.getElementById("yesterdayDate");
+
+const yesterdayTitle =
+    document.getElementById("yesterdayTitle");
+
+
+// =========================================================
+// ARCHIVOS DE AUDIO
+// =========================================================
+
+const urlHoy = "audio/hoy.mp3";
+
+const urlAyer = "audio/ayer.mp3";
+
+
+// =========================================================
+// CONFIGURAR AUDIO DE HOY
+// =========================================================
+
+audioHoy.src = urlHoy;
+
+audioHoy.preload = "metadata";
+
+downloadButton.href = urlHoy;
+
+downloadButton.download = "un-dia-mas-hoy.mp3";
+
+
+// =========================================================
+// CONFIGURAR AUDIO DE AYER
+// =========================================================
+
+audioAyer.src = urlAyer;
+
+audioAyer.preload = "metadata";
+
+yesterdayDownload.href = urlAyer;
+
+yesterdayDownload.download = "un-dia-mas-ayer.mp3";
+
+
+// =========================================================
+// TITULOS
+// =========================================================
+
+todayTitle.textContent = "Un momento para ti";
+
+todayDescription.textContent =
+    "Escucha el mensaje de hoy y tómate unos minutos para ti.";
+
+yesterdayTitle.textContent =
+    "Mensaje de ayer";
+
+
+// =========================================================
+// FECHA DE HOY
+// =========================================================
+
+function mostrarFecha() {
+
+    const fecha = new Date();
+
+    const opciones = {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+    };
+
+    const texto =
+        fecha.toLocaleDateString("es-CO", opciones);
+
+    currentDate.textContent =
+        texto.charAt(0).toUpperCase() +
+        texto.slice(1);
 }
 
+mostrarFecha();
 
-/* =========================================================
-   RESET
-   ========================================================= */
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+// =========================================================
+// FECHA DE AYER
+// =========================================================
+
+function mostrarFechaAyer() {
+
+    const fecha = new Date();
+
+    fecha.setDate(fecha.getDate() - 1);
+
+    const opciones = {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+    };
+
+    const texto =
+        fecha.toLocaleDateString("es-CO", opciones);
+
+    yesterdayDate.textContent =
+        texto.charAt(0).toUpperCase() +
+        texto.slice(1);
 }
 
-
-html {
-    min-height: 100%;
-    scroll-behavior: smooth;
-}
+mostrarFechaAyer();
 
 
-body {
-    min-height: 100vh;
+// =========================================================
+// FORMATEAR TIEMPO
+// =========================================================
 
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
+function formatoTiempo(segundos) {
 
-    color: var(--text);
-
-    overflow-x: hidden;
-
-    background:
-        radial-gradient(
-            circle at 50% -15%,
-            rgba(24, 91, 170, 0.30),
-            transparent 40%
-        ),
-
-        radial-gradient(
-            circle at 0% 45%,
-            rgba(16, 96, 210, 0.12),
-            transparent 32%
-        ),
-
-        radial-gradient(
-            circle at 100% 80%,
-            rgba(217, 180, 92, 0.07),
-            transparent 30%
-        ),
-
-        linear-gradient(
-            145deg,
-            var(--bg-1),
-            var(--bg-2) 48%,
-            var(--bg-3)
-        );
-}
-
-
-/* =========================================================
-   RED TECNOLÓGICA DE FONDO
-   ========================================================= */
-
-body::before {
-    content: "";
-
-    position: fixed;
-
-    inset: 0;
-
-    pointer-events: none;
-
-    opacity: 0.32;
-
-    background-image:
-        linear-gradient(
-            rgba(67, 133, 210, 0.035) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(67, 133, 210, 0.035) 1px,
-            transparent 1px
-        );
-
-    background-size:
-        55px 55px;
-
-    mask-image:
-        linear-gradient(
-            to bottom,
-            black,
-            transparent 85%
-        );
-
-    -webkit-mask-image:
-        linear-gradient(
-            to bottom,
-            black,
-            transparent 85%
-        );
-
-    z-index: -3;
-}
-
-
-/* =========================================================
-   HALO CENTRAL
-   ========================================================= */
-
-body::after {
-    content: "";
-
-    position: fixed;
-
-    width: 600px;
-    height: 600px;
-
-    left: 50%;
-    top: 38%;
-
-    transform: translate(-50%, -50%);
-
-    border-radius: 50%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(16, 91, 190, 0.10),
-            rgba(16, 91, 190, 0.035) 40%,
-            transparent 70%
-        );
-
-    filter: blur(20px);
-
-    pointer-events: none;
-
-    z-index: -2;
-
-    animation:
-        ambientGlow 8s ease-in-out infinite;
-}
-
-
-@keyframes ambientGlow {
-
-    0%,
-    100% {
-        opacity: 0.65;
-
-        transform:
-            translate(-50%, -50%)
-            scale(0.95);
+    if (!isFinite(segundos)) {
+        return "0:00";
     }
 
-    50% {
-        opacity: 1;
+    const minutos =
+        Math.floor(segundos / 60);
 
-        transform:
-            translate(-50%, -50%)
-            scale(1.08);
+    const segundosRestantes =
+        Math.floor(segundos % 60);
+
+    return (
+        minutos +
+        ":" +
+        String(segundosRestantes).padStart(2, "0")
+    );
+}
+
+
+// =========================================================
+// PLAY / PAUSA - HOY
+// =========================================================
+
+playButton.addEventListener("click", function () {
+
+    if (audioHoy.paused) {
+
+        // Si Ayer está sonando, detenerlo
+        audioAyer.pause();
+
+        audioHoy.play();
+
+    } else {
+
+        audioHoy.pause();
     }
-}
+
+});
 
 
-/* =========================================================
-   APP
-   ========================================================= */
+// =========================================================
+// CAMBIAR ICONO PLAY / PAUSA
+// =========================================================
 
-.app {
-    width: 100%;
+audioHoy.addEventListener("play", function () {
 
-    max-width: 720px;
+    playIcon.textContent = "❚❚";
 
-    margin: 0 auto;
-
-    padding:
-        25px
-        18px
-        40px;
-}
+});
 
 
-/* =========================================================
-   HEADER
-   ========================================================= */
+audioHoy.addEventListener("pause", function () {
 
-header {
-    text-align: center;
+    playIcon.textContent = "▶";
 
-    padding:
-        10px
-        0
-        30px;
-}
+});
 
 
-.brand {
-    position: relative;
+audioHoy.addEventListener("ended", function () {
 
-    display: inline-block;
+    playIcon.textContent = "▶";
 
-    font-size: 31px;
+    progress.style.width = "0%";
 
-    font-weight: 800;
+    currentTime.textContent = "0:00";
 
-    letter-spacing: 6px;
-
-    color: var(--white);
-
-    text-shadow:
-        0 0 8px rgba(85, 170, 255, 0.20),
-        0 0 25px rgba(85, 170, 255, 0.10);
-
-    margin-bottom: 8px;
-}
+});
 
 
-/* pequeña línea tecnológica */
+// =========================================================
+// DURACIÓN HOY
+// =========================================================
 
-.brand::after {
-    content: "";
+audioHoy.addEventListener("loadedmetadata", function () {
 
-    display: block;
+    duration.textContent =
+        formatoTiempo(audioHoy.duration);
 
-    width: 55px;
+    console.log(
+        "Duración:",
+        audioHoy.duration
+    );
 
-    height: 2px;
-
-    margin:
-        9px auto
-        0;
-
-    border-radius: 10px;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            var(--gold),
-            transparent
-        );
-
-    box-shadow:
-        0 0 12px rgba(217, 180, 92, 0.5);
-}
+});
 
 
-.subtitle {
-    font-size: 13px;
+// =========================================================
+// PROGRESO HOY
+// =========================================================
 
-    color: var(--muted);
+audioHoy.addEventListener("timeupdate", function () {
 
-    letter-spacing: 2px;
-}
+    if (!audioHoy.duration) {
+        return;
+    }
+
+    const porcentaje =
+        (audioHoy.currentTime /
+            audioHoy.duration) * 100;
+
+    progress.style.width =
+        porcentaje + "%";
+
+    currentTime.textContent =
+        formatoTiempo(audioHoy.currentTime);
+
+});
 
 
-#currentDate {
-    margin-top: 13px;
+// =========================================================
+// BUSCAR POSICIÓN HOY
+// =========================================================
 
-    color: var(--gold-light);
+progressBar.addEventListener("click", function (evento) {
 
-    font-size: 11px;
+    if (!audioHoy.duration) {
+        return;
+    }
 
-    letter-spacing: 2px;
+    const rect =
+        progressBar.getBoundingClientRect();
 
-    text-transform: uppercase;
-}
+    const posicion =
+        evento.clientX - rect.left;
+
+    const porcentaje =
+        posicion / rect.width;
+
+    audioHoy.currentTime =
+        porcentaje * audioHoy.duration;
+
+});
 
 
-/* =========================================================
-   PANEL PRINCIPAL
-   ========================================================= */
+// =========================================================
+// RETROCEDER 10 SEGUNDOS
+// =========================================================
 
-.today-card,
-.yesterday-card {
+rewindButton.addEventListener("click", function () {
 
-    position: relative;
-
-    overflow: hidden;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(13, 34, 63, 0.84),
-            rgba(3, 12, 25, 0.91)
+    audioHoy.currentTime =
+        Math.max(
+            0,
+            audioHoy.currentTime - 10
         );
 
-    border:
-        1px solid var(--line);
-
-    backdrop-filter:
-        blur(20px);
-
-    -webkit-backdrop-filter:
-        blur(20px);
-
-    box-shadow:
-        0 25px 70px rgba(0, 0, 0, 0.48),
-        inset 0 1px 0 rgba(255,255,255,0.035);
-}
+});
 
 
-/* =========================================================
-   BORDE TECNOLÓGICO
-   ========================================================= */
+// =========================================================
+// AVANZAR 10 SEGUNDOS
+// =========================================================
 
-.today-card::before,
-.yesterday-card::before {
+forwardButton.addEventListener("click", function () {
 
-    content: "";
-
-    position: absolute;
-
-    inset: 0;
-
-    border-radius: inherit;
-
-    padding: 1px;
-
-    background:
-        linear-gradient(
-            125deg,
-            transparent 15%,
-            rgba(85, 170, 255, 0.20),
-            transparent 35%,
-            transparent 65%,
-            rgba(217, 180, 92, 0.20),
-            transparent 85%
+    audioHoy.currentTime =
+        Math.min(
+            audioHoy.duration || 0,
+            audioHoy.currentTime + 10
         );
 
-    -webkit-mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-
-    -webkit-mask-composite: xor;
-
-    mask-composite: exclude;
-
-    pointer-events: none;
-}
+});
 
 
-/* =========================================================
-   REFLEJO SUPERIOR
-   ========================================================= */
+// =========================================================
+// AUDIO DE AYER - PLAY / PAUSA
+// =========================================================
 
-.today-card::after,
-.yesterday-card::after {
+yesterdayPlay.addEventListener("click", function () {
 
-    content: "";
+    if (audioAyer.paused) {
 
-    position: absolute;
+        // Si Hoy está sonando, detenerlo
+        audioHoy.pause();
 
-    top: -120px;
+        audioAyer.play();
 
-    left: 10%;
+    } else {
 
-    width: 80%;
+        audioAyer.pause();
+    }
 
-    height: 180px;
+});
 
-    background:
-        radial-gradient(
-            ellipse,
-            rgba(50, 132, 235, 0.11),
-            transparent 70%
+
+// =========================================================
+// AUDIO DE AYER - ICONO
+// =========================================================
+
+audioAyer.addEventListener("play", function () {
+
+    yesterdayPlay.textContent = "❚❚";
+
+});
+
+
+audioAyer.addEventListener("pause", function () {
+
+    yesterdayPlay.textContent = "▶";
+
+});
+
+
+audioAyer.addEventListener("ended", function () {
+
+    yesterdayPlay.textContent = "▶";
+
+    yesterdayProgress.style.width =
+        "0%";
+
+});
+
+
+// =========================================================
+// DURACIÓN DE AYER
+// =========================================================
+
+audioAyer.addEventListener("loadedmetadata", function () {
+
+    yesterdayDuration.textContent =
+        formatoTiempo(audioAyer.duration);
+
+});
+
+
+// =========================================================
+// PROGRESO DE AYER
+// =========================================================
+
+audioAyer.addEventListener("timeupdate", function () {
+
+    if (!audioAyer.duration) {
+        return;
+    }
+
+    const porcentaje =
+        (audioAyer.currentTime /
+            audioAyer.duration) * 100;
+
+    yesterdayProgress.style.width =
+        porcentaje + "%";
+
+    yesterdayDuration.textContent =
+        formatoTiempo(audioAyer.currentTime);
+
+});
+
+
+// =========================================================
+// BUSCAR POSICIÓN EN AUDIO DE AYER
+// =========================================================
+
+yesterdayProgressBar.addEventListener(
+    "click",
+    function (evento) {
+
+        if (!audioAyer.duration) {
+            return;
+        }
+
+        const rect =
+            yesterdayProgressBar.getBoundingClientRect();
+
+        const posicion =
+            evento.clientX - rect.left;
+
+        const porcentaje =
+            posicion / rect.width;
+
+        audioAyer.currentTime =
+            porcentaje * audioAyer.duration;
+
+    }
+);
+
+
+// =========================================================
+// ERRORES - HOY
+// =========================================================
+
+audioHoy.addEventListener("error", function () {
+
+    console.error(
+        "Error al cargar el audio de hoy:",
+        audioHoy.error
+    );
+
+});
+
+
+// =========================================================
+// ERRORES - AYER
+// =========================================================
+
+audioAyer.addEventListener("error", function () {
+
+    console.error(
+        "Error al cargar el audio de ayer:",
+        audioAyer.error
+    );
+
+});
+
+
+// =========================================================
+// DESCARGA
+// =========================================================
+
+downloadButton.addEventListener("click", function () {
+
+    console.log(
+        "Descargando audio de hoy..."
+    );
+
+});
+
+
+yesterdayDownload.addEventListener(
+    "click",
+    function () {
+
+        console.log(
+            "Descargando audio de ayer..."
         );
 
-    filter: blur(18px);
-
-    pointer-events: none;
-}
-
-
-/* =========================================================
-   CARD HOY
-   ========================================================= */
-
-.today-card {
-
-    padding:
-        28px
-        24px
-        25px;
-
-    border-radius: 25px;
-
-    border-color:
-        rgba(85, 170, 255, 0.20);
-
-    animation:
-        panelEnter 0.7s ease both;
-}
-
-
-@keyframes panelEnter {
-
-    from {
-        opacity: 0;
-
-        transform:
-            translateY(18px)
-            scale(0.985);
     }
+);
 
-    to {
-        opacity: 1;
 
-        transform:
-            translateY(0)
-            scale(1);
-    }
-}
+// =========================================================
+// VISUALIZADOR
+// =========================================================
 
+const barras =
+    document.querySelectorAll(
+        ".visualizer span"
+    );
 
-/* =========================================================
-   LABEL
-   ========================================================= */
 
-.label {
+let visualizadorActivo = false;
 
-    position: relative;
 
-    z-index: 2;
+function animarVisualizador() {
 
-    display: flex;
+    if (!visualizadorActivo) {
 
-    align-items: center;
+        barras.forEach(function (barra) {
 
-    gap: 10px;
+            barra.style.height = "8px";
 
-    color: var(--gold-light);
+        });
 
-    font-size: 10px;
-
-    font-weight: 700;
-
-    letter-spacing: 2.5px;
-
-    margin-bottom: 20px;
-}
-
-
-.label::before {
-
-    content: "";
-
-    width: 7px;
-    height: 7px;
-
-    flex-shrink: 0;
-
-    border-radius: 50%;
-
-    background: var(--gold);
-
-    box-shadow:
-        0 0 7px var(--gold),
-        0 0 17px rgba(217,180,92,0.6);
-
-    animation:
-        signalPulse 2s ease-in-out infinite;
-}
-
-
-@keyframes signalPulse {
-
-    0%,
-    100% {
-        transform: scale(0.75);
-
-        opacity: 0.55;
-    }
-
-    50% {
-        transform: scale(1.15);
-
-        opacity: 1;
-    }
-}
-
-
-/* =========================================================
-   TITULO
-   ========================================================= */
-
-#todayTitle {
-
-    position: relative;
-
-    z-index: 2;
-
-    color: var(--white);
-
-    font-size: 26px;
-
-    font-weight: 700;
-
-    line-height: 1.25;
-
-    letter-spacing: 0.2px;
-
-    margin-bottom: 10px;
-
-    text-shadow:
-        0 0 20px rgba(85,170,255,0.08);
-}
-
-
-#todayDescription {
-
-    position: relative;
-
-    z-index: 2;
-
-    color: var(--muted);
-
-    font-size: 14px;
-
-    line-height: 1.65;
-
-    max-width: 580px;
-
-    margin-bottom: 25px;
-}
-
-
-/* =========================================================
-   VISUALIZADOR
-   ========================================================= */
-
-.visualizer {
-
-    position: relative;
-
-    z-index: 2;
-
-    height: 58px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 4px;
-
-    margin:
-        2px
-        0
-        20px;
-}
-
-
-.visualizer span {
-
-    width: 3px;
-
-    min-height: 8px;
-
-    border-radius: 10px;
-
-    background:
-        linear-gradient(
-            to top,
-            var(--blue),
-            var(--gold-light)
-        );
-
-    opacity: 0.65;
-
-    box-shadow:
-        0 0 7px rgba(47,137,255,0.28);
-
-    transform-origin: center;
-
-    transition:
-        height 0.15s ease,
-        opacity 0.15s ease;
-}
-
-
-/* =========================================================
-   BARRA DE PROGRESO
-   ========================================================= */
-
-.progress-bar {
-
-    position: relative;
-
-    z-index: 3;
-
-    width: 100%;
-
-    height: 5px;
-
-    border-radius: 20px;
-
-    background:
-        rgba(255,255,255,0.055);
-
-    border:
-        1px solid rgba(255,255,255,0.025);
-
-    cursor: pointer;
-
-    overflow: visible;
-
-    margin-bottom: 9px;
-}
-
-
-.progress {
-
-    position: relative;
-
-    width: 0%;
-
-    height: 100%;
-
-    border-radius: inherit;
-
-    background:
-        linear-gradient(
-            90deg,
-            var(--blue),
-            var(--gold-light)
-        );
-
-    box-shadow:
-        0 0 8px rgba(44,139,255,0.55),
-        0 0 15px rgba(217,180,92,0.20);
-
-    transition:
-        width 0.1s linear;
-}
-
-
-/* punto luminoso */
-
-.progress::after {
-
-    content: "";
-
-    position: absolute;
-
-    right: -4px;
-
-    top: 50%;
-
-    width: 9px;
-    height: 9px;
-
-    transform: translateY(-50%);
-
-    border-radius: 50%;
-
-    background: var(--gold-light);
-
-    box-shadow:
-        0 0 6px var(--gold),
-        0 0 14px rgba(217,180,92,0.65);
-}
-
-
-/* =========================================================
-   TIEMPO
-   ========================================================= */
-
-.time {
-
-    position: relative;
-
-    z-index: 2;
-
-    display: flex;
-
-    justify-content: space-between;
-
-    color: #607893;
-
-    font-size: 10px;
-
-    letter-spacing: 0.5px;
-
-    margin-bottom: 20px;
-}
-
-
-/* =========================================================
-   CONTROLES
-   ========================================================= */
-
-.controls {
-
-    position: relative;
-
-    z-index: 4;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 18px;
-}
-
-
-.controls button {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    border: 1px solid rgba(95,143,198,0.15);
-
-    cursor: pointer;
-
-    color: var(--text);
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(28,58,94,0.65),
-            rgba(8,23,42,0.85)
-        );
-
-    box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.035),
-        0 8px 20px rgba(0,0,0,0.25);
-
-    transition:
-        transform 0.22s ease,
-        border-color 0.22s ease,
-        box-shadow 0.22s ease,
-        background 0.22s ease;
-}
-
-
-.controls button:hover {
-
-    transform:
-        translateY(-2px);
-
-    border-color:
-        rgba(217,180,92,0.35);
-
-    background:
-        rgba(19,48,82,0.9);
-
-    box-shadow:
-        0 10px 25px rgba(0,0,0,0.32),
-        0 0 15px rgba(36,124,235,0.10);
-}
-
-
-.controls button:active {
-
-    transform:
-        scale(0.93);
-}
-
-
-/* =========================================================
-   BOTONES LATERALES
-   ========================================================= */
-
-#rewindButton,
-#forwardButton {
-
-    width: 45px;
-
-    height: 45px;
-
-    border-radius: 50%;
-
-    font-size: 14px;
-}
-
-
-/* =========================================================
-   BOTÓN PLAY FUTURISTA
-   ========================================================= */
-
-#playButton {
-
-    position: relative;
-
-    width: 74px;
-
-    height: 74px;
-
-    border-radius: 50%;
-
-    color: #06101d;
-
-    border:
-        1px solid rgba(255,239,181,0.75);
-
-    background:
-        radial-gradient(
-            circle at 35% 30%,
-            #fff4c8,
-            var(--gold-light) 35%,
-            var(--gold) 68%,
-            var(--gold-dark)
-        );
-
-    box-shadow:
-        0 8px 25px rgba(0,0,0,0.40),
-        0 0 16px rgba(217,180,92,0.35),
-        0 0 40px rgba(217,180,92,0.12);
-
-    font-size: 23px;
-
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease;
-}
-
-
-/* anillo */
-
-#playButton::before {
-
-    content: "";
-
-    position: absolute;
-
-    inset: -7px;
-
-    border-radius: 50%;
-
-    border:
-        1px solid rgba(217,180,92,0.20);
-
-    box-shadow:
-        0 0 16px rgba(217,180,92,0.10);
-
-    animation:
-        playRing 3s ease-in-out infinite;
-}
-
-
-@keyframes playRing {
-
-    0%,
-    100% {
-        transform: scale(0.96);
-
-        opacity: 0.45;
-    }
-
-    50% {
-        transform: scale(1.04);
-
-        opacity: 1;
-    }
-}
-
-
-#playButton:hover {
-
-    transform:
-        scale(1.07);
-
-    box-shadow:
-        0 10px 30px rgba(0,0,0,0.42),
-        0 0 25px rgba(217,180,92,0.55),
-        0 0 55px rgba(217,180,92,0.18);
-}
-
-
-/* =========================================================
-   DESCARGA
-   ========================================================= */
-
-#downloadButton {
-
-    position: relative;
-
-    z-index: 3;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 9px;
-
-    width: 100%;
-
-    margin-top: 22px;
-
-    padding: 12px 15px;
-
-    border-radius: 13px;
-
-    color: var(--gold-light);
-
-    text-decoration: none;
-
-    font-size: 10px;
-
-    font-weight: 700;
-
-    letter-spacing: 1.7px;
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(217,180,92,0.035),
-            rgba(217,180,92,0.08),
-            rgba(217,180,92,0.035)
-        );
-
-    border:
-        1px solid rgba(217,180,92,0.16);
-
-    transition:
-        background 0.25s ease,
-        border-color 0.25s ease,
-        box-shadow 0.25s ease;
-}
-
-
-#downloadButton:hover {
-
-    background:
-        rgba(217,180,92,0.10);
-
-    border-color:
-        rgba(217,180,92,0.35);
-
-    box-shadow:
-        0 0 20px rgba(217,180,92,0.08);
-}
-
-
-/* =========================================================
-   AYER
-   ========================================================= */
-
-.yesterday-card {
-
-    margin-top: 17px;
-
-    padding:
-        21px;
-
-    border-radius: 21px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(9,26,48,0.72),
-            rgba(3,12,25,0.82)
-        );
-
-    animation:
-        panelEnter 0.8s ease 0.12s both;
-}
-
-
-.yesterday-card .label {
-
-    margin-bottom: 11px;
-
-    color: #8196b0;
-}
-
-
-#yesterdayDate {
-
-    color: var(--gold);
-
-    font-size: 10px;
-
-    letter-spacing: 1.5px;
-
-    margin-bottom: 6px;
-}
-
-
-#yesterdayTitle {
-
-    color: var(--white);
-
-    font-size: 16px;
-
-    line-height: 1.4;
-
-    margin-bottom: 17px;
-}
-
-
-/* =========================================================
-   CONTROLES AYER
-   ========================================================= */
-
-.yesterday-controls {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 13px;
-}
-
-
-#yesterdayPlay {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    width: 45px;
-
-    height: 45px;
-
-    flex-shrink: 0;
-
-    border-radius: 50%;
-
-    color: var(--gold-light);
-
-    background:
-        rgba(217,180,92,0.055);
-
-    border:
-        1px solid rgba(217,180,92,0.20);
-
-    cursor: pointer;
-
-    font-size: 14px;
-
-    transition:
-        transform 0.2s ease,
-        background 0.2s ease,
-        box-shadow 0.2s ease;
-}
-
-
-#yesterdayPlay:hover {
-
-    transform:
-        scale(1.06);
-
-    background:
-        rgba(217,180,92,0.11);
-
-    box-shadow:
-        0 0 18px rgba(217,180,92,0.12);
-}
-
-
-#yesterdayProgressBar {
-
-    flex: 1;
-
-    height: 4px;
-
-    border-radius: 20px;
-
-    background:
-        rgba(255,255,255,0.06);
-
-    cursor: pointer;
-
-    overflow: visible;
-}
-
-
-#yesterdayProgress {
-
-    position: relative;
-
-    width: 0%;
-
-    height: 100%;
-
-    border-radius: inherit;
-
-    background:
-        linear-gradient(
-            90deg,
-            var(--blue),
-            var(--gold)
-        );
-
-    box-shadow:
-        0 0 9px rgba(22,119,255,0.35);
-}
-
-
-#yesterdayDuration {
-
-    min-width: 35px;
-
-    text-align: right;
-
-    color: #617995;
-
-    font-size: 10px;
-}
-
-
-/* =========================================================
-   DESCARGA AYER
-   ========================================================= */
-
-#yesterdayDownload {
-
-    display: block;
-
-    margin-top: 16px;
-
-    text-align: right;
-
-    color: #8297b1;
-
-    font-size: 10px;
-
-    letter-spacing: 0.8px;
-
-    text-decoration: none;
-
-    transition:
-        color 0.2s ease;
-}
-
-
-#yesterdayDownload:hover {
-
-    color: var(--gold-light);
-}
-
-
-/* =========================================================
-   FOOTER
-   ========================================================= */
-
-footer {
-
-    text-align: center;
-
-    padding-top: 27px;
-
-    color: #52667f;
-
-    font-size: 9px;
-
-    letter-spacing: 1.4px;
-
-    text-transform: uppercase;
-}
-
-
-/* =========================================================
-   EFECTO DE LUZ SOBRE EL PANEL
-   ========================================================= */
-
-@keyframes scanningLight {
-
-    0% {
-        transform:
-            translateX(-120%);
-    }
-
-    100% {
-        transform:
-            translateX(120%);
-    }
-}
-
-
-.today-card {
-    isolation: isolate;
-}
-
-
-/* =========================================================
-   RESPONSIVE
-   ========================================================= */
-
-@media (max-width: 520px) {
-
-    .app {
-
-        padding:
-            19px
-            13px
-            30px;
+        return;
     }
 
 
-    header {
+    barras.forEach(function (barra) {
 
-        padding-bottom: 25px;
-    }
+        const altura =
+            Math.floor(
+                Math.random() * 35
+            ) + 8;
 
+        barra.style.height =
+            altura + "px";
 
-    .brand {
-
-        font-size: 25px;
-
-        letter-spacing: 4px;
-    }
-
-
-    .subtitle {
-
-        font-size: 11px;
-
-        letter-spacing: 1.5px;
-    }
+    });
 
 
-    #currentDate {
+    requestAnimationFrame(
+        function () {
 
-        font-size: 9px;
+            setTimeout(
+                animarVisualizador,
+                100
+            );
 
-        letter-spacing: 1.5px;
-    }
-
-
-    .today-card {
-
-        padding:
-            23px
-            18px
-            21px;
-
-        border-radius: 22px;
-    }
-
-
-    #todayTitle {
-
-        font-size: 22px;
-    }
-
-
-    #todayDescription {
-
-        font-size: 13px;
-    }
-
-
-    .visualizer {
-
-        height: 50px;
-
-        gap: 3px;
-    }
-
-
-    .visualizer span {
-
-        width: 3px;
-    }
-
-
-    .controls {
-
-        gap: 14px;
-    }
-
-
-    #playButton {
-
-        width: 67px;
-
-        height: 67px;
-    }
-
-
-    #rewindButton,
-    #forwardButton {
-
-        width: 42px;
-
-        height: 42px;
-    }
-
-
-    .yesterday-card {
-
-        padding:
-            19px 17px;
-
-        border-radius: 19px;
-    }
+        }
+    );
 }
 
 
-/* =========================================================
-   DESKTOP
-   ========================================================= */
+// =========================================================
+// ACTIVAR VISUALIZADOR
+// =========================================================
 
-@media (min-width: 900px) {
+audioHoy.addEventListener("play", function () {
 
-    .app {
+    visualizadorActivo = true;
 
-        padding-top: 40px;
-    }
+    animarVisualizador();
 
-
-    .brand {
-
-        font-size: 34px;
-    }
+});
 
 
-    .today-card {
+audioHoy.addEventListener("pause", function () {
 
-        padding:
-            31px
-            28px
-            28px;
-    }
-}
+    visualizadorActivo = false;
+
+});
+
+
+audioHoy.addEventListener("ended", function () {
+
+    visualizadorActivo = false;
+
+});
+
+
+// =========================================================
+// INICIO
+// =========================================================
+
+console.log(
+    "UN DÍA MÁS: reproductor preparado."
+);
