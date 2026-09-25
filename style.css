@@ -820,38 +820,40 @@ header {
     position: relative;
 
     width: 74px;
-
     height: 74px;
 
     border-radius: 50%;
 
+    /* COLOR DEL ICONO */
     color: #071426;
 
-    border:
-        1px solid rgba(255,239,181,0.75);
+    /* BORDE DORADO */
+    border: 2px solid #d4af37;
 
-    background:
-        radial-gradient(
-            circle at 35% 30%,
-            #fff4c8,
-            var(--gold-light) 35%,
-            var(--gold) 68%,
-            var(--gold-dark)
-        );
+    /* FONDO BLANCO */
+    background: #ffffff;
 
+    /* BRILLO DORADO */
     box-shadow:
-         0 0 20px rgba(255, 215, 0, 0.45),
-         0 0 40px rgba(212, 175, 55, 0.25);
+        0 0 12px rgba(212, 175, 55, 0.35),
+        0 0 25px rgba(212, 175, 55, 0.15);
 
     font-size: 23px;
 
+    cursor: pointer;
+
     transition:
         transform 0.25s ease,
+        background 0.25s ease,
+        color 0.25s ease,
+        border-color 0.25s ease,
         box-shadow 0.25s ease;
 }
 
 
-/* anillo */
+/* =========================================================
+   ANILLO FUTURISTA
+   ========================================================= */
 
 #playButton::before {
 
@@ -864,10 +866,10 @@ header {
     border-radius: 50%;
 
     border:
-        1px solid rgba(217,180,92,0.20);
+        1px solid rgba(212, 175, 55, 0.35);
 
     box-shadow:
-        0 0 16px rgba(217,180,92,0.10);
+        0 0 16px rgba(212, 175, 55, 0.15);
 
     animation:
         playRing 3s ease-in-out infinite;
@@ -878,12 +880,14 @@ header {
 
     0%,
     100% {
+
         transform: scale(0.96);
 
         opacity: 0.45;
     }
 
     50% {
+
         transform: scale(1.04);
 
         opacity: 1;
@@ -891,18 +895,33 @@ header {
 }
 
 
+/* =========================================================
+   AL PASAR EL CURSOR → DORADO
+   ========================================================= */
+
 #playButton:hover {
 
-    transform:
-        scale(1.07);
+    transform: scale(1.07);
 
+    /* AHORA EL BOTÓN SE VUELVE DORADO */
+    background: linear-gradient(
+        135deg,
+        #ffe66d,
+        #d4af37
+    );
+
+    /* ICONO OSCURO */
+    color: #071426;
+
+    /* BORDE MÁS BRILLANTE */
+    border-color: #ffe9a3;
+
+    /* MÁS GLOW */
     box-shadow:
-       background: linear-gradient(135deg, #ffe66d, #e0b93f);
-    box-shadow:
-        0 0 25px rgba(255, 215, 0, 0.65),
-        0 0 50px rgba(212, 175, 55, 0.35);
+        0 0 20px rgba(255, 215, 0, 0.65),
+        0 0 40px rgba(212, 175, 55, 0.45),
+        0 0 65px rgba(212, 175, 55, 0.20);
 }
-
 
 /* =========================================================
    DESCARGA
