@@ -1,29 +1,23 @@
-
 {
   "name": "UN DÍA MÁS",
   "short_name": "UN DÍA MÁS",
-  "description": "Un momento para ti. Escucha el mensaje de hoy.",
+  "description": "Un momento para ti, cada día.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
+  "background_color": "#071426",
+  "theme_color": "#071426",
   "orientation": "portrait",
-  "background_color": "#07152f",
-  "theme_color": "#07152f",
-  "lang": "es-CO",
   "icons": [
     {
-      "src": "assets/icon-192.png",
+      "src": "icon-192.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     },
     {
-      "src": "assets/icon-512.png",
+      "src": "icon-512.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     }
   ]
 }
-
-
