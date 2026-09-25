@@ -317,7 +317,33 @@
 
 
     </main>
+<script>
+if ("serviceWorker" in navigator) {
 
+    window.addEventListener("load", function () {
+
+        navigator.serviceWorker
+            .register("./sw.js")
+            .then(function (registration) {
+
+                console.log(
+                    "UN DÍA MÁS: Service Worker registrado."
+                );
+
+            })
+            .catch(function (error) {
+
+                console.error(
+                    "UN DÍA MÁS: Error registrando Service Worker:",
+                    error
+                );
+
+            });
+
+    });
+
+}
+</script>
 
     <!-- JAVASCRIPT -->
     <script src="app.js"></script>
