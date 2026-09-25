@@ -1,147 +1,131 @@
-const CACHE_NAME = "un-dia-mas-v3";
+/* =========================================================
+   UN DÍA MÁS
+   SERVICE WORKER
+   ========================================================= */
 
-const APP_FILES = [
-  "./",
-  "./index.html",
-  "./style.css",
-  "./app.js",
-  "./manifest.json",
-  "./assets/icon-192.png",
-  "./assets/icon-512.png"
+const CACHE_NAME = "un-dia-mas-v1";
+
+const ARCHIVOS_APP = [
+    "./",
+    "./index.html",
+    "./style.css",
+    "./app.js",
+    "./manifest.json",
+    "./icon-192.png",
+    "./icon-512.png"
 ];
 
 
-/* =====================================================
-   INSTALAR
-===================================================== */
+// =========================================================
+// INSTALACIÓN
+// =========================================================
 
 self.addEventListener("install", event => {
 
-  event.waitUntil(
+    console.log("UN DÍA MÁS: instalando Service Worker...");
 
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(APP_FILES))
-      .then(() => self.skipWaiting())
+    event.waitUntil(
 
-  );
+        caches.open(CACHE_NAME)
+            .then(cache => {
+
+                return cache.addAll(ARCHIVOS_APP);
+
+            })
+
+    );
+
+    self.skipWaiting();
 
 });
 
 
-/* =====================================================
-   ACTIVAR
-===================================================== */
+// =========================================================
+// ACTIVACIÓN
+// =========================================================
 
 self.addEventListener("activate", event => {
 
-  event.waitUntil(
+    console.log("UN DÍA MÁS: Service Worker activado.");
 
-    caches.keys().then(keys => {
+    event.waitUntil(
 
-      return Promise.all(
+        caches.keys()
+            .then(nombresCaches => {
 
-        keys
-          .filter(key => key !== CACHE_NAME)
-          .map(key => caches.delete(key))
+                return Promise.all(
 
-      );
+                    nombresCaches
+                        .filter(nombre => nombre !== CACHE_NAME)
+                        .map(nombre => caches.delete(nombre))
 
-    }).then(() => self.clients.claim())
+                );
 
-  );
+            })
+
+    );
+
+    self.clients.claim();
 
 });
 
 
-/* =====================================================
-   PETICIONES
-===================================================== */
+// =========================================================
+// PETICIONES
+// =========================================================
 
 self.addEventListener("fetch", event => {
 
-  const request = event.request;
-  const url = new URL(request.url);
+    const url = new URL(event.request.url);
 
 
-  /*
-   * NO INTERCEPTAR GOOGLE DRIVE
-   *
-   * Esto permite que el navegador maneje
-   * directamente el MP3.
-   */
+    // =====================================================
+    // LOS AUDIOS NUNCA SE GUARDAN EN CACHE
+    // =====================================================
 
-  if (
-    url.hostname === "drive.google.com" ||
-    url.hostname === "drive.usercontent.google.com" ||
-    url.hostname === "googleusercontent.com"
-  ) {
+    if (
+        url.pathname.endsWith("/audio/hoy.mp3") ||
+        url.pathname.endsWith("/audio/ayer.mp3")
+    ) {
 
-    return;
-  }
+        event.respondWith(
 
+            fetch(event.request, {
+                cache: "no-store"
+            })
 
-  /*
-   * Ignorar extensiones del navegador
-   */
+        );
 
-  if (url.protocol === "chrome-extension:") {
-
-    return;
-  }
+        return;
+    }
 
 
-  /*
-   * Archivos de la aplicación
-   */
+    // =====================================================
+    // RESTO DE LA APLICACIÓN
+    // CACHE FIRST
+    // =====================================================
 
-  event.respondWith(
+    event.respondWith(
 
-    caches.match(request)
-      .then(cachedResponse => {
+        caches.match(event.request)
+            .then(respuestaCache => {
 
-        if (cachedResponse) {
-          return cachedResponse;
-        }
+                if (respuestaCache) {
+
+                    return respuestaCache;
+
+                }
 
 
-        return fetch(request)
-          .then(response => {
+                return fetch(event.request)
+                    .then(respuesta => {
 
-            if (
-              response &&
-              response.status === 200 &&
-              response.type === "basic"
-            ) {
+                        return respuesta;
 
-              const responseClone =
-                response.clone();
+                    });
 
-              caches.open(CACHE_NAME)
-                .then(cache => {
+            })
 
-                  cache.put(
-                    request,
-                    responseClone
-                  );
-
-                })
-                .catch(error => {
-
-                  console.warn(
-                    "No se pudo guardar en caché:",
-                    error
-                  );
-
-                });
-
-            }
-
-            return response;
-
-          });
-
-      })
-
-  );
+    );
 
 });
